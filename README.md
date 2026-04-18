@@ -109,14 +109,59 @@ lib/
 
 ## Деплой
 
-Проект готов к деплою на Vercel / Netlify / любой хостинг, поддерживающий Next.js 14:
+Сайт настроен на **статический экспорт** (`output: 'export'` в `next.config.mjs`).
+После `npm run build` готовый сайт лежит в папке `out/` — это обычная статика,
+которую можно залить на любой хостинг (CDN / S3 / GitHub Pages / Cloudflare Pages / Netlify / любой nginx).
+
+### GitHub Pages (настроено из коробки)
+
+В репозитории есть workflow `.github/workflows/deploy.yml`, который при пуше в `main`
+собирает сайт и публикует на GitHub Pages.
+
+Один раз включить в настройках репозитория:
+
+1. GitHub → **Settings** → **Pages** → Source: **GitHub Actions**
+2. Запушить любой коммит в `main` (или запустить workflow вручную во вкладке **Actions**)
+3. После успешного деплоя адрес сайта: `https://<username>.github.io/<repo-name>/`
+
+Workflow автоматически проставляет `basePath = /<repo-name>` через переменную `NEXT_PUBLIC_BASE_PATH`.
+
+### Cloudflare Pages
+
+1. Cloudflare Dashboard → **Pages** → **Create project** → **Connect to Git**
+2. Выбрать репозиторий
+3. Build settings:
+   - **Framework preset**: Next.js (Static HTML Export)
+   - **Build command**: `npm run build`
+   - **Build output directory**: `out`
+4. Save and Deploy
+
+На корневом домене `basePath` не нужен — оставить пустым (значение по умолчанию).
+
+### Netlify
+
+1. **Add new site** → **Import from Git**
+2. Build settings:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `out`
+3. Deploy
+
+### Свой сервер (nginx / любой статический хостинг)
 
 ```bash
+npm ci
 npm run build
-npm run start
+# содержимое out/ отдать как статику
 ```
 
-Для Vercel достаточно подключить репозиторий — дополнительная конфигурация не требуется.
+### Локально
+
+```bash
+npm install
+npm run dev            # разработка
+npm run build          # production-сборка в out/
+npx serve out          # проверить статику локально
+```
 
 ## Что дальше
 
