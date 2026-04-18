@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #f7f8fa;
+    --color-ink: #1c1c1e;
+    --color-muted: #6b7280;
+    --color-brand: #4f46e5;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+    font-feature-settings: "cv11", "ss01", "ss03";
+  }
+
+  ::selection {
+    background: #4f46e5;
+    color: #fff;
+  }
+
+  h1, h2, h3, h4 {
+    @apply tracking-tight text-ink;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-[1280px] px-5 sm:px-6 lg:px-8;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.14em] text-muted;
+  }
+
+  .card {
+    @apply rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 ease-out-soft;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-hover;
+  }
+
+  .link-underline {
+    @apply relative inline-flex items-center gap-1 text-ink transition-colors hover:text-brand;
+  }
+
+  .divider {
+    @apply h-px w-full bg-line;
+  }
+}
+
+@layer utilities {
+  .grid-lines {
+    background-image:
+      linear-gradient(to right, rgba(17, 24, 39, 0.05) 1px, transparent 1px);
+    background-size: calc(100% / 12) 100%;
+  }
+  .bg-dot {
+    background-image: radial-gradient(rgba(17, 24, 39, 0.08) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+}
