@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "ghost" | "invert" | "ghost-invert";
 type Size = "md" | "lg";
 
 const base =
@@ -14,6 +14,10 @@ const variants: Record<Variant, string> = {
   secondary:
     "bg-white text-ink border border-line hover:border-brand/40 hover:text-brand",
   ghost: "text-ink hover:text-brand",
+  invert:
+    "bg-white text-ink shadow-soft hover:bg-white/90 hover:-translate-y-px",
+  "ghost-invert":
+    "border border-white/25 text-white hover:bg-white/10 hover:border-white/40",
 };
 
 const sizes: Record<Size, string> = {

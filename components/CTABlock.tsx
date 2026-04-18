@@ -28,22 +28,17 @@ export function CTABlock({
             <div className="absolute -bottom-20 -left-10 h-[280px] w-[280px] rounded-full bg-white/5 blur-3xl" />
           </div>
           <div className="relative max-w-2xl">
-            <h2 className="text-display-lg font-semibold">{title}</h2>
+            <h2 className="text-display-lg font-semibold text-white">{title}</h2>
             {description && (
-              <p className="mt-5 text-lg leading-relaxed text-white/70">{description}</p>
+              <p className="mt-5 text-lg leading-relaxed text-white/75">{description}</p>
             )}
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button href={primaryHref} size="lg" className="group bg-white text-ink hover:bg-white/90">
+              <Button href={primaryHref} size="lg" variant="invert" className="group">
                 {primaryLabel}
                 <ArrowRight />
               </Button>
               {secondaryHref && secondaryLabel && (
-                <Button
-                  href={secondaryHref}
-                  size="lg"
-                  variant="ghost"
-                  className="border border-white/20 text-white hover:bg-white/10 hover:text-white"
-                >
+                <Button href={secondaryHref} size="lg" variant="ghost-invert">
                   {secondaryLabel}
                 </Button>
               )}

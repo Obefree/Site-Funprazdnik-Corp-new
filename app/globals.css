@@ -27,7 +27,13 @@
   }
 
   h1, h2, h3, h4 {
-    @apply tracking-tight text-ink;
+    @apply tracking-tight;
+    color: inherit;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
