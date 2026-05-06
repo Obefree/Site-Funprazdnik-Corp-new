@@ -22,10 +22,11 @@ export function CTABlock({
   return (
     <section className="py-16 md:py-24">
       <Container>
-        <div className="relative overflow-hidden rounded-[28px] border border-line bg-ink px-8 py-14 text-white md:px-14 md:py-20">
+        <div className="relative overflow-hidden rounded-[28px] border border-line bg-gradient-to-br from-[#2b3b2f] via-[#243327] to-[#1f2a21] px-8 py-14 text-white md:px-14 md:py-20">
           <div aria-hidden className="pointer-events-none absolute inset-0 opacity-60">
-            <div className="absolute -top-24 -right-16 h-[300px] w-[300px] rounded-full bg-brand/40 blur-3xl" />
-            <div className="absolute -bottom-20 -left-10 h-[280px] w-[280px] rounded-full bg-white/5 blur-3xl" />
+            <div className="absolute -top-24 -right-16 h-[300px] w-[300px] rounded-full bg-brand/35 blur-3xl" />
+            <div className="absolute -bottom-20 -left-10 h-[280px] w-[280px] rounded-full bg-emerald-700/20 blur-3xl" />
+            <div className="absolute inset-0 mycelium-web opacity-25" />
           </div>
           <div className="relative max-w-2xl">
             <h2 className="text-display-lg font-semibold text-white">{title}</h2>

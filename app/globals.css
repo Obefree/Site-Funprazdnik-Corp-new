@@ -4,10 +4,10 @@
 
 @layer base {
   :root {
-    --color-bg: #f7f8fa;
-    --color-ink: #1c1c1e;
-    --color-muted: #6b7280;
-    --color-brand: #4f46e5;
+    --color-bg: #f5f3ec;
+    --color-ink: #1f2a21;
+    --color-muted: #5f6d60;
+    --color-brand: #7a4c2a;
   }
 
   html {
@@ -19,10 +19,13 @@
   body {
     @apply bg-surface text-ink font-sans antialiased;
     font-feature-settings: "cv11", "ss01", "ss03";
+    background-image:
+      radial-gradient(circle at 10% 15%, rgba(122, 76, 42, 0.08), transparent 35%),
+      radial-gradient(circle at 85% 0%, rgba(62, 104, 77, 0.08), transparent 40%);
   }
 
   ::selection {
-    background: #4f46e5;
+    background: #7a4c2a;
     color: #fff;
   }
 
@@ -47,7 +50,8 @@
   }
 
   .card {
-    @apply rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 ease-out-soft;
+    @apply rounded-2xl border border-line bg-white/95 p-6 shadow-card transition duration-300 ease-out-soft;
+    backdrop-filter: blur(2px);
   }
 
   .card-hover {
@@ -66,11 +70,21 @@
 @layer utilities {
   .grid-lines {
     background-image:
-      linear-gradient(to right, rgba(17, 24, 39, 0.05) 1px, transparent 1px);
+      linear-gradient(to right, rgba(53, 69, 56, 0.08) 1px, transparent 1px);
     background-size: calc(100% / 12) 100%;
   }
   .bg-dot {
-    background-image: radial-gradient(rgba(17, 24, 39, 0.08) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(46, 70, 51, 0.1) 1px, transparent 1px);
     background-size: 18px 18px;
+  }
+
+  .mycelium-web {
+    background-image:
+      radial-gradient(circle at 0 0, rgba(51, 80, 59, 0.2) 0 2px, transparent 2px),
+      radial-gradient(circle at 24px 24px, rgba(122, 76, 42, 0.18) 0 2px, transparent 2px),
+      linear-gradient(115deg, rgba(56, 88, 65, 0.12) 1px, transparent 1px),
+      linear-gradient(65deg, rgba(122, 76, 42, 0.1) 1px, transparent 1px);
+    background-size: 24px 24px, 24px 24px, 40px 40px, 34px 34px;
+    background-position: 0 0, 12px 12px, 0 0, 0 0;
   }
 }

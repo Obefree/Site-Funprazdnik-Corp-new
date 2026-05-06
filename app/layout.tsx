@@ -11,15 +11,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://funprazdnik.corp"),
+  metadataBase: new URL("https://myceliumlab.io"),
   title: {
-    default: "Funprazdnik Corp — игровые события для распределённых команд",
-    template: "%s — Funprazdnik Corp",
+    default: "Mycelium Lab — игровые события для распределённых команд",
+    template: "%s — Mycelium Lab",
   },
   description:
     "Онлайн, оффлайн и гибридные форматы для команд: улучшаем связи, ускоряем онбординг и даём полезный сигнал о состоянии коллектива.",
   openGraph: {
-    title: "Funprazdnik Corp",
+    title: "Mycelium Lab",
     description:
       "Игровые события и продукты для распределённых команд. Experience → Dynamics → Signal.",
     type: "website",

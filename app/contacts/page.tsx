@@ -34,20 +34,20 @@ export default function ContactsPage() {
               <ul className="space-y-3 text-[15px]">
                 <li className="flex items-center justify-between gap-3">
                   <span className="text-muted">Email</span>
-                  <a href="mailto:hello@funprazdnik.corp" className="text-ink hover:text-brand">
-                    hello@funprazdnik.corp
+                  <a href="mailto:hello@myceliumlab.io" className="text-ink hover:text-brand">
+                    hello@myceliumlab.io
                   </a>
                 </li>
                 <li className="flex items-center justify-between gap-3">
                   <span className="text-muted">Telegram</span>
                   <a href="#" className="text-ink hover:text-brand">
-                    @funprazdnik_corp
+                    @myceliumlab
                   </a>
                 </li>
                 <li className="flex items-center justify-between gap-3">
                   <span className="text-muted">LinkedIn</span>
                   <a href="#" className="text-ink hover:text-brand">
-                    funprazdnik-corp
+                    mycelium-lab
                   </a>
                 </li>
               </ul>

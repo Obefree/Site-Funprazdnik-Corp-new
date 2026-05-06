@@ -21,15 +21,15 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#4F46E5",
-          hover: "#4338CA",
-          soft: "#EEF2FF",
-          ink: "#312E81",
+          DEFAULT: "#7A4C2A",
+          hover: "#5F3A20",
+          soft: "#F3E8D6",
+          ink: "#3D2615",
         },
-        ink: "#1C1C1E",
-        muted: "#6B7280",
-        surface: "#F7F8FA",
-        line: "#E5E7EB",
+        ink: "#1F2A21",
+        muted: "#5F6D60",
+        surface: "#F5F3EC",
+        line: "#D9D4C8",
       },
       fontFamily: {
         sans: [

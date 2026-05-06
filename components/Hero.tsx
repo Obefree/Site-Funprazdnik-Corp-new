@@ -16,14 +16,19 @@ export function Hero({ eyebrow, title, description, actions, aside, className, c
   return (
     <section
       className={cn(
-        "relative overflow-hidden border-b border-line bg-white",
+        "relative overflow-hidden border-b border-line bg-white/80",
         compact ? "pt-14 pb-16 md:pt-20 md:pb-20" : "pt-16 pb-20 md:pt-24 md:pb-28",
         className,
       )}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-32 -right-20 h-[420px] w-[420px] rounded-full bg-brand-soft blur-3xl opacity-60" />
-        <div className="absolute inset-0 bg-dot opacity-30" />
+        <div className="absolute -top-32 -right-20 h-[420px] w-[420px] rounded-full bg-brand-soft blur-3xl opacity-80" />
+        <div className="absolute bottom-[-120px] left-[-80px] h-[280px] w-[280px] rounded-full bg-emerald-900/15 blur-3xl" />
+        <div className="absolute inset-0 mycelium-web opacity-40" />
+        <div className="absolute right-[12%] top-[22%] h-14 w-12 rounded-[55%_55%_45%_45%] bg-brand/20" />
+        <div className="absolute right-[15%] top-[30%] h-8 w-3 rounded-full bg-brand/15" />
+        <div className="absolute left-[8%] bottom-[18%] h-12 w-9 rounded-[55%_55%_45%_45%] bg-emerald-900/15" />
+        <div className="absolute left-[10%] bottom-[24%] h-7 w-2.5 rounded-full bg-emerald-900/15" />
       </div>
 
       <Container>

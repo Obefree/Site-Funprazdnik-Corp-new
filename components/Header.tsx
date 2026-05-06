@@ -10,11 +10,11 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/80 bg-surface/85 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-line/80 bg-surface/90 backdrop-blur-md">
       <div className="container-site flex h-16 items-center justify-between gap-6">
         <Link href="/" className="flex items-center gap-2 text-ink">
           <Logo />
-          <span className="text-[15px] font-semibold tracking-tight">Funprazdnik Corp</span>
+          <span className="text-[15px] font-semibold tracking-tight">Mycelium Lab</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-7">
@@ -81,12 +81,12 @@ export function Header() {
 
 function Logo() {
   return (
-    <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-ink text-white">
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
-        <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor" />
-        <rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor" opacity=".6" />
-        <rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity=".6" />
-        <rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor" />
+    <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-white shadow-soft">
+      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M4.5 12.5c0-3.1 3.3-5.5 7.5-5.5s7.5 2.4 7.5 5.5H4.5Z" fill="currentColor" stroke="none" />
+        <path d="M9.2 12.5v4.2a2.8 2.8 0 0 0 5.6 0v-4.2" />
+        <path d="M12 9.2v1.6M8.5 9.6v1.2M15.5 9.6v1.2" strokeLinecap="round" />
+        <path d="M6.8 17.3h10.4" strokeLinecap="round" />
       </svg>
     </span>
   );
