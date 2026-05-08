@@ -21,20 +21,22 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#7A4C2A",
-          hover: "#5F3A20",
-          soft: "#F3E8D6",
-          ink: "#3D2615",
+          DEFAULT: "#4E7D2F",
+          hover: "#3E6424",
+          soft: "#EBF4E2",
+          ink: "#1C3310",
         },
-        ink: "#1F2A21",
-        muted: "#5F6D60",
-        surface: "#F5F3EC",
-        line: "#D9D4C8",
+        ink: "#222B1A",
+        muted: "#667358",
+        surface: "#F5EFE1",
+        line: "#DDD4BE",
+        gold: "#C9943A",
+        lime: "#9DC044",
+        cream: "#FAF6ED",
       },
       fontFamily: {
         sans: [
           "Inter",
-          "Manrope",
           "ui-sans-serif",
           "system-ui",
           "-apple-system",
@@ -55,9 +57,10 @@ const config: Config = {
         "2xl": "18px",
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06)",
-        card: "0 1px 2px rgba(16,24,40,0.04), 0 2px 8px rgba(16,24,40,0.04)",
-        hover: "0 2px 6px rgba(16,24,40,0.06), 0 16px 40px rgba(16,24,40,0.08)",
+        soft: "0 1px 2px rgba(34,43,26,0.05), 0 6px 20px rgba(34,43,26,0.07)",
+        card: "0 1px 2px rgba(34,43,26,0.04), 0 2px 8px rgba(34,43,26,0.05)",
+        hover: "0 2px 6px rgba(34,43,26,0.06), 0 14px 36px rgba(34,43,26,0.09)",
+        btn: "0 1px 0 rgba(255,255,255,0.18) inset, 0 1px 3px rgba(34,43,26,0.18)",
       },
       spacing: {
         "18": "4.5rem",

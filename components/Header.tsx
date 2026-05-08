@@ -82,11 +82,15 @@ export function Header() {
 function Logo() {
   return (
     <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-white shadow-soft">
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M4.5 12.5c0-3.1 3.3-5.5 7.5-5.5s7.5 2.4 7.5 5.5H4.5Z" fill="currentColor" stroke="none" />
-        <path d="M9.2 12.5v4.2a2.8 2.8 0 0 0 5.6 0v-4.2" />
-        <path d="M12 9.2v1.6M8.5 9.6v1.2M15.5 9.6v1.2" strokeLinecap="round" />
-        <path d="M6.8 17.3h10.4" strokeLinecap="round" />
+      <svg viewBox="0 0 20 20" className="h-[18px] w-[18px]" fill="none">
+        {/* Шляпка */}
+        <path d="M3 10c0-3.8 3.1-6.5 7-6.5s7 2.7 7 6.5H3Z" fill="currentColor" opacity="0.9"/>
+        {/* Ножка */}
+        <path d="M8 10v5.5a2 2 0 0 0 4 0V10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+        {/* Прожилки снизу шляпки */}
+        <path d="M5 10h2M9.5 10h1M12.5 10h2.5" stroke="white" strokeWidth="0.7" strokeLinecap="round" opacity="0.45"/>
+        {/* Земля */}
+        <path d="M6.5 15.8h7" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" opacity="0.5"/>
       </svg>
     </span>
   );
