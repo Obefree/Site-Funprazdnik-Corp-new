@@ -1,0 +1,27 @@
+---
+description: Синхронизация с personal knowledge base
+globs: **/*
+alwaysApply: true
+---
+
+# Синхронизация с Knowledge Base
+
+**KB:** `C:\Users\lev\Documents\GitHub\Knowledge-base`  
+**Slug:** `corporate-events-products`  
+**Контекст-пак:** `C:\Users\lev\Documents\GitHub\Knowledge-base\40-context-packs\cursor\corporate-site.cursor-context.md`
+
+## Перед кодом
+
+1. `C:\Users\lev\Documents\GitHub\Knowledge-base\CONTEXT_ROUTER.md`
+2. `20-projects/corporate-events-products/ACTIVE_CONTEXT.md`, `TASK.md`, `repo-state.md`
+3. Только routed-файлы, не вся KB
+
+## После значимых изменений
+
+Mini-ingestion по `80-automation/auto-sync-policy.md` (сайт Mycelium Lab / Funprazdnik corp).
+
+## Конец сессии
+
+`C:\Users\lev\Documents\GitHub\Knowledge-base\00-inbox\agent-sessions\Site-Funprazdnik-Corp-new-YYYY-MM-DD.md` (≤15 строк)
+
+Агент обновляет KB сам, без «разложи в базу».
