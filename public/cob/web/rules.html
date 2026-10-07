@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Call of Blades — Правила игры</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #1a1a2e;
+            --bg-darker: #0f0f1e;
+            --accent-blue: #4ecdc4;
+            --accent-gold: #ffd700;
+            --accent-red: #e74c3c;
+            --accent-green: #2ecc71;
+            --accent-purple: #9b59b6;
+            --text-light: #f0f0f0;
+            --text-gray: #b0b0b0;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .main-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: var(--bg-dark);
+            border-right: 2px solid var(--border-color);
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        nav h2 {
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            background: var(--accent-blue);
+            color: var(--bg-dark);
+            transform: translateX(5px);
+        }
+
+        .container {
+            margin-left: 250px;
+            max-width: 1200px;
+            width: calc(100% - 250px);
+            background: var(--bg-dark);
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            overflow-x: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid var(--accent-blue);
+        }
+
+        h1 {
+            font-size: 3em;
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: var(--text-gray);
+        }
+
+
+        section {
+            margin-bottom: 50px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        h2 {
+            color: var(--accent-gold);
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-blue);
+        }
+
+        h3 {
+            color: var(--accent-blue);
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: var(--accent-blue);
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            display: inline-block;
+            vertical-align: middle;
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+        }
+
+        .icon-large {
+            width: 50px;
+            height: 50px;
+        }
+
+        .effect-card {
+            background: rgba(78, 205, 196, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .effect-card h4 {
+            margin-top: 0;
+            color: var(--accent-blue);
+        }
+
+        .rule-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--accent-gold);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .rule-box h3 {
+            color: var(--accent-gold);
+            margin-top: 0;
+        }
+
+        .table-layout {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .card-type {
+            display: inline-block;
+            background: var(--accent-blue);
+            color: var(--bg-dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .highlight {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .phase {
+            background: rgba(78, 205, 196, 0.15);
+            border-left: 5px solid var(--accent-blue);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .phase h3 {
+            margin-top: 0;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-blue);
+            color: var(--bg-dark);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5em;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 25px rgba(78, 205, 196, 0.5);
+        }
+
+        /* Планшеты и телефоны: убираем фиксированный сайдбар — иначе узкая колонка + обрезание */
+        @media (max-width: 900px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            nav {
+                position: relative;
+                left: auto;
+                top: auto;
+                width: 100%;
+                height: auto;
+                max-height: min(50vh, 420px);
+                border-right: none;
+                border-bottom: 2px solid var(--border-color);
+                padding: 12px 14px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            nav h2 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+
+            nav a {
+                padding: 12px 14px;
+                font-size: 0.95rem;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+
+            .container {
+                margin-left: 0;
+                width: 100%;
+                max-width: 100%;
+                padding: 16px 12px;
+                overflow-x: hidden;
+            }
+
+            h1 {
+                font-size: clamp(1.35rem, 5vw, 2em);
+            }
+
+            .board-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .player-area {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+
+            .board-layout {
+                padding: 16px;
+                margin: 16px 0;
+                overflow-x: auto;
+            }
+        }
+
+        .effect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 900px) {
+            .effect-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+        }
+
+        .effect-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .effect-item strong {
+            color: var(--accent-gold);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .card-anatomy {
+            background: rgba(0, 0, 0, 0.4);
+            border: 3px solid var(--accent-blue);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .card-diagram {
+            width: 100%;
+            max-width: 400px;
+            height: 560px;
+            background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%);
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Стили для изображений анатомии карт */
+        .anatomy-image-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+            margin-bottom: 30px;
+        }
+        
+        .anatomy-image-container img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        @media (max-width: 900px) {
+            .anatomy-image-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Стили для примеров карт разных типов */
+        .card-types-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+            align-items: start;
+        }
+        
+        .card-type-example {
+            text-align: center;
+        }
+        
+        .card-type-example h4 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .card-type-example img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (max-width: 1200px) {
+            .card-types-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .card-types-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-zone {
+            position: absolute;
+            border: 2px dashed var(--accent-blue);
+            background: rgba(78, 205, 196, 0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            font-weight: bold;
+            padding: 5px;
+        }
+
+        .card-zone-label {
+            position: absolute;
+            color: var(--accent-gold);
+            font-size: 0.75rem;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2px 6px;
+            border-radius: 3px;
+            z-index: 10;
+        }
+
+        .zone-name {
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            height: 45px;
+        }
+
+        .zone-cost {
+            top: 8px;
+            right: 8px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+        .zone-power {
+            top: 8px;
+            right: 8px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+        .zone-image {
+            top: 60px;
+            left: 8px;
+            width: calc(100% - 16px);
+            height: 220px;
+        }
+
+        .zone-effect1 {
+            top: 290px;
+            left: 8px;
+            width: calc(100% - 16px);
+            height: 110px;
+        }
+
+        .zone-effect2 {
+            top: 410px;
+            left: 8px;
+            width: calc(100% - 16px);
+            height: 90px;
+        }
+
+        .zone-triggers {
+            bottom: 8px;
+            left: 8px;
+            width: calc(100% - 16px);
+            height: 45px;
+        }
+
+        .zone-color {
+            left: 0;
+            top: 0;
+            width: 8px;
+            height: 100%;
+            border: none;
+            background: var(--accent-blue);
+        }
+
+        .board-layout {
+            background: rgba(0, 0, 0, 0.4);
+            border: 3px solid var(--accent-gold);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto auto;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .board-zone {
+            background: rgba(78, 205, 196, 0.1);
+            border: 2px solid var(--accent-blue);
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 100px;
+            text-align: center;
+        }
+
+        .board-zone h4 {
+            color: var(--accent-gold);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .board-zone p {
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+
+        .player-area {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .player-zone {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--accent-gold);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .player-zone h4 {
+            color: var(--accent-gold);
+            margin-top: 0;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            border: 2px solid var(--accent-blue);
+        }
+
+        .legend-blue { background: #4a90e2; }
+        .legend-red { background: #e74c3c; }
+        .legend-green { background: #2ecc71; }
+        .legend-white { background: #ecf0f1; }
+        .legend-gold { background: #ffd700; }
+
+        /* =========================
+           PRINT / PDF (Ctrl+P)
+           ========================= */
+        @page {
+            size: A4;
+            margin: 14mm 12mm;
+        }
+
+        @media print {
+            /* Use print-friendly colors (readable as rules) */
+            body {
+                background: #ffffff !important;
+                color: #111111 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .main-wrapper {
+                display: block !important;
+                min-height: auto !important;
+            }
+
+            /* Turn side nav into a TOC block */
+            nav {
+                position: static !important;
+                width: auto !important;
+                height: auto !important;
+                overflow: visible !important;
+                border-right: none !important;
+                border-bottom: 1px solid #dddddd !important;
+                background: transparent !important;
+                padding: 0 0 10px 0 !important;
+                margin: 0 0 16px 0 !important;
+            }
+            nav h2 {
+                color: #111111 !important;
+                text-align: left !important;
+                margin: 0 0 8px 0 !important;
+                font-size: 14pt !important;
+            }
+            nav ul {
+                display: block !important;
+                column-count: 2;
+                column-gap: 18px;
+                gap: 0 !important;
+            }
+            nav li { break-inside: avoid; }
+            nav a {
+                color: #111111 !important;
+                background: transparent !important;
+                padding: 2px 0 !important;
+                transform: none !important;
+                font-size: 10.5pt !important;
+                border-radius: 0 !important;
+            }
+
+            /* Layout */
+            .container {
+                margin-left: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                overflow: visible !important;
+                background: transparent !important;
+            }
+
+            header {
+                border-bottom: 1px solid #dddddd !important;
+                margin-bottom: 18px !important;
+                padding-bottom: 10px !important;
+            }
+            h1 {
+                color: #111111 !important;
+                text-shadow: none !important;
+                font-size: 22pt !important;
+            }
+            h2 {
+                color: #111111 !important;
+                border-bottom: 2px solid #4ecdc4 !important;
+                text-shadow: none !important;
+            }
+            h3, h4 {
+                color: #0b6f6a !important;
+                text-shadow: none !important;
+            }
+            p { text-align: left !important; }
+
+            /* Hide purely interactive UI */
+            .back-to-top { display: none !important; }
+            header a { display: none !important; } /* game/menu/pnp/pdf buttons */
+
+            /* Card-like blocks → clean paper style */
+            section {
+                background: #ffffff !important;
+                color: #111111 !important;
+                border: 1px solid #dddddd !important;
+                border-radius: 10px !important;
+                box-shadow: none !important;
+                padding: 16px !important;
+                margin-bottom: 14px !important;
+            }
+            /* Each top-level section on new page (except first) */
+            section { break-before: page; }
+            section#setup { break-before: auto; }
+
+            .rule-box,
+            .phase,
+            .effect-card,
+            .effect-item,
+            .card-anatomy,
+            .board-layout,
+            .table-layout {
+                background: #ffffff !important;
+                color: #111111 !important;
+                box-shadow: none !important;
+            }
+            .rule-box { border-color: #999999 !important; }
+            .phase { border-left-color: #4ecdc4 !important; }
+            .effect-card { border-left-color: #4ecdc4 !important; }
+
+            .highlight {
+                background: #fff4b8 !important;
+                color: #111111 !important;
+            }
+            .card-type {
+                background: #e6f7f5 !important;
+                color: #111111 !important;
+                border: 1px solid #4ecdc4 !important;
+            }
+
+            /* Images */
+            img { max-width: 100% !important; height: auto !important; }
+            img.icon { width: 14px !important; height: 14px !important; margin: 0 2px !important; }
+            /* PDF export mode (used by scripts/export_rules_pdf.ps1):
+               hide heavy illustrative images to keep export fast/stable.
+               Icons stay visible. */
+            html.pdf-export img:not(.icon):not(.icon-large) { display: none !important; }
+
+            /* Avoid awkward splits */
+            .effect-item, .rule-box, .phase, .card-anatomy, .board-layout { break-inside: avoid; }
+        }
+
+        /* PDF export mode (screen too): hide heavy images early */
+        html.pdf-export img:not(.icon):not(.icon-large) { display: none !important; }
+    </style>
+    <script>
+        (function () {
+            try {
+                var p = new URLSearchParams(window.location.search);
+                if (p.get('pdf') === '1') document.documentElement.classList.add('pdf-export');
+            } catch (e) { /* ignore */ }
+        })();
+    </script>
+</head>
+<body>
+    <div class="main-wrapper">
+        <nav>
+            <h2>📑 Навигация</h2>
+            <ul>
+                <li><a href="#setup">Подготовка к игре</a></li>
+                <li><a href="#round">Структура раунда</a></li>
+                <li><a href="#card-types">Типы карт</a></li>
+                <li><a href="#card-anatomy">Анатомия карты</a></li>
+                <li><a href="#board-layout">Схема игрового поля</a></li>
+                <li><a href="#card-examples-detailed">Примеры карт</a></li>
+                <li><a href="#effects">Эффекты карт</a></li>
+                <li><a href="#triggers">Триггеры</a></li>
+                <li><a href="#altar">Altar of Souls</a></li>
+                <li><a href="#monsters">Монстры</a></li>
+                <li><a href="#victory">Условия победы</a></li>
+                <li><a href="#variants">Варианты игры</a></li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <header>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h1>⚔️ Call of Blades</h1>
+                        <p class="subtitle">Полные правила игры</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <a href="./game.html" style="background: var(--accent-blue); color: var(--bg-dark); padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: all 0.3s;">🎮 В игру</a>
+                        <a href="../" style="background: var(--accent-gold); color: var(--bg-dark); padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: all 0.3s;">🏠 Главное меню</a>
+                        <a href="https://drive.google.com/drive/folders/1KwXk_YHE-0kcViV_NliqulMhDl8bgh24?usp=sharing" target="_blank" style="background: var(--accent-purple); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: all 0.3s;">🖨️ PnP</a>
+                        <a href="https://cob-game-clean-v-1.vercel.app/web/rules.pdf" style="background: var(--accent-green); color: var(--bg-dark); padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: all 0.3s;">📄 PDF</a>
+                    </div>
+                </div>
+            </header>
+
+            <section id="setup">
+            <h2>🎮 Подготовка к игре</h2>
+
+            <h3>Стартовые колоды</h3>
+            <ul>
+                <li>Каждый игрок получает стартовую колоду из <span class="highlight">10 карт</span>:
+                    <ul>
+                        <li><span class="highlight">7 карт Prayer</span> <img src="https://cob-game-clean-v-1.vercel.app/web/static/Prayer.png" class="icon" alt="Prayer"> — даёт <img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_1.png" class="icon" alt="Blessing 1"> 1 Blessing</li>
+                        <li><span class="highlight">3 карты Strike</span> <img src="https://cob-game-clean-v-1.vercel.app/web/static/Strike.png" class="icon" alt="Strike"> — даёт <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_1.png" class="icon" alt="Damage 1"> 1 Damage</li>
+                    </ul>
+                </li>
+                <li>Перемешайте колоды игроков отдельно.</li>
+            </ul>
+
+            <h3>Определение первого игрока</h3>
+            <ul>
+                <li>Первый игрок определяется случайно (например, последний, кто держал меч).</li>
+                <li><span class="highlight">Первый игрок</span> начинает игру с <span class="highlight">3 картами</span> в руке.</li>
+                <li><span class="highlight">Второй игрок</span> начинает игру с <span class="highlight">5 картами</span> в руке.</li>
+            </ul>
+
+            <h3>Торговый ряд</h3>
+            <ol>
+                <li>Перемешайте вместе карты <span class="card-type">Disciple</span> и <span class="card-type">Attire</span>, сформируйте одну колоду.</li>
+                <li>Выложите из неё <span class="highlight">6 карт</span> в открытую рядом с колодой (это торговый ряд).</li>
+                <li>Стопку карт <span class="card-type">Priestess</span> положите рядом лицом вверх — эта карта всегда доступна для покупки (постоянный 7-й слот).</li>
+            </ol>
+
+            <h3>Events</h3>
+            <ul>
+                <li><em>В базовой версии игры Events не используются. Подробности см. в разделе "Варианты игры".</em></li>
+            </ul>
+
+            <h3>Monsters</h3>
+            <ol>
+                <li>Подготовьте колоду монстров.</li>
+                <li>Перемешайте всех монстров и сформируйте из них колоду.</li>
+                <li>Откройте верхнюю карту колоды — это первый открытый монстр (случайный).</li>
+            </ol>
+
+            <div class="rule-box">
+                <h3>⚱️ Altar of Souls</h3>
+                <ul>
+                    <li><span class="highlight">У каждого игрока есть свой отдельный Altar of Souls</span> (не общий).</li>
+                    <li>Каждый игрок может активировать свой алтарь <span class="highlight">1 раз в ход</span>.</li>
+                    <li>На алтаре можно накапливать <span class="highlight">Soul Tokens</span>, которые не сгорают в конце хода.</li>
+                    <li>Токены на алтаре каждого игрока используются только этим игроком для покупок.</li>
+                </ul>
+            </div>
+
+            <div class="rule-box">
+                <h3>🗑️ Стопка Trash Trade Row</h3>
+                <ul>
+                    <li>Создайте отдельную стопку для карт, уничтоженных из торгового ряда.</li>
+                    <li>Карты из этой стопки можно просматривать, но они не возвращаются в игру.</li>
+                </ul>
+            </div>
+
+            <h3>Размещение компонентов</h3>
+            <ul>
+                <li>Разместите все жетоны и токены в зоне, доступной игрокам.</li>
+                <li>Установите начальное значение <span class="highlight">HP</span> игроков на <span class="highlight">50</span>.</li>
+            </ul>
+        </section>
+
+        <section id="round">
+            <h2>🔄 Структура раунда</h2>
+
+            <h3>1. Ходы игроков (по очереди)</h3>
+            <p>Каждый игрок выполняет полный ход, включающий три фазы:</p>
+
+            <div class="phase">
+                <h3>A. Фаза начала хода — Срабатывание эффектов</h3>
+                <p><em>Примечание: В базовой версии игры эффекты Кровотечения и Яда не используются. Подробности см. в разделе "Варианты игры".</em></p>
+            </div>
+
+            <div class="phase">
+                <h3>B. Фаза розыгрыша и действий</h3>
+
+                <h4>Розыгрыш карт</h4>
+                <ul>
+                    <li>Игрок выкладывает карты из руки в зону <span class="highlight">"В игре"</span> одну за другой, в любом порядке.</li>
+                    <li>При розыгрыше карты выполняется её <span class="highlight">основной блок действий</span> (effect1).</li>
+                    <li>Карты можно разыгрывать в любом порядке и количестве.</li>
+                </ul>
+
+                <h4>Активация Attire</h4>
+                <ul>
+                    <li>Свойства Attire, которое уже лежит "В игре", могут быть активированы <span class="highlight">1 раз в ход</span>.</li>
+                    <li>Каждый эффект Attire (effect1, effect2) можно активировать отдельно, но только <span class="highlight">1 раз за ход</span>.</li>
+                    <li>Вторичные способности (effect2, Chain) можно активировать позже, в любое время своего хода.</li>
+                </ul>
+
+                <h4>Распределение Damage</h4>
+                <ul>
+                    <li>Игрок может распределять Damage между:
+                        <ul>
+                            <li>Монстрами</li>
+                            <li>Оппонентом</li>
+                            <li>Attire оппонента</li>
+                        </ul>
+                    </li>
+                    <li><img src="https://cob-game-clean-v-1.vercel.app/web/static/power_x.png" class="icon" alt="Damage"> Damage со всех сыгранных карт <span class="highlight">складывается</span> и может быть распределён частично или полностью между любым количеством целей в любое время хода.</li>
+                    <li>Чтобы убить монстра, нужно <span class="highlight">единовременно</span> нанести <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_x.png" class="icon" alt="Damage"> Damage, равный его <span class="highlight">силе</span> (значение в правом верхнем углу карты).</li>
+                    <li>При убийстве монстра игрок <span class="highlight">немедленно</span> получает награду, указанную на карте.</li>
+                    <li><span class="highlight">Лимит убийства монстров:</span> За <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_x.png" class="icon" alt="Damage"> Damage можно убить <span class="highlight">не более одного монстра в ход</span>. Однако карты со свойством <strong>{Defeat Monster}</strong> позволяют убивать монстров <span class="highlight">без ограничений</span>, не тратя Damage и не учитывая лимит "1 монстр за ход".</li>
+                </ul>
+
+                <h4>Покупка карт</h4>
+                <ul>
+                    <li>Игрок может покупать любое количество карт из Торгового ряда.</li>
+                    <li>Для покупки необходимо потратить количество <img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_x.png" class="icon" alt="Blessing"> <span class="highlight">Blessing</span>, равное стоимости карты (указана в правом верхнем углу карты).</li>
+                    <li><img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_x.png" class="icon" alt="Blessing"> Blessing со всех сыгранных карт <span class="highlight">складывается</span> и может быть потрачен частично или полностью в любое время хода.</li>
+                    <li><span class="highlight">Приоритет трат</span>: сначала тратится Blessing, накопленный в этом ходу, затем Altar Tokens (если не хватает).</li>
+                    <li>Купленная карта <span class="highlight">сразу отправляется в сброс</span> игрока.</li>
+                    <li>Купленная карта <span class="highlight">немедленно заменяется</span> новой картой из колоды Торгового ряда.</li>
+                </ul>
+            </div>
+
+            <div class="phase">
+                <h3>C. Завершение хода</h3>
+
+                <h4>Сброс карт</h4>
+                <ul>
+                    <li>Все карты из зоны <span class="highlight">"В игре"</span> сбрасываются в личный сброс.</li>
+                    <li>Все оставшиеся карты на руке сбрасываются в личный сброс.</li>
+                    <li><span class="highlight">Карты Attire остаются</span> в зоне "В игре".</li>
+                </ul>
+
+                <h4>Сброс ресурсов</h4>
+                <ul>
+                    <li>Весь <img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_x.png" class="icon" alt="Blessing"> <span class="highlight">unspent Blessing</span> сгорает (теряется).</li>
+                    <li>Altar Tokens <span class="highlight">НЕ сгорают</span> и остаются до использования.</li>
+                    <li>Сбрасываются все накопленные счетчики (Damage, Blessing, Heal и т.д.).</li>
+                </ul>
+
+                <h4>Добор карт</h4>
+                <ul>
+                    <li>Игрок добирает новые <span class="highlight">5 карт</span> из своей колоды.</li>
+                    <li>Если колода пуста — <span class="highlight">перемешайте сброс</span>, чтобы сформировать новую колоду.</li>
+                    <li>Если нужно добрать карты, а в колоде не хватает:
+                        <ol>
+                            <li>Возьмите все доступные карты из колоды.</li>
+                            <li>Перемешайте сброс и сделайте его новой колодой.</li>
+                            <li>Доберите оставшиеся карты из новой колоды.</li>
+                        </ol>
+                    </li>
+                </ul>
+
+            </div>
+        </section>
+
+        <section id="card-types">
+            <h2>🃏 Типы карт</h2>
+
+            <div class="effect-grid">
+                <div class="effect-item">
+                    <strong>Базовые карты</strong>
+                    <p><span class="card-type">Prayer</span> <img src="https://cob-game-clean-v-1.vercel.app/web/static/Prayer.png" class="icon" alt="Prayer"> и <span class="card-type">Strike</span> <img src="https://cob-game-clean-v-1.vercel.app/web/static/Strike.png" class="icon" alt="Strike"> входят в стартовую колоду.</p>
+                    <p>Карта <span class="card-type">Priestess</span> всегда доступна для покупки в Торговом ряду (постоянный слот).</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong>Disciple</strong>
+                    <p>Карты в Торговом ряду, которые можно приобрести в свою колоду.</p>
+                    <p>После розыгрыша уходят в сброс игрока в конце хода.</p>
+                    <p>Имеют основную способность (effect1) и могут иметь вторичную способность (effect2).</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong>Attire</strong>
+                    <p>Особые карты Торгового ряда.</p>
+                    <p>Имеют <span class="highlight">прочность</span> (<img src="https://cob-game-clean-v-1.vercel.app/web/static/heal.png" class="icon" alt="Def_N"> Def_N_Text) и могут быть уничтожены.</p>
+                    <p><span class="highlight">Не сбрасываются</span> в конце хода — остаются в зоне "В игре".</p>
+                    <p>Их свойства можно активировать <span class="highlight">1 раз в ход</span>.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong>Monsters</strong>
+                    <p>Отдельная колода, всегда <span class="highlight">1 открытый монстр</span>.</p>
+                    <p>Первый монстр открывается случайно.</p>
+                    <p>Убив монстра Damage, <span class="highlight">немедленно</span> получите награду.</p>
+                    <p><span class="highlight">Лимит:</span> За <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_x.png" class="icon" alt="Damage"> Damage можно убить <span class="highlight">не более одного монстра в ход</span>. Карты со свойством <strong>{Defeat Monster}</strong> позволяют убивать монстров <span class="highlight">без ограничений</span>.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong>✨ Event</strong>
+                    <p>Специальные карты, которые перемешиваются в колоду Торгового ряда.</p>
+                    <p><span class="highlight">Event не покупается</span> — при появлении Event на рынке (когда он заменяет другую карту) игрок, чей ход, должен решить: применить эффект Event или отказаться.</p>
+                    <p>Эффект применяется для обоих игроков последовательно (каждый решает отдельно).</p>
+                    <p>После обработки Event отправляется в Trash Trade Row.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong>⚗️ Consumable</strong>
+                    <p>Специальные карты, которые можно применить немедленно или сохранить в зоне экипировки.</p>
+                    <p>Могут быть применены <span class="highlight">в любое время</span> своего хода.</p>
+                    <p>В зоне экипировки может находиться <span class="highlight">только один расходник</span> одновременно.</p>
+                    <p>Если приобретается новый расходник, старый должен быть применен или сброшен.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="card-anatomy">
+            <h2>📋 Анатомия карты</h2>
+
+            <!-- Disciple -->
+            <h3>🧙 Disciple</h3>
+            <div class="card-anatomy">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Disciple Card Anatomy.png" alt="Анатомия карты Disciple" style="width: 100%; max-width: 600px; border-radius: 10px; border: 2px solid var(--accent-blue); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);">
+                </div>
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="color: var(--accent-gold); margin-top: 0;">Описание параметров карты Disciple:</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Color (Цвет)</strong> — иконка цвета карты в верхнем левом углу (синий, красный, зеленый, белый). Определяет совместимость с эффектами Chain.</li>
+                        <li><strong>Name (Название)</strong> — название карты в золотой полосе вверху. Уникальное имя для идентификации карты.</li>
+                        <li><strong>Type (Тип)</strong> — тип карты под названием. Для Disciple всегда указано "Disciple".</li>
+                        <li><strong>Cost (Стоимость)</strong> — стоимость карты в кружке в правом верхнем углу. Количество <img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_x.png" class="icon" alt="Blessing"> Blessing, необходимое для покупки карты из Trade Row.</li>
+                        <li><strong>Art (Изображение)</strong> — основное изображение карты в центре. Художественное представление персонажа или предмета.</li>
+                        <li><strong>Main Effect (Основной эффект)</strong> — эффект, который применяется при розыгрыше карты из руки. Игрок объявляет розыгрыш карты и применяет все эффекты, указанные в основном эффекте. Может содержать несколько эффектов (Damage, Heal, Blessing и т.д.).</li>
+                        <li><strong>Secondary Effect (Вторичный эффект)</strong> — эффект, который можно активировать вручную в любое время своего хода после розыгрыша основной способности. Обычно содержит Chain или Trigger.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Monster -->
+            <h3>👹 Monster</h3>
+            <div class="card-anatomy">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Monster Anatomy.png" alt="Анатомия карты Monster" style="width: 100%; max-width: 600px; border-radius: 10px; border: 2px solid var(--accent-red); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);">
+                </div>
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="color: var(--accent-gold); margin-top: 0;">Описание параметров карты Monster:</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Color (Цвет)</strong> — иконка цвета монстра в верхнем левом углу. Определяет тип монстра и может влиять на награду.</li>
+                        <li><strong>Power (Сила)</strong> — сила монстра в кружке в правом верхнем углу. Количество <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_x.png" class="icon" alt="Damage"> Damage, которое нужно нанести единовременно для убийства монстра.</li>
+                        <li><strong>Art (Изображение)</strong> — основное изображение монстра в центре карты. Художественное представление существа.</li>
+                        <li><strong>Name (Название)</strong> — название монстра в золотой полосе под изображением. Уникальное имя для идентификации.</li>
+                        <li><strong>Type (Тип)</strong> — тип карты под названием. Для монстров всегда указано "Monster".</li>
+                        <li><strong>Effect (Эффект / Награда)</strong> — награда, которую получает игрок при убийстве монстра. Может содержать несколько эффектов или выбор через OR. Применяется немедленно после убийства.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Attire -->
+            <h3>🛡️ Attire</h3>
+            <div class="card-anatomy">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Attire Anatomy.png" alt="Анатомия карты Attire" style="width: 100%; max-width: 600px; border-radius: 10px; border: 2px solid var(--accent-blue); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);">
+                </div>
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="color: var(--accent-gold); margin-top: 0;">Описание параметров карты Attire:</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Name (Название)</strong> — название Attire в золотой полосе вверху. Уникальное имя для идентификации.</li>
+                        <li><strong>Type (Тип)</strong> — тип карты под названием. Для Attire всегда указано "Attire".</li>
+                        <li><strong>Color (Цвет)</strong> — иконка цвета Attire в верхнем левом углу. Определяет совместимость с эффектами Chain.</li>
+                        <li><strong>Cost (Стоимость)</strong> — стоимость карты в кружке в правом верхнем углу. Количество <img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_x.png" class="icon" alt="Blessing"> Blessing, необходимое для покупки.</li>
+                        <li><strong>Art (Изображение)</strong> — основное изображение Attire в центре карты.</li>
+                        <li><strong>Defense (Защита / Прочность)</strong> — прочность Attire (<img src="https://cob-game-clean-v-1.vercel.app/web/static/heal.png" class="icon" alt="Def_N"> Def_N_Text или <img src="https://cob-game-clean-v-1.vercel.app/web/static/Shield.png" class="icon" alt="Def_Y"> Def_Y_Text). Количество <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_x.png" class="icon" alt="Damage"> Damage, необходимое для уничтожения. <img src="https://cob-game-clean-v-1.vercel.app/web/static/Shield.png" class="icon" alt="Def_Y"> Def_Y_Text означает активную защиту игрока.</li>
+                        <li><strong>Main Effect (Основной эффект)</strong> — эффект, который применяется при розыгрыше Attire. Может быть активирован 1 раз в ход.</li>
+                        <li><strong>Secondary Effect (Вторичный эффект)</strong> — дополнительный эффект, обычно Chain или Trigger, который можно активировать вручную. Может быть активирован 1 раз в ход.</li>
+                        <li><strong>Особенность:</strong> Attire <span class="highlight">остается в игре</span> после розыгрыша и не сбрасывается в конце хода. <span class="highlight">Каждый эффект Attire может быть активирован один раз в ход</span>. Основной эффект и вторичный могут быть активированы по отдельности в разное время и в любом порядке.</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <!-- Altar -->
+            <h3>⚱️ Altar</h3>
+            <div class="card-anatomy">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <p style="color: var(--text-gray); font-style: italic;">Анатомия алтаря будет добавлена позже</p>
+                </div>
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="color: var(--accent-gold); margin-top: 0;">Описание параметров карты Altar:</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Color (Цвет)</strong> — иконка цвета алтаря в верхнем левом углу. Может определять тип алтаря и его способности.</li>
+                        <li><strong>Name (Название)</strong> — название алтаря в золотой полосе вверху. Уникальное имя Altar.</li>
+                        <li><strong>Type (Тип)</strong> — тип карты под названием. Для алтарей указано "Altar".</li>
+                        <li><strong>Tokens (Soul Tokens)</strong> — количество Soul Tokens, накопленных на Altar. Soul Tokens не сгорают в конце хода.</li>
+                        <li><strong>Art (Изображение)</strong> — основное изображение алтаря в центре карты. Художественное представление алтаря.</li>
+                        <li><strong>Ability 1 (Способность 1)</strong> — первая способность алтаря, доступная 1 раз в ход. Обычно требует Burn (spend Blessing) для получения эффекта.</li>
+                        <li><strong>Ability 2 (Способность 2)</strong> — вторая способность алтаря, альтернатива первой. Также доступна 1 раз в ход.</li>
+                        <li><strong>Особенность:</strong> У каждого игрока <span class="highlight">свой отдельный Altar</span>. Soul Tokens на Altar доступны для покупок вместе с разыгранными картами. Altar остается в игре постоянно.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="card-examples">
+            <h2>📚 Примеры карт разных типов</h2>
+            
+            <!-- Примеры карт в ряд -->
+            <div class="card-types-grid">
+                <!-- Disciple -->
+                <div class="card-type-example">
+                    <h4 style="color: var(--accent-blue);">🧙 Disciple</h4>
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Warscar_Herald.png" alt="Warscar Herald" style="border: 2px solid var(--accent-blue);" onerror="this.src='https://cob-game-clean-v-1.vercel.app/web/static/Forsaken_Wayfarer.png'; this.alt='Forsaken Wayfarer';">
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-gray);">Warscar Herald</p>
+                </div>
+                
+                <!-- Monster -->
+                <div class="card-type-example">
+                    <h4 style="color: var(--accent-red);">👹 Monster</h4>
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Phoenix.png" alt="Phoenix" style="border: 2px solid var(--accent-red);" onerror="this.style.display='none';">
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-gray);">Phoenix</p>
+                </div>
+                
+                <!-- Event (Effect) -->
+                <div class="card-type-example">
+                    <h4 style="color: var(--accent-gold);">✨ Event</h4>
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Cursebound_Grace.png" alt="Cursebound Grace" style="border: 2px solid var(--accent-gold);" onerror="this.src='https://cob-game-clean-v-1.vercel.app/web/static/Grave_Benediction.png'; this.alt='Grave Benediction';">
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-gray);">Cursebound Grace</p>
+                </div>
+                
+                <!-- Consumable -->
+                <div class="card-type-example">
+                    <h4 style="color: var(--accent-green);">🧪 Consumable</h4>
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Healing_Potion.png" alt="Healing Potion" style="border: 2px solid var(--accent-green);" onerror="this.src='https://cob-game-clean-v-1.vercel.app/web/static/Speed_Potion.png'; this.alt='Speed Potion';">
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-gray);">Healing Potion</p>
+                </div>
+            </div>
+            
+            <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                <h3 style="color: var(--accent-gold); margin-top: 0;">Описание типов карт:</h3>
+                
+                <h4 style="color: var(--accent-blue); margin-top: 15px;">🧙 Disciple</h4>
+                <p>Карты, которые можно купить в Торговом ряду. После розыгрыша уходят в сброс в конце хода.</p>
+                
+                <h4 style="color: var(--accent-red); margin-top: 15px;">👹 Monster (Монстр)</h4>
+                <p>Отдельная колода монстров. Всегда один открытый монстр. Убив монстра уроном, игрок немедленно получает награду.</p>
+                
+                <h4 style="color: var(--accent-gold); margin-top: 15px;">✨ Event</h4>
+                <p>Специальные карты, которые перемешиваются в колоду Торгового ряда. <span class="highlight">Эвенты не покупаются</span> — при появлении эвента на рынке (когда он заменяет другую карту) игрок, чей ход, должен решить: применить эффект эвента или отказаться. Эффект применяется для обоих игроков последовательно (каждый решает отдельно). После обработки эвент отправляется в Trash Trade Row.</p>
+                
+                <h4 style="color: var(--accent-green); margin-top: 15px;">🧪 Consumable</h4>
+                <p>При покупке можно применить эффект немедленно или положить в игровую зону (только один расходник в зоне). Можно сыграть в любое время хода. Обычно имеют простые эффекты (лечение, урон, добор карт).</p>
+                
+                <h4 style="color: var(--accent-purple); margin-top: 15px;">⚱️ Altar (Алтарь душ)</h4>
+                <p>Специальный тип карт, который остается в игре постоянно. <span class="highlight">У каждого игрока свой отдельный алтарь</span>. Алтарь имеет две способности на выбор, доступные 1 раз в ход. Обычно требует сжечь души (Burn) для получения эффекта. Души, накопленные на алтаре, не сгорают в конце хода и доступны для покупок в сумме с разыгранными картами.</p>
+            </div>
+
+        </section>
+
+        <section id="board-layout">
+            <h2>🎯 Схема игрового поля</h2>
+
+            <div class="board-layout">
+                <h3>Визуальная схема расположения на столе</h3>
+                
+                <!-- Центральная зона -->
+                <div style="background: rgba(0, 0, 0, 0.5); padding: 30px; border-radius: 15px; margin-bottom: 30px; overflow-x: auto;">
+                    <h4 style="color: var(--accent-gold); margin-top: 0; margin-bottom: 20px;">Центральная зона (общая для всех игроков)</h4>
+                    
+                    <!-- Контейнер для карт рынка: CSS Grid для строгого выравнивания -->
+                    <div style="display: grid; grid-template-columns: 100px 100px 100px 100px 100px; grid-template-rows: auto auto auto; gap: 2px 5px; margin-bottom: 20px; width: fit-content;">
+                        <!-- Подписи для первого ряда (row 1) -->
+                        <div style="grid-column: 1; grid-row: 1; text-align: center;">
+                            <p style="margin: 0; font-size: 0.7rem; color: var(--text-gray); font-weight: bold; line-height: 1.2; height: 1.2em;">Колода Торгового ряда</p>
+                            <p style="margin: 0; font-size: 0.65rem; color: var(--text-gray); line-height: 1.2; height: 1.2em;">Disciple, Attire</p>
+                        </div>
+                        <div style="grid-column: 2; grid-row: 1; text-align: center;">
+                            <p style="margin: 0; font-size: 0.7rem; color: var(--text-gray); font-weight: bold; line-height: 1.2; height: 1.2em;">1я карта</p>
+                        </div>
+                        <div style="grid-column: 3; grid-row: 1; text-align: center;">
+                            <p style="margin: 0; font-size: 0.7rem; color: var(--text-gray); font-weight: bold; line-height: 1.2; height: 1.2em;">2я карта</p>
+                        </div>
+                        <div style="grid-column: 4; grid-row: 1; text-align: center;">
+                            <p style="margin: 0; font-size: 0.7rem; color: var(--text-gray); font-weight: bold; line-height: 1.2; height: 1.2em;">3я карта</p>
+                        </div>
+                        <div style="grid-column: 5; grid-row: 1; text-align: center;">
+                            <p style="margin: 0; font-size: 0.7rem; color: var(--text-gray); font-weight: bold; line-height: 1.2; height: 1.2em;">Зона треша</p>
+                            <p style="margin: 0; font-size: 0.65rem; color: var(--text-gray); line-height: 1.2; height: 1.2em;">Trash Trade Row</p>
+                        </div>
+                        
+                        <!-- Карты первого ряда (row 2) - все выровнены -->
+                        <div style="grid-column: 1; grid-row: 2; text-align: center;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/cardBack.png" alt="Колода Торгового ряда" style="width: 100px; height: 140px; border-radius: 8px; border: 2px solid var(--accent-blue); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); display: block; margin: 0 auto;">
+                        </div>
+                        <div style="grid-column: 2; grid-row: 2; text-align: center;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/Icebind_Duelist.png" alt="1я карта" style="width: 100px; height: 140px; border-radius: 6px; border: 2px solid var(--accent-blue); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); object-fit: cover; display: block; margin: 0 auto;">
+                        </div>
+                        <div style="grid-column: 3; grid-row: 2; text-align: center;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/Sanguine_Redeemer.png" alt="2я карта" style="width: 100px; height: 140px; border-radius: 6px; border: 2px solid var(--accent-red); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); object-fit: cover; display: block; margin: 0 auto;">
+                        </div>
+                        <div style="grid-column: 4; grid-row: 2; text-align: center;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/Venomlash_Duelist.png" alt="3я карта" style="width: 100px; height: 140px; border-radius: 6px; border: 2px solid var(--accent-green); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); object-fit: cover; display: block; margin: 0 auto;">
+                        </div>
+                        <div style="grid-column: 5; grid-row: 2; text-align: center;">
+                            <div style="width: 100px; height: 140px; background: rgba(0, 0, 0, 0.6); border-radius: 6px; border: 2px dashed var(--accent-blue); display: flex; align-items: center; justify-content: center; color: var(--text-gray); font-size: 0.65rem; text-align: center; padding: 5px; margin: 0 auto;">Trash<br>Trade<br>Row</div>
+                        </div>
+                        
+                        <!-- Карты второго ряда (row 3) -->
+                        <div style="grid-column: 2; grid-row: 3; text-align: center;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/Forsaken_Wayfarer.png" alt="4я карта" style="width: 100px; height: 140px; border-radius: 6px; border: 2px solid #95a5a6; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); object-fit: cover; display: block; margin: 0 auto;">
+                            <p style="margin-top: 3px; font-size: 0.7rem; color: var(--text-gray); font-weight: bold; line-height: 1.2; height: 1.2em;">4я карта</p>
+                        </div>
+                        <div style="grid-column: 3; grid-row: 3; text-align: center;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/Saint_s_Mace.png" alt="5я карта" style="width: 100px; height: 140px; border-radius: 6px; border: 2px solid var(--accent-purple); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); object-fit: cover; display: block; margin: 0 auto;">
+                            <p style="margin-top: 3px; font-size: 0.7rem; color: var(--text-gray); font-weight: bold; line-height: 1.2; height: 1.2em;">5я карта</p>
+                        </div>
+                        <div style="grid-column: 4; grid-row: 3; text-align: center;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/Healing_Potion.png" alt="6я карта" style="width: 100px; height: 140px; border-radius: 6px; border: 2px solid var(--accent-gold); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); object-fit: cover; display: block; margin: 0 auto;">
+                            <p style="margin-top: 3px; font-size: 0.7rem; color: var(--text-gray); font-weight: bold; line-height: 1.2; height: 1.2em;">6я карта</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Третий ряд: Колода монстров - открытый монстр - пропуск - пропуск - Треш зона монстров (выровнена с Trash Trade Row) -->
+                    <div style="display: flex; align-items: flex-start; gap: 5px; margin-bottom: 20px; flex-wrap: nowrap; min-width: fit-content;">
+                        <!-- Колода Монстров -->
+                        <div style="text-align: center; flex-shrink: 0; width: 100px;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/monsterBack.png" alt="Колода Монстров" style="width: 100px; height: 140px; border-radius: 8px; border: 2px solid var(--accent-red); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); display: block; margin: 0 auto;" onerror="this.src='https://cob-game-clean-v-1.vercel.app/web/static/cardBack.png';">
+                            <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-gray); font-weight: bold; line-height: 1.2;">Колода Монстров</p>
+                            <p style="margin-top: 2px; font-size: 0.7rem; color: var(--text-gray); line-height: 1.2;">Monster Deck</p>
+                        </div>
+                        
+                        <!-- Открытый Монстр -->
+                        <div style="text-align: center; flex-shrink: 0; width: 100px;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/Phoenix.png" alt="Открытый Монстр" style="width: 100px; height: 140px; border-radius: 8px; border: 3px solid var(--accent-red); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); object-fit: cover; display: block; margin: 0 auto;">
+                            <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-gray); font-weight: bold; line-height: 1.2;">Открытый Монстр</p>
+                            <p style="margin-top: 2px; font-size: 0.7rem; color: var(--text-gray); line-height: 1.2;">Open Monster</p>
+                        </div>
+                        
+                        <!-- Пропуск для выравнивания с картами рынка (4я и 5я карты) -->
+                        <div style="width: 115px; flex-shrink: 0;"></div>
+                        
+                        <!-- Пропуск для выравнивания с 6й картой рынка -->
+                        <div style="width: 115px; flex-shrink: 0;"></div>
+                        
+                        <!-- Треш зона монстров (выровнена с Trash Trade Row) -->
+                        <div style="text-align: center; flex-shrink: 0; width: 100px;">
+                            <div style="width: 100px; height: 140px; background: rgba(139, 0, 0, 0.6); border-radius: 8px; border: 2px dashed var(--accent-red); display: flex; align-items: center; justify-content: center; color: var(--text-gray); font-size: 0.65rem; text-align: center; padding: 5px; margin: 0 auto;">Убитые<br>Монстры</div>
+                            <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-gray); font-weight: bold; line-height: 1.2;">Треш зона монстров</p>
+                            <p style="margin-top: 2px; font-size: 0.7rem; color: var(--text-gray); line-height: 1.2;">Defeated Monsters</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Зона игрока -->
+                <div style="background: rgba(0, 0, 0, 0.5); padding: 30px; border-radius: 15px;">
+                    <h4 style="color: var(--accent-gold); margin-top: 0; margin-bottom: 20px;">Зона игрока</h4>
+                    
+                    <div style="display: flex; align-items: flex-start; gap: 5px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <!-- Колода игрока -->
+                        <div style="text-align: center;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/cardBack.png" alt="Колода игрока" style="width: 90px; height: 126px; border-radius: 8px; border: 2px solid var(--accent-blue); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);">
+                            <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-gray); font-weight: bold;">Колода</p>
+                            <p style="margin-top: 2px; font-size: 0.7rem; color: var(--text-gray);">Личная колода</p>
+                        </div>
+                        
+                        <!-- Зона "В игре" -->
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap; background: rgba(78, 205, 196, 0.1); padding: 15px; border-radius: 8px; border: 2px dashed var(--accent-blue); min-height: 160px;">
+                                <!-- Снаряжение -->
+                                <div style="text-align: center;">
+                                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Saint_s_Mace.png" alt="Attire" style="width: 90px; height: 126px; border-radius: 6px; border: 2px solid var(--accent-purple); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); object-fit: cover;">
+                                    <p style="margin-top: 3px; font-size: 0.65rem; color: var(--text-gray); font-weight: bold;">Attire</p>
+                                    <p style="margin-top: 1px; font-size: 0.6rem; color: var(--text-gray);">Снаряжение</p>
+                                </div>
+                                <!-- Карты хода -->
+                                <div style="text-align: center;">
+                                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Icebind_Duelist.png" alt="Разыгранная карта" style="width: 90px; height: 126px; border-radius: 6px; border: 2px solid var(--accent-blue); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); object-fit: cover;">
+                                    <p style="margin-top: 3px; font-size: 0.65rem; color: var(--text-gray); font-weight: bold;">Disciple</p>
+                                    <p style="margin-top: 1px; font-size: 0.6rem; color: var(--text-gray);">Разыгранная</p>
+                                </div>
+                                <div style="text-align: center;">
+                                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Sanguine_Redeemer.png" alt="Разыгранная карта" style="width: 90px; height: 126px; border-radius: 6px; border: 2px solid var(--accent-red); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); object-fit: cover;">
+                                    <p style="margin-top: 3px; font-size: 0.65rem; color: var(--text-gray); font-weight: bold;">Disciple</p>
+                                    <p style="margin-top: 1px; font-size: 0.6rem; color: var(--text-gray);">Разыгранная</p>
+                                </div>
+                            </div>
+                            <p style="margin-top: 8px; font-size: 0.9rem; color: var(--accent-blue); font-weight: bold; text-align: center;">Зона "В игре"</p>
+                            <p style="margin-top: 4px; font-size: 0.75rem; color: var(--text-gray); font-style: italic; text-align: center;">Снаряжение остается, карты хода сбрасываются в конце хода</p>
+                        </div>
+                        
+                        <!-- Алтарь игрока -->
+                        <div style="text-align: center;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/Altar_of_Souls.png" alt="Алтарь душ" style="width: 90px; height: 126px; border-radius: 8px; border: 3px solid var(--accent-purple); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); object-fit: cover;">
+                            <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-gray); font-weight: bold;">Алтарь душ</p>
+                            <p style="margin-top: 2px; font-size: 0.7rem; color: var(--text-gray);">(у каждого свой)</p>
+                        </div>
+                        
+                        <!-- Сброс -->
+                        <div style="text-align: center;">
+                            <div style="width: 90px; height: 126px; background: rgba(0, 0, 0, 0.6); border-radius: 8px; border: 2px dashed var(--accent-blue); display: flex; align-items: center; justify-content: center; color: var(--text-gray); font-size: 0.7rem; text-align: center; padding: 5px;">Сброс<br>(пусто)</div>
+                            <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-gray); font-weight: bold;">Сброс</p>
+                            <p style="margin-top: 2px; font-size: 0.7rem; color: var(--text-gray);">Карты лицом вверх</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Планшет героя и Жизни -->
+                    <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; align-items: flex-start;">
+                        <!-- Планшет героя -->
+                        <div style="text-align: center;">
+                            <div style="width: 120px; height: 160px; background: rgba(139, 69, 19, 0.3); border-radius: 8px; border: 2px solid var(--accent-gold); display: flex; align-items: center; justify-content: center; color: var(--text-gray); font-size: 0.8rem; padding: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
+                                Планшет<br>Героя
+                            </div>
+                            <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-gray); font-weight: bold;">Планшет героя</p>
+                        </div>
+                        <!-- Жизни -->
+                        <div style="background: rgba(255, 107, 107, 0.2); padding: 15px; border-radius: 8px; border: 2px solid var(--accent-red); min-width: 150px;">
+                            <h5 style="color: var(--accent-red); margin-top: 0; margin-bottom: 10px;">💚 HP</h5>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--accent-red);">50</div>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 20px; font-size: 0.85rem; color: var(--text-gray); font-style: italic;">
+                        <strong>Примечание:</strong> У каждого игрока свой отдельный Алтарь душ, расположенный в его личной зоне. Алтарь не находится в общей зоне стола.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="effects">
+            <h2>✨ Описание свойств карт</h2>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <img src="https://cob-game-clean-v-1.vercel.app/web/static/Refer_card1.png" alt="Справочная карта эффектов" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
+            </div>
+
+            <h3>Боевые эффекты</h3>
+            <div class="effect-grid">
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_x.png" class="icon" alt="Blessing"> {Blessing X}</strong>
+                    <p>Получите X Blessing. Blessing используется для покупки карт и активации способностей. Unspent Blessing сгорает в конце хода.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/power_x.png" class="icon" alt="Damage"> {Damage X}</strong>
+                    <p>Получите X Damage. Damage можно применить к противнику, картам Attire противника или Monsters. Damage накапливается и может быть распределён в любое время хода.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/stun_x.png" class="icon" alt="Stun"> {Stun X}</strong>
+                    <p>Противник сбрасывает X карт из руки в сброс.</p>
+                </div>
+
+            </div>
+
+            <h3>Исцеление</h3>
+            <div class="effect-grid">
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/heal_x.png" class="icon" alt="Heal"> {Heal X}</strong>
+                    <p>Восстановите X HP (можно превысить 50, но победа при 100+).</p>
+                </div>
+
+            </div>
+
+            <h3>Манипуляции с картами</h3>
+            <div class="effect-grid">
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/discard_x.png" class="icon" alt="Discard"> {Discard X}</strong>
+                    <p>Сбросьте X карт из руки в сброс. Может быть частью стоимости (TO эффекта).</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/trash_1.png" class="icon" alt="Trash"> {Trash X}</strong>
+                    <p>Изгнайте до X карт из руки или сброса (уберите из игры навсегда).</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/ready_1.png" class="icon" alt="Ready"> {Ready X} [Of cost N or less/more]</strong>
+                    <p>Возьмите X карт из сброса в руку. Может иметь условие по стоимости или цвету (например, "Ready 1 Blue card").</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/draw_X.png" class="icon" alt="Draw"> {Draw X}</strong>
+                    <p>Возьмите X карт из колоды (перемешайте сброс в колоду, если нужно).</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/TrashTradeRow.png" class="icon" alt="Trash Trade Row"> {Trash Trade Row X} [of cost N or less]</strong>
+                    <p>Изгнайте до X карт из Торгового ряда. Уничтоженные карты отправляются в стопку Trash Trade Row. Немедленно восполните слоты из колоды Торгового ряда.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/Destroy.png" class="icon" alt="Destroy"> {Destroy}</strong>
+                    <p>Уничтожьте карту Снаряжения противника в его зоне. Можно уничтожить только карты без активной защиты (<img src="https://cob-game-clean-v-1.vercel.app/web/static/heal.png" class="icon" alt="Def_N"> Def_N_Text), если есть карты с активной защитой (<img src="https://cob-game-clean-v-1.vercel.app/web/static/Shield.png" class="icon" alt="Def_Y"> Def_Y_Text).</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/steal_X.png" class="icon" alt="Steal"> {Steal}</strong>
+                    <p>Украдите верхнюю карту из колоды противника в свой сброс.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/shuffle.png" class="icon" alt="Shuffle"> {Shuffle}</strong>
+                    <p>Перемешайте сброс в колоду.</p>
+                </div>
+            </div>
+
+            <h3>Информационные эффекты</h3>
+            <div class="effect-grid">
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/spy_X.png" class="icon" alt="Spy"> {Spy X}</strong>
+                    <p>Посмотрите верхние X карт колоды противника. Вы можете сбросить 1 карту. Остальные возвращаются в том же порядке.</p>
+                </div>
+            </div>
+
+            <h3>Специальные эффекты</h3>
+            <div class="effect-grid">
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/burn_X.png" class="icon" alt="Burn"> {Burn X} <img src="https://cob-game-clean-v-1.vercel.app/web/static/then_1.png" class="icon" alt="TO"> {effect}</strong>
+                    <p>Spend X Blessing, чтобы получить эффект после "TO". Если не хватает Blessing, эффект не применяется.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/sacrifice_x.png" class="icon" alt="Sacrifice"> {Sacrifice X} <img src="https://cob-game-clean-v-1.vercel.app/web/static/then_1.png" class="icon" alt="TO"> {effect}</strong>
+                    <p>Sacrifice X HP, чтобы получить эффект после "TO". Если HP недостаточно, эффект не применяется.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/trash_this.png" class="icon" alt="Trash This"> {Trash_this}</strong>
+                    <p>Изгнайте эту карту из игры, чтобы получить указанный далее эффект. Карта удаляется навсегда (не попадает в сброс).</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/defeat_monster.png" class="icon" alt="Defeat Monster"> {Defeat Monster} [of Power N or less]</strong>
+                    <p>Убейте монстра силой N или меньше без траты урона. Не учитывается лимит "1 монстр за ход".</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="triggers">
+            <h2>⚡ Триггеры в игре</h2>
+
+            <div class="effect-grid">
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/b_chain.png" class="icon" alt="Chain"> Chain</strong>
+                    <p>Активируется, если у вас есть <span class="highlight">хотя бы одна другая карта</span> соответствующего цвета в зоне "В игре" (не сама карта с Chain эффектом).</p>
+                    <p>Цвета: <img src="https://cob-game-clean-v-1.vercel.app/web/static/b_chain.png" class="icon" alt="Blue"> B (синий), <img src="https://cob-game-clean-v-1.vercel.app/web/static/r_chain.png" class="icon" alt="Red"> R (красный), <img src="https://cob-game-clean-v-1.vercel.app/web/static/g_chain.png" class="icon" alt="Green"> G (зеленый), <img src="https://cob-game-clean-v-1.vercel.app/web/static/w_chain.png" class="icon" alt="White"> W (белый).</p>
+                    <p>Chain эффект можно активировать вручную, объявив об активации.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/trash_this.png" class="icon" alt="Trash This"> Trash_this</strong>
+                    <p>Особый триггер, позволяющий удалить карту из игры навсегда, чтобы активировать указанный дополнительный эффект.</p>
+                    <p>Использовать нужно обдуманно: карта теряется, но игрок получает мощный результат.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/trigger.png" class="icon" alt="Trigger"> Trigger</strong>
+                    <p>Универсальный триггер, который активируется при наступлении указанного условия.</p>
+                    <p>Такие эффекты можно разыгрывать немедленно, даже во время хода соперника.</p>
+                    <p>При розыгрыше карты игрок кладет ее в свою зону "В Игре". Эффект триггера разыгрывается мгновенно.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong><img src="https://cob-game-clean-v-1.vercel.app/web/static/If_discrded_on_your_turn.png" class="icon" alt="If Discarded"> If_discarded_on_your_turn</strong>
+                    <p>Триггер, который срабатывает, когда карта сброшена в ваш ход.</p>
+                    <p>Позволяет получить дополнительный эффект при сбросе карты.</p>
+                </div>
+            </div>
+
+            <h3>Структуры эффектов</h3>
+            <div class="rule-box">
+                <h4>OR {effect1} OR {effect2}</h4>
+                <p>Выберите один из двух эффектов. Применяется только выбранный эффект.</p>
+            </div>
+
+            <div class="rule-box">
+                <h4>{cost} <img src="https://cob-game-clean-v-1.vercel.app/web/static/then_1.png" class="icon" alt="TO"> {effect}</h4>
+                <p>Заплатите стоимость, чтобы получить эффект. Стоимость может быть: {Discard X}, {Burn X}, {Sacrifice X}, {Trash_this} и т.д.</p>
+            </div>
+
+            <div class="rule-box">
+                <h4>OR в стоимости: {effect1} OR {cost} <img src="https://cob-game-clean-v-1.vercel.app/web/static/then_1.png" class="icon" alt="TO"> {effect2}</h4>
+                <p>Выберите: применить простой эффект или заплатить стоимость для получения другого эффекта.</p>
+            </div>
+
+            <div class="rule-box">
+                <h4>OR в эффекте: {cost} <img src="https://cob-game-clean-v-1.vercel.app/web/static/then_1.png" class="icon" alt="TO"> {effect1} OR {effect2}</h4>
+                <p>Заплатите стоимость и выберите один из двух эффектов.</p>
+            </div>
+        </section>
+
+        <section id="altar">
+            <h2>⚱️ Алтарь душ</h2>
+
+            <div class="rule-box">
+                <h3>Важно: у каждого игрока свой алтарь</h3>
+                <p><span class="highlight">У каждого игрока есть свой отдельный Алтарь душ</span>. Это не общий алтарь — каждый игрок управляет только своим алтарем и использует только свои токены.</p>
+            </div>
+
+            <div class="rule-box">
+                <h3>Активация алтаря</h3>
+                <ul>
+                    <li>Каждый игрок может активировать <span class="highlight">свой алтарь 1 раз в ход</span>, объявив об активации и выбрав одну из двух способностей.</li>
+                    <li>Доступны <span class="highlight">2 способности на выбор</span>:
+                        <ol>
+                            <li><img src="https://cob-game-clean-v-1.vercel.app/web/static/burn_3.png" class="icon" alt="Burn 3"> <strong>{Burn 3}</strong> <img src="https://cob-game-clean-v-1.vercel.app/web/static/then_1.png" class="icon" alt="TO"> <img src="https://cob-game-clean-v-1.vercel.app/web/static/trash_1.png" class="icon" alt="Trash 1"> <strong>{Trash 1}</strong> — Потратить 3 души и уничтожить 1 карту из торгового ряда (или из руки/сброса игрока).</li>
+                            <li><img src="https://cob-game-clean-v-1.vercel.app/web/static/burn_1.png" class="icon" alt="Burn 1"> <strong>{Burn 1}</strong> <img src="https://cob-game-clean-v-1.vercel.app/web/static/then_1.png" class="icon" alt="TO"> <strong>Put 1 Soul Token to the Altar of Souls</strong> — Потратить <img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_1.png" class="icon" alt="1 Душа"> 1 душу и положить 1 Токен души на свой алтарь.</li>
+                        </ol>
+                    </li>
+                    <li>Токены на алтаре каждого игрока <span class="highlight">не сгорают</span> в конце хода и могут быть использованы только этим игроком для покупок.</li>
+                    <li>Токены с алтаря тратятся только при недостатке обычных Душ (сначала тратятся Души хода, затем токены с алтаря).</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="monsters">
+            <h2>👹 Монстры</h2>
+
+            <div class="rule-box">
+                <h3>Особенности монстров</h3>
+                <ul>
+                    <li>Отдельная колода, всегда <span class="highlight">1 открытый монстр</span>.</li>
+                    <li>Первый монстр открывается случайно из перемешанной колоды.</li>
+                    <li>Убив монстра уроном, <span class="highlight">немедленно</span> получите награду с карты, сбросьте монстра и откройте нового.</li>
+                    <li><span class="highlight">Лимит убийства монстров:</span> За <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_x.png" class="icon" alt="Урон"> урон можно убить <span class="highlight">не более одного монстра в ход</span>.</li>
+                    <li>Карты со свойством <strong>{Defeat Monster}</strong> позволяют убивать монстров <span class="highlight">без ограничений</span> (не тратя урон и не учитывая лимит "1 монстр за ход").</li>
+                    <li>Монстры могут иметь награды с выбором (<strong>OR</strong>), в этом случае игрок выбирает один из вариантов.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="victory">
+            <h2>🏆 Завершение игры</h2>
+
+            <p>Игра завершается <span class="highlight">немедленно</span>, если выполняется одно из условий:</p>
+
+            <div class="effect-grid">
+                <div class="effect-item">
+                    <strong>Поражение по HP</strong>
+                    <p>У игрока <span class="highlight">0 или меньше Жизненной Силы</span> — он проигрывает.</p>
+                </div>
+
+
+                <div class="effect-item">
+                    <strong>Победа по HP</strong>
+                    <p>У игрока <span class="highlight">100 или больше Жизненной Силы</span> — он немедленно побеждает.</p>
+                </div>
+
+                <div class="effect-item">
+                    <strong>Победа по колоде</strong>
+                    <p><span class="highlight">Колода Торгового ряда пуста</span> при обновлении — побеждает игрок с наибольшей Жизненной Силой. При равенстве — ничья.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="variants">
+            <h2>🎲 Варианты игры</h2>
+
+            <div class="rule-box">
+                <h3>Торги жизнями за первый ход</h3>
+                <p>Вместо случайного выбора первого игрока проводится аукцион:</p>
+                <ol>
+                    <li>Игроки по очереди делают ставки, указывая количество Жизненной Силы, которое готовы потратить.</li>
+                    <li>Ставка должна быть не меньше 1 и выше предыдущей.</li>
+                    <li>Торги продолжаются до тех пор, пока все кроме одного не спасуют.</li>
+                    <li>Победитель теряет ставку в Жизненной Силе и начинает игру первым.</li>
+                </ol>
+            </div>
+
+            <h3>💀 Кровотечение и Яд</h3>
+            <div class="rule-box">
+                <h4><img src="https://cob-game-clean-v-1.vercel.app/web/static/bleed_x.png" class="icon" alt="Bleed"> Кровотечение (Bleed)</h4>
+                <p>В варианте игры с Кровотечением:</p>
+                <ul>
+                    <li>В начале хода игрок теряет <span class="highlight">1 Жизненную Силу</span> за каждый жетон Кровотечения.</li>
+                    <li>Затем сбрасывает <span class="highlight">1 жетон</span> Кровотечения (количество уменьшается на 1).</li>
+                    <li>Эффект <strong>{Bleed X}</strong> накладывает X жетонов Кровотечения на противника.</li>
+                    <li>Эффект <strong>{Heal_bleed X}</strong> убирает до X стаков Кровотечения с себя.</li>
+                </ul>
+            </div>
+
+            <div class="rule-box">
+                <h4><img src="https://cob-game-clean-v-1.vercel.app/web/static/poison_x.png" class="icon" alt="Poison"> Яд (Poison)</h4>
+                <p>В варианте игры с Ядом:</p>
+                <ul>
+                    <li>В начале хода игрок теряет HP равное количеству жетонов Яда.</li>
+                    <li>При <span class="highlight">20 или больше</span> жетонах Яда игрок <span class="highlight">немедленно проигрывает</span>.</li>
+                    <li>Эффект <strong>{Poison X}</strong> накладывает X жетонов Яда на противника.</li>
+                    <li>Эффект <strong>{Heal_poison X}</strong> убирает до X стаков Яда с себя.</li>
+                    <li>Эффект <strong>{Remove_poison X}</strong> убирает до X стаков Яда с противника.</li>
+                </ul>
+                <p><strong>Условие поражения:</strong> У игрока <span class="highlight">20 или больше жетонов Яда</span> — он проигрывает.</p>
+            </div>
+
+            <h3>📜 Эвенты</h3>
+            <div class="rule-box">
+                <h4>Подготовка эвентов</h4>
+                <ol>
+                    <li>Перемешайте колоду эвентов.</li>
+                    <li>Возьмите <span class="highlight">6 случайных карт</span> эвентов и <span class="highlight">замешайте их в колоду Торгового ряда</span>.</li>
+                    <li>Остальные эвенты уберите в коробку (не используются в этой игре).</li>
+                </ol>
+                <h4>Использование эвентов</h4>
+                <ul>
+                    <li>Эвенты — специальные карты, которые замешиваются в колоду Торгового ряда.</li>
+                    <li>Эвенты могут выйти <span class="highlight">вместо купленной или стрешенной карты</span>, в этом случае сразу разыгрываются.</li>
+                    <li>Эффект работает <span class="highlight">не только на активного игрока</span>, чаще всего на всех игроков, иногда по-разному.</li>
+                    <li>Карта не попадает в колоду игрока.</li>
+                </ul>
+            </div>
+
+            <!-- Анатомия Event -->
+            <h4>✨ Анатомия карты Event</h4>
+            <div class="card-anatomy">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Event Anatomy.png" alt="Анатомия карты Event" style="width: 100%; max-width: 600px; border-radius: 10px; border: 2px solid var(--accent-gold); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div style="display: none; width: 100%; max-width: 600px; height: 400px; background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%); border-radius: 10px; border: 2px solid var(--accent-gold); margin: 0 auto; display: flex; align-items: center; justify-content: center; color: var(--text-gray);">
+                        <p>Event Anatomy.png будет добавлена позже</p>
+                    </div>
+                </div>
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="color: var(--accent-gold); margin-top: 0;">Описание параметров карты Event:</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Color (Цвет)</strong> — иконка цвета эвента в верхнем левом углу. Может влиять на условия применения эффекта.</li>
+                        <li><strong>Name (Название)</strong> — название эвента в золотой полосе вверху. Уникальное имя события.</li>
+                        <li><strong>Type (Тип)</strong> — тип карты под названием. Для эвентов указано "Effect" или "Event".</li>
+                        <li><strong>Cost (Стоимость)</strong> — обычно 0 для эвентов. Эвенты не покупаются, а применяются при появлении в Торговом ряду.</li>
+                        <li><strong>Art (Изображение)</strong> — основное изображение события в центре карты. Художественное представление события.</li>
+                        <li><strong>Effect (Эффект)</strong> — эффект события, который применяется немедленно при появлении эвента вместо купленной или стрешенной карты. Обычно влияет на всех игроков или имеет особые условия, иногда по-разному для разных игроков.</li>
+                        <li><strong>Особенность:</strong> Эвенты перемешиваются в колоду Торгового ряда в начале игры. При появлении эвента вместо карты эффект применяется сразу, карта не попадает в колоду игрока.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>⚗️ Расходники</h3>
+            <div class="rule-box">
+                <h4>Особенности расходников</h4>
+                <ul>
+                    <li>Расходники — особый тип карт с уникальными механиками.</li>
+                    <li>При покупке расходника игрок может либо <span class="highlight">применить эффект немедленно</span>, либо <span class="highlight">положить расходник в свою игровую зону</span> рядом со снаряжением.</li>
+                    <li>В зоне игрока может быть <span class="highlight">только одна карта расходника</span>.</li>
+                    <li>Игрок может сыграть расходник из своей зоны <span class="highlight">в любое время</span> во время своего хода.</li>
+                    <li>Если игрок хочет положить новый расходник в зону, а там уже лежит предыдущий, он либо должен быть <span class="highlight">разыгран</span>, либо <span class="highlight">сброшен</span>.</li>
+                    <li>После использования расходник обычно удаляется из игры.</li>
+                </ul>
+            </div>
+
+            <!-- Анатомия Consumable -->
+            <h4>🧪 Анатомия карты Consumable</h4>
+            <div class="card-anatomy">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Consumable Anatomy.png" alt="Анатомия карты Consumable" style="width: 100%; max-width: 600px; border-radius: 10px; border: 2px solid var(--accent-green); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div style="display: none; width: 100%; max-width: 600px; height: 400px; background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%); border-radius: 10px; border: 2px solid var(--accent-green); margin: 0 auto; display: flex; align-items: center; justify-content: center; color: var(--text-gray);">
+                        <p>Consumable Anatomy.png будет добавлена позже</p>
+                    </div>
+                </div>
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="color: var(--accent-gold); margin-top: 0;">Описание параметров карты Consumable:</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Color (Цвет)</strong> — иконка цвета расходника в верхнем левом углу. Может влиять на совместимость с эффектами.</li>
+                        <li><strong>Name (Название)</strong> — название расходника в золотой полосе вверху. Обычно указывает на тип предмета (зелье, бомба и т.д.).</li>
+                        <li><strong>Type (Тип)</strong> — тип карты под названием. Для расходников указано "Consumable".</li>
+                        <li><strong>Cost (Стоимость)</strong> — стоимость карты в кружке в правом верхнем углу. Количество Душ для покупки из Торгового ряда.</li>
+                        <li><strong>Art (Изображение)</strong> — основное изображение расходника в центре карты. Визуальное представление предмета.</li>
+                        <li><strong>Effect (Эффект)</strong> — эффект расходника, который применяется при использовании. Обычно простой эффект (лечение, урон, добор карт).</li>
+                        <li><strong>Особенность:</strong> При покупке расходника игрок может либо <span class="highlight">применить эффект немедленно</span>, либо <span class="highlight">положить расходник в свою игровую зону</span> рядом со снаряжением. В зоне игрока может быть <span class="highlight">только одна карта расходника</span>. Игрок может сыграть ее в любое время во время своего хода. Если игрок хочет положить новый расходник, а там лежит предыдущий, он либо должен быть разыгран, либо сброшен. После использования расходник обычно удаляется из игры.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🦸 Асимметричные герои</h3>
+            <div class="rule-box">
+                <h4>Игра с героями</h4>
+                <ul>
+                    <li>Каждый игрок выбирает одного героя и берет его компоненты.</li>
+                    <li>Стартовая колода игрока заменяется на колоду героя.</li>
+                    <li>Герои могут иметь уникальные способности и правила, которые действуют на протяжении всей игры.</li>
+                    <li>Каждый герой имеет свою уникальную механику и стиль игры.</li>
+                </ul>
+            </div>
+
+            <!-- Анатомия Hero Board -->
+            <h4>👤 Анатомия Hero Board</h4>
+            <div class="card-anatomy">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Hero Board Anatomy.png" alt="Анатомия Hero Board" style="width: 100%; max-width: 600px; border-radius: 10px; border: 2px solid var(--accent-gold); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div style="display: none; width: 100%; max-width: 600px; height: 400px; background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%); border-radius: 10px; border: 2px solid var(--accent-gold); margin: 0 auto; display: flex; align-items: center; justify-content: center; color: var(--text-gray);">
+                        <p>Hero Board Anatomy.png будет добавлена позже</p>
+                    </div>
+                </div>
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="color: var(--accent-gold); margin-top: 0;">Описание параметров Hero Board:</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Hero Name (Имя героя)</strong> — название героя в верхней части доски. Уникальное имя для идентификации асимметричного героя.</li>
+                        <li><strong>Hero Art (Изображение героя)</strong> — основное изображение героя в центре доски. Художественное представление персонажа.</li>
+                        <li><strong>Starting HP (Начальное HP)</strong> — начальное количество жизненной силы героя. Может отличаться от стандартных 50.</li>
+                        <li><strong>Starting Deck (Стартовая колода)</strong> — описание или список карт, которые получает герой в начале игры. Может отличаться от стандартной колоды.</li>
+                        <li><strong>Special Ability (Особенная способность)</strong> — уникальная способность героя, доступная с начала игры. Определяет асимметричность героя.</li>
+                        <li><strong>Passive Effect (Пассивный эффект)</strong> — постоянный эффект, который действует на протяжении всей игры. Может изменять правила для этого героя.</li>
+                        <li><strong>Upgrade Slots (Слоты улучшений)</strong> — специальные зоны для карт улучшений или модификаторов героя (если применимо).</li>
+                        <li><strong>Особенность:</strong> Hero Board используется для <span class="highlight">асимметричных героев</span>, которые имеют уникальные способности и правила, отличающиеся от стандартного игрока.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="card-examples-detailed">
+            <h2>📚 Подробные примеры карт с небазовыми эффектами</h2>
+            
+            <p style="margin-bottom: 20px; color: var(--text-gray);">В этом разделе представлены примеры карт с небазовыми эффектами и объяснение того, как они должны работать.</p>
+
+            <h3>Пример Disciple с Chain эффектом</h3>
+            <div class="card-anatomy">
+                <div style="display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: start;">
+                    <div>
+                        <img src="https://cob-game-clean-v-1.vercel.app/web/static/Forsaken_Wayfarer.png" alt="Forsaken Wayfarer" style="width: 100%; border-radius: 10px; border: 2px solid var(--accent-blue);">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-gold); margin-top: 0;">Forsaken Wayfarer</h4>
+                        <p><strong>Тип:</strong> Disciple (Белый)</p>
+                        <p><strong>Стоимость:</strong> 5</p>
+                        <p><strong>Effect 1 (Основной):</strong></p>
+                        <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-bottom: 10px;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/heal_5.png" class="icon" alt="Heal 5">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_4.png" class="icon" alt="Damage 4">
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-gray); margin-bottom: 15px;">{Heal 5}{Damage 4}</p>
+                        <p><strong>Effect 2 (Chain):</strong></p>
+                        <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/w_chain.png" class="icon" alt="White Chain">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_1.png" class="icon" alt="Blessing 1">
+                            <span style="font-size: 0.9rem;">for each {white} card in your play area</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-gray); margin-top: 10px;"><strong>Как работает:</strong> При розыгрыше карты применяется основной эффект (лечение 5 и урон 4). Chain эффект можно активировать вручную в любой момент хода, если в зоне "В игре" есть <span class="highlight">хотя бы одна другая белая карта</span> (не сама карта с Chain). Эффект дает 1 душу за каждую белую карту в зоне игры (включая эту карту и снаряжение).</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Пример Attire с OR и TO эффектом</h3>
+            <div class="card-anatomy">
+                <div style="display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: start;">
+                    <div>
+                        <img src="https://cob-game-clean-v-1.vercel.app/web/static/Saint_s_Mace.png" alt="Saint's Mace" style="width: 100%; border-radius: 10px; border: 2px solid var(--accent-blue);">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-gold); margin-top: 0;">Saint's Mace</h4>
+                        <p><strong>Тип:</strong> Attire (Белый)</p>
+                        <p><strong>Стоимость:</strong> 4</p>
+                        <p><strong>Прочность:</strong> 4 (<img src="https://cob-game-clean-v-1.vercel.app/web/static/heal.png" class="icon" alt="Def_N"> Def_N_Text) — отдельная цель</p>
+                        <p><strong>Effect 1 (Основной):</strong></p>
+                        <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-bottom: 10px;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_2.png" class="icon" alt="Damage 2">
+                            <span style="font-size: 0.9rem; margin: 0 5px;">OR</span>
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/burn_3.png" class="icon" alt="Burn 3">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/then_1.png" class="icon" alt="TO">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_6.png" class="icon" alt="Damage 6">
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-gray); margin-bottom: 15px;">{Damage 2} OR {Burn 3} TO {Damage 6}</p>
+                        <p><strong>Effect 2 (Chain):</strong></p>
+                        <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/w_chain.png" class="icon" alt="White Chain">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_2.png" class="icon" alt="Blessing 2">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/heal_3.png" class="icon" alt="Heal 3">
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-gray); margin-top: 10px;"><strong>Как работает:</strong> При активации основного эффекта игрок выбирает: либо нанести 2 урона сразу, либо потратить 3 души для нанесения 6 урона. Chain эффект можно активировать отдельно, если в зоне "В игре" есть <span class="highlight">хотя бы одна другая белая карта</span> (не само снаряжение). Снаряжение остается в игре. <span class="highlight">Каждый эффект снаряжения может быть активирован один раз в ход</span>. Основной эффект и вторичный могут быть активированы по отдельности в разное время и в любом порядке.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Пример Monster с OR наградой</h3>
+            <div class="card-anatomy">
+                <div style="display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: start;">
+                    <div>
+                        <img src="https://cob-game-clean-v-1.vercel.app/web/static/Phoenix.png" alt="Phoenix" style="width: 100%; border-radius: 10px; border: 2px solid var(--accent-red);" onerror="this.style.display='none';">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-gold); margin-top: 0;">Phoenix</h4>
+                        <p><strong>Тип:</strong> Monster (Белый)</p>
+                        <p><strong>Сила:</strong> 9 — нужно нанести 9 урона единовременно для убийства</p>
+                        <p><strong>Награда за убийство:</strong></p>
+                        <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-bottom: 10px;">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/bless_6.png" class="icon" alt="Blessing 6">
+                            <img src="https://cob-game-clean-v-1.vercel.app/web/static/ready_2.png" class="icon" alt="Ready 2">
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-gray); margin-top: 10px;"><strong>Как работает:</strong> Чтобы убить монстра, нужно нанести 9 урона единовременно (не накапливая урон от разных карт). После убийства игрок немедленно получает награду: 6 душ и возможность взять 2 карты из сброса в руку. Если награда содержит OR, игрок выбирает один из вариантов.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📋 Важные правила и уточнения</h2>
+
+            <h3>Порядок применения эффектов</h3>
+            <ol>
+                <li>Основной эффект карты (effect1) применяется при розыгрыше.</li>
+                <li>Вторичные эффекты (effect2, Chain) можно активировать позже в ход.</li>
+                <li>Эффекты с TO применяются только после оплаты стоимости.</li>
+                <li>Эффекты с OR требуют выбора одного варианта.</li>
+            </ol>
+
+            <h3>Защита снаряжения</h3>
+            <ul>
+                <li>Карты с активной защитой (<img src="https://cob-game-clean-v-1.vercel.app/web/static/Shield.png" class="icon" alt="Def_Y"> Def_Y_Text) должны быть уничтожены прежде, чем можно атаковать игрока или снаряжение без защиты (<img src="https://cob-game-clean-v-1.vercel.app/web/static/heal.png" class="icon" alt="Def_N"> Def_N_Text).</li>
+                <li><img src="https://cob-game-clean-v-1.vercel.app/web/static/power_x.png" class="icon" alt="Урон"> Урон распределяется через защитные карты (снаряжение с <img src="https://cob-game-clean-v-1.vercel.app/web/static/Shield.png" class="icon" alt="Def_Y"> Def_Y_Text), если они есть. Игрок решает, как распределить урон между защитными картами и своим HP.</li>
+            </ul>
+
+            <h3>Лимиты</h3>
+            <ul>
+                <li><span class="highlight">Лимит убийства монстров:</span> За <img src="https://cob-game-clean-v-1.vercel.app/web/static/power_x.png" class="icon" alt="Урон"> урон можно убить <span class="highlight">не более одного монстра в ход</span>. Карты со свойством <strong>{Defeat Monster}</strong> позволяют убивать монстров <span class="highlight">без ограничений</span> (не тратя урон и не учитывая лимит "1 монстр за ход").</li>
+                <li><span class="highlight">1 активация алтаря за ход</span> — алтарь можно использовать только один раз в ход.</li>
+                <li><span class="highlight">1 активация эффекта снаряжения за ход</span> — каждый эффект снаряжения можно активировать только один раз в ход.</li>
+            </ul>
+
+            <h3>Добор карт</h3>
+            <p>Если нужно добрать карты, а в колоде не хватает:</p>
+            <ol>
+                <li>Возьмите все доступные карты из колоды.</li>
+                <li>Перемешайте сброс и сделайте его новой колодой.</li>
+                <li>Доберите оставшиеся карты из новой колоды.</li>
+            </ol>
+
+            <h3>Трата душ</h3>
+            <ul>
+                <li>При покупке карт сначала тратятся души, накопленные в этом ходу.</li>
+                <li>Если не хватает, используются токены с Алтаря душ.</li>
+                <li>Неиспользованные души сгорают в конце хода.</li>
+                <li>Токены на алтаре не сгорают.</li>
+            </ul>
+        </section>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top">↑</a>
+
+    <script>
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Показ/скрытие кнопки "Наверх"
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
+
