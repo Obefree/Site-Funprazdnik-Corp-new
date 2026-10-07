@@ -1,0 +1,2050 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="icon" href="data:,">
+    <title>Call of Blades Online - База карт</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .subtitle {
+            color: #b8c6db;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn.primary {
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border-color: transparent;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .cards-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #b8c6db;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #4ecdc4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cards-filter-block {
+            display: block;
+            margin-bottom: 20px;
+        }
+        .cards-filter {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: rgba(78, 205, 196, 0.3);
+            border-color: #4ecdc4;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #4ecdc4;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-item.red { border-left: 4px solid #ff6b6b; }
+        .card-item.blue { border-left: 4px solid #4ecdc4; }
+        .card-item.green { border-left: 4px solid #96ceb4; }
+        .card-item.white { border-left: 4px solid #ecf0f1; }
+        .card-item.gear { border-left: 4px solid #f39c12; }
+        .card-item.altar { border-left: 4px solid #9b59b6; }
+
+        /* Алтари в базе карт — горизонтальная карточка 7/5, спрайт как в игре (сетка 6×7) */
+        .card-item.altar {
+            max-width: 320px;
+        }
+        .card-item.altar .card-image,
+        .card-item.altar .card-image-sprite-altar {
+            max-width: 100%;
+            aspect-ratio: 7 / 5;
+            height: auto;
+        }
+
+        .card-image {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            aspect-ratio: 5 / 7; /* Стандартные пропорции MTG карт (2.5" x 3.5") */
+            object-fit: contain;
+            border-radius: 10px;
+            margin: 0 auto 15px;
+            display: block;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .card-image-sprite {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            aspect-ratio: 5 / 7; /* Стандартные пропорции MTG карт для спрайт-листов */
+            border-radius: 10px;
+            margin: 0 auto 15px;
+            display: block;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .card-image:hover,
+        .card-image-sprite:hover {
+            transform: scale(1.05);
+        }
+
+        .card-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #4ecdc4;
+        }
+
+        .card-type {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .card-cost {
+            background: linear-gradient(45deg, #f1c40f, #f39c12);
+            color: #000;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .card-effects {
+            font-size: 0.9rem;
+            color: #b8c6db;
+            line-height: 1.4;
+            margin-top: 10px;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+
+        .card-effect {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 8px;
+        }
+
+        /* Стили для выбора колод */
+        .deck-selection {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .deck-selection h3 {
+            margin-top: 0;
+            color: #4ecdc4;
+            text-align: center;
+        }
+
+        .deck-checkboxes {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .deck-checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            position: relative;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .deck-checkbox:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .deck-checkbox input[type="checkbox"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #4ecdc4;
+        }
+
+        .deck-label {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .deck-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 14px;
+            color: #b8c6db;
+            text-align: center;
+        }
+
+        .deck-info p {
+            margin: 5px 0;
+        }
+
+        .export-btn {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .export-btn {
+            flex: 1;
+        }
+
+        .copy-btn {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+        }
+
+        .copy-btn:hover {
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-title {
+            color: #b8c6db;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #4ecdc4;
+        }
+
+        .stat-subtitle {
+            font-size: 0.8rem;
+            color: #b8c6db;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .error-message {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+            border-radius: 10px;
+            padding: 15px;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: clamp(1.35rem, 6vw, 2rem);
+            }
+            
+            .nav-buttons {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                gap: 10px;
+                padding-bottom: 8px;
+                scrollbar-width: thin;
+            }
+
+            .nav-buttons .btn {
+                flex: 0 0 auto;
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                touch-action: manipulation;
+            }
+            
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
+                gap: 15px;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Модальное окно для полного просмотра карты */
+        .card-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .card-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow: auto;
+        }
+
+        .card-modal-image {
+            max-width: 400px;
+            width: auto;
+            height: auto;
+            aspect-ratio: 5 / 7; /* Стандартные пропорции MTG карт (2.5" x 3.5") */
+            border-radius: 15px;
+            margin: 0 auto;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            object-fit: contain;
+        }
+
+        .card-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .card-modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .card-modal-info {
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        .card-modal-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-modal-effects {
+            font-size: 1rem;
+            line-height: 1.5;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">🗃️ База карт Call of Blades</h1>
+            <p class="subtitle">Полная коллекция карт с изображениями и эффектами</p>
+            
+            <div class="nav-buttons">
+                <a href="../" class="btn">🏠 Главная</a>
+                <a href="./game.html" class="btn">⚔️ Игра</a>
+                <a href="./simulator.html" class="btn">🧪 Симулятор</a>
+                <button class="btn primary" onclick="loadCards()" title="Загрузить JSON и подтянуть текст из Google Таблиц">📥 Загрузить карты</button>
+            </div>
+            <div id="update-banner" style="display:none; margin: 0 auto 20px; max-width: 900px; padding: 12px 16px; border-radius: 10px; background: rgba(255, 215, 0, 0.15); border: 1px solid rgba(255, 215, 0, 0.35); color: #ffd700;">
+                Обнаружены изменения в источнике карт. <button class="btn" onclick="applyDetectedUpdate()">Применить обновление</button>
+            </div>
+        </header>
+
+        <div class="cards-container">
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Загрузка карт...</p>
+            </div>
+
+            <div id="error-container"></div>
+
+            <div id="stats-container" style="display: none;">
+                <div class="stats" id="stats">
+                    <!-- Статистика будет добавлена через JS -->
+                </div>
+            </div>
+
+            <div class="deck-selection" id="deck-selection" style="display: none;">
+                <h3>🎯 Выбор колод для игры</h3>
+                <div class="deck-checkboxes">
+                    <label class="deck-checkbox">
+                        <input type="checkbox" id="deck-disciple" checked>
+                        <span class="checkmark"></span>
+                        <span class="deck-label">⚔️ Disciple карты (Trade Row)</span>
+                    </label>
+                    <label class="deck-checkbox">
+                        <input type="checkbox" id="deck-attire" checked>
+                        <span class="checkmark"></span>
+                        <span class="deck-label">👗 Attire карты (Trade Row)</span>
+                    </label>
+                    <label class="deck-checkbox">
+                        <input type="checkbox" id="deck-starter" checked>
+                        <span class="checkmark"></span>
+                        <span class="deck-label">⭐ Стартовые карты (базовая колода)</span>
+                    </label>
+                    <label class="deck-checkbox">
+                        <input type="checkbox" id="deck-monster">
+                        <span class="checkmark"></span>
+                        <span class="deck-label">👹 Монстры (отдельная стопка)</span>
+                    </label>
+                    <label class="deck-checkbox">
+                        <input type="checkbox" id="deck-consumable" checked>
+                        <span class="checkmark"></span>
+                        <span class="deck-label">🧪 Расходники (Trade Row)</span>
+                    </label>
+        <label class="deck-checkbox">
+            <input type="checkbox" id="deck-effect" checked>
+            <span class="checkmark"></span>
+            <span class="deck-label">✨ Эвенты (играют при выходе)</span>
+        </label>
+                    <label class="deck-checkbox">
+                        <input type="checkbox" id="deck-altar" checked>
+                        <span class="checkmark"></span>
+                        <span class="deck-label">⚱️ Алтари</span>
+                    </label>
+                </div>
+                <div class="deck-info">
+                    <p><strong>По умолчанию:</strong> Disciple + Attire + Consumables + Effects → Trade Row, Стартовые → базовая колода игрока</p>
+                    <p><strong>Базовая колода:</strong> 7 Prunuk + 3 Strike (автоматически)</p>
+                    <p><strong>Монстры:</strong> Отдельная стопка с 1 открытой картой (атакуются уроном для получения награды)</p>
+                    <div class="export-buttons">
+                        <button id="export-decks" class="export-btn" onclick="exportSelectedDecks()">📤 Экспорт в файл</button>
+                        <button id="copy-decks" class="export-btn copy-btn" onclick="copyDeckConfig()">📋 Копировать в буфер</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="filters-container" class="cards-filter-block">
+                <div class="cards-filter">
+                    <button class="filter-btn active" onclick="filterCards('all', event)">Все карты</button>
+                    <button class="filter-btn" onclick="filterCards('altar', event)">⚱️ Алтари</button>
+                    <button class="filter-btn" onclick="filterCards('red', event)">🔴 Красные</button>
+                    <button class="filter-btn" onclick="filterCards('blue', event)">🔵 Синие</button>
+                    <button class="filter-btn" onclick="filterCards('green', event)">🟢 Зелёные</button>
+                    <button class="filter-btn" onclick="filterCards('white', event)">⚪ Белые</button>
+                    <button class="filter-btn" onclick="filterCards('gear', event)">👗 Attire</button>
+                    <button class="filter-btn" onclick="filterCards('starter', event)">⭐ Стартовые</button>
+                    <button class="filter-btn" onclick="filterCards('monster', event)">👹 Монстры</button>
+                    <button class="filter-btn" onclick="filterCards('consumable', event)">🧪 Расходники</button>
+                    <button class="filter-btn" onclick="filterCards('effect', event)">✨ Эвенты</button>
+                    <button class="filter-btn" onclick="clearImageCache()" style="background: #ff6b6b; margin-left: 20px;">🗑️ Очистить кеш</button>
+                </div>
+                <div class="cards-filter" style="margin-top: 10px;">
+                    <div style="color: #4ecdc4; font-weight: 600; margin-bottom: 8px; text-align: center;">Персонажи:</div>
+                    <button class="filter-btn" onclick="filterCards('berserk', event)">⚔️ Berserk</button>
+                    <button class="filter-btn" onclick="filterCards('wizard', event)">🧙 Wizard</button>
+                    <button class="filter-btn" onclick="filterCards('hunter', event)">🏹 Hunter</button>
+                    <button class="filter-btn" onclick="filterCards('dark_knight', event)">⚔️ Dark Knight</button>
+                </div>
+                <div class="cost-filters" style="margin-top:10px; display:flex; gap:8px; align-items:center;">
+                    <label>Стоимость от <input id="cost-min" type="number" min="0" step="1" style="width:70px"></label>
+                    <label>до <input id="cost-max" type="number" min="0" step="1" style="width:70px"></label>
+                    <button class="btn" onclick="applyCostFilter()">Фильтр по стоимости</button>
+                    <button class="btn" onclick="resetCostFilter()">Сброс</button>
+                </div>
+            </div>
+
+            <div id="no-cards" style="text-align: center; color: #666; padding: 50px;">
+                <h3>📚 Готов к загрузке</h3>
+                <p>Нажмите "Загрузить карты" для просмотра коллекции</p>
+            </div>
+
+            <div class="cards-grid" id="cards-grid">
+                <!-- Карты будут добавлены через JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Без общего кеша: стабильная версия без мерцаний -->
+    <script src="./shared-utils.js"></script>
+    <script src="./sprite-utils.js"></script>
+    <script src="./google_sheets_merge.js"></script>
+    <script>
+        let allCards = [];
+        let cardsDataRef = null; // для подмешивания таблиц по кнопке «Загрузить карты из таблиц»
+        let currentFilter = 'all';
+        let costMin = null;
+        let costMax = null;
+
+        async function loadCards() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('no-cards').style.display = 'none';
+            document.getElementById('error-container').innerHTML = '';
+
+            try {
+                // Пробуем несколько путей для локальной и продакшн версий
+                let cardsData = null;
+                let lastError = null;
+                
+                const pathsToTry = [
+                    './unified_cards_cob_3.8.json',
+                    '..../data/unified_cards_cob_3.8.json',
+                    './unified_cards_cob_3.8.json',
+                    'unified_cards_cob_3.8.json',
+                    '../unified_cards_cob_3.8.json'
+                ];
+                
+                for (let i = 0; i < pathsToTry.length; i++) {
+                    const path = pathsToTry[i];
+                    try {
+                        console.log('🔄 Пробуем загрузить из: ' + path);
+                        const response = await fetch(path, { cache: 'default' });
+                        if (!response.ok) { 
+                            throw new Error('HTTP ' + response.status + ': ' + response.statusText); 
+                        }
+                        cardsData = await response.json();
+                        console.log('✅ Загружено из: ' + path);
+                        break; // Успешно загружено, выходим из цикла
+                    } catch (e) {
+                        lastError = e;
+                        console.log('⚠️ Не удалось загрузить из ' + path + ': ' + e.message);
+                        continue; // Пробуем следующий путь
+                    }
+                }
+                
+                if (!cardsData) {
+                    const errorMsg = lastError ? lastError.message : 'неизвестная ошибка';
+                    throw new Error('Не удалось загрузить карты ни из одного источника. Последняя ошибка: ' + errorMsg);
+                }
+
+                if (cardsData.error) {
+                    throw new Error(cardsData.message || cardsData.error);
+                }
+
+                // Таблицы — по умолчанию отключены (лишние запросы). Включить: window.ENABLE_SHEETS_AUTO_MERGE = true
+                if (window.ENABLE_SHEETS_AUTO_MERGE && window.fetchGoogleSheetsData && window.mergeCardsWithGoogleSheets) {
+                    try {
+                        const sheetData = await window.fetchGoogleSheetsData();
+                        if (sheetData && typeof sheetData === 'object' && cardsData) {
+                            var n = window.mergeCardsWithGoogleSheets(cardsData, sheetData);
+                            console.log('  -> Merge таблиц: применено к', n || 0, 'картам');
+                        }
+                    } catch (e) { console.warn('Google Таблицы:', e && e.message ? e.message : e); }
+                }
+
+                console.log('Структура cardsData:', Object.keys(cardsData));
+                console.log('Disciple карт:', (cardsData.disciple || []).length);
+                console.log('Attire карт:', (cardsData.attire || []).length);
+                console.log('Consumables:', (cardsData.consumables || []).length);
+                console.log('Effects:', (cardsData.effects || []).length);
+                console.log('Monsters:', (cardsData.monsters || []).length);
+
+                cardsDataRef = cardsData;
+                allCards = [];
+                
+                // Алтари — отдельная категория, не disciple. Сначала из data.altars, иначе из disciple по имени "Altar"
+                const altarsArr = cardsData.altars && Array.isArray(cardsData.altars) ? cardsData.altars : [];
+                if (altarsArr.length > 0) {
+                    for (let i = 0; i < altarsArr.length; i++) {
+                        const card = altarsArr[i];
+                        card.category = 'altar';
+                        card.type = 'Altar';
+                        allCards.push(card);
+                    }
+                    console.log('  -> Загружено алтарей из data.altars:', altarsArr.length);
+                }
+                
+                // Disciple карты — алтари не добавляем (они не disciple)
+                const discipleCards = cardsData.disciple || cardsData.main || [];
+                for (let i = 0; i < discipleCards.length; i++) {
+                    const card = discipleCards[i];
+                    const typeLower = String(card.type || card.card_type || '').toLowerCase();
+                    const nameIsAltar = card.name && /Altar/i.test(card.name);
+                    if (typeLower === 'altar' || nameIsAltar) {
+                        // Алтарь — добавляем только если ещё не загружены из data.altars
+                        if (altarsArr.length === 0) {
+                            card.category = 'altar';
+                            card.type = 'Altar';
+                            allCards.push(card);
+                        }
+                        continue;
+                    }
+                    card.category = 'disciple';
+                    const cardObj = card;
+                    const cardSet = String(card.set || card.Set || 'base').toLowerCase().trim();
+                    if (cardSet && cardSet !== 'base') {
+                        let normalizedChar = cardSet;
+                        if (cardSet === 'berserk') normalizedChar = 'berserk';
+                        else if (cardSet === 'wizard') normalizedChar = 'wizard';
+                        else if (cardSet === 'hunter') normalizedChar = 'hunter';
+                        else if (cardSet === 'dark knight' || cardSet === 'dark_knight' || cardSet === 'darkknight') normalizedChar = 'dark_knight';
+                        card.character = normalizedChar;
+                    }
+                    allCards.push(cardObj);
+                }
+                
+                // Starter карты - используем поле Set для определения персонажа
+                const starterCards = cardsData.starters || [];
+                for (let i = 0; i < starterCards.length; i++) {
+                    const card = starterCards[i];
+                    card.category = 'starter';
+                    const cardObj = card;
+                    // Если Set не указан, по умолчанию "Base"
+                    const cardSet = String(card.set || card.Set || 'base').toLowerCase().trim();
+                    if (cardSet && cardSet !== 'base') {
+                        // Нормализуем имя персонажа
+                        let normalizedChar = cardSet;
+                        if (cardSet === 'berserk') {
+                            normalizedChar = 'berserk';
+                        } else if (cardSet === 'wizard') {
+                            normalizedChar = 'wizard';
+                        } else if (cardSet === 'hunter') {
+                            normalizedChar = 'hunter';
+                        } else if (cardSet === 'dark knight' || cardSet === 'dark_knight' || cardSet === 'darkknight') {
+                            normalizedChar = 'dark_knight';
+                        }
+                        cardObj.character = normalizedChar;
+                        console.log('  -> Карта', cardObj.name, 'получила character:', normalizedChar, 'из Set:', cardSet);
+                    }
+                    allCards.push(cardObj);
+                }
+                
+                // Attire карты - используем поле Set для определения персонажа (те же объекты для merge таблиц)
+                const attireCards = cardsData.attire || cardsData.gear || [];
+                for (let i = 0; i < attireCards.length; i++) {
+                    const card = attireCards[i];
+                    card.category = 'attire';
+                    const cardSet = String(card.set || card.Set || 'base').toLowerCase().trim();
+                    if (cardSet && cardSet !== 'base') {
+                        let normalizedChar = cardSet;
+                        if (cardSet === 'berserk') normalizedChar = 'berserk';
+                        else if (cardSet === 'wizard') normalizedChar = 'wizard';
+                        else if (cardSet === 'hunter') normalizedChar = 'hunter';
+                        else if (cardSet === 'dark knight' || cardSet === 'dark_knight' || cardSet === 'darkknight') normalizedChar = 'dark_knight';
+                        card.character = normalizedChar;
+                    }
+                    allCards.push(card);
+                }
+                
+                // Consumable карты (те же объекты для merge)
+                const consumableCards = cardsData.consumables || [];
+                for (let i = 0; i < consumableCards.length; i++) {
+                    const card = consumableCards[i];
+                    card.category = 'consumable';
+                    allCards.push(card);
+                }
+                
+                // Effect карты
+                const effectCards = cardsData.effects || cardsData.events || [];
+                for (let i = 0; i < effectCards.length; i++) {
+                    const card = effectCards[i];
+                    card.category = 'effect';
+                    allCards.push(card);
+                }
+                
+                const monsterCards = cardsData.monsters || [];
+                for (let i = 0; i < monsterCards.length; i++) {
+                    const card = monsterCards[i];
+                    card.category = 'monster';
+                    allCards.push(card);
+                }
+
+                // Ищем компоненты персонажей в основных категориях
+                const characters = ['berserk', 'wizard', 'hunter', 'dark_knight'];
+                const characterNames = {
+                    'berserk': ['Berserk', 'berserk'],
+                    'wizard': ['Wizard', 'wizard'],
+                    'hunter': ['Hunter', 'hunter'],
+                    'dark_knight': ['Dark Knight', 'Dark_Knight', 'dark knight', 'dark_knight']
+                };
+                
+                // Ищем алтари по имени во всех категориях (например "Berserk Altar", "Wizard Altar")
+                const allCategoriesForSearch = ['disciple', 'attire', 'starters', 'consumables', 'monsters'];
+                for (let charIdx = 0; charIdx < characters.length; charIdx++) {
+                    const charName = characters[charIdx];
+                    const nameVariants = characterNames[charName] || [];
+                    
+                    // Ищем алтари по имени
+                    for (let nameIdx = 0; nameIdx < nameVariants.length; nameIdx++) {
+                        const nameVariant = nameVariants[nameIdx];
+                        for (let catIdx = 0; catIdx < allCategoriesForSearch.length; catIdx++) {
+                            const catName = allCategoriesForSearch[catIdx];
+                            const catCards = cardsData[catName] || [];
+                            for (let cardIdx = 0; cardIdx < catCards.length; cardIdx++) {
+                                const card = catCards[cardIdx];
+                                const cardName = String(card.name || '').toLowerCase();
+                                if (cardName.indexOf(nameVariant.toLowerCase()) >= 0 && cardName.indexOf('altar') >= 0) {
+                                    // Проверяем, не добавлен ли уже этот алтарь
+                                    let alreadyAdded = false;
+                                    for (let checkIdx = 0; checkIdx < allCards.length; checkIdx++) {
+                                        if (allCards[checkIdx].name === card.name && allCards[checkIdx].character === charName) {
+                                            alreadyAdded = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!alreadyAdded) {
+                                        allCards.push(Object.assign({}, card, {
+                                            category: charName + '_altar',
+                                            character: charName,
+                                            characterType: 'altar'
+                                        }));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Ищем карты персонажей по полю Set
+                    // Эти карты уже добавлены в allCards, нужно только пометить их character
+                    for (let cardIdx = 0; cardIdx < allCards.length; cardIdx++) {
+                        const card = allCards[cardIdx];
+                        // Если карта уже имеет character, пропускаем
+                        if (card.character) {
+                            continue;
+                        }
+                        // Проверяем поле Set (если не указано, по умолчанию "Base")
+                        const cardSet = String(card.set || card.Set || 'base').toLowerCase();
+                        if (cardSet && cardSet !== 'base') {
+                            // Нормализуем имя персонажа из Set
+                            let setCharName = cardSet;
+                            if (cardSet === 'berserk') {
+                                setCharName = 'berserk';
+                            } else if (cardSet === 'wizard') {
+                                setCharName = 'wizard';
+                            } else if (cardSet === 'hunter') {
+                                setCharName = 'hunter';
+                            } else if (cardSet === 'dark knight' || cardSet === 'dark_knight') {
+                                setCharName = 'dark_knight';
+                            }
+                            // Если Set совпадает с текущим персонажем, помечаем карту
+                            if (setCharName === charName) {
+                                card.character = charName;
+                            }
+                        }
+                    }
+                }
+                
+                // Загружаем данные персонажей из отдельных секций, если они есть
+                for (let i = 0; i < characters.length; i++) {
+                    const charName = characters[i];
+                    
+                    // Колоды персонажей
+                    const deckKey = charName + '_deck';
+                    const decksKey = charName + '_decks';
+                    if (cardsData[deckKey] || cardsData[decksKey]) {
+                        const deckCards = cardsData[deckKey] || cardsData[decksKey] || [];
+                        for (let j = 0; j < deckCards.length; j++) {
+                            const card = deckCards[j];
+                            allCards.push(Object.assign({}, card, {
+                                category: charName + '_deck',
+                                character: charName,
+                                characterType: 'deck'
+                            }));
+                        }
+                    }
+                    
+                    // Токены персонажей
+                    const tokenKey = charName + '_token';
+                    const tokensKey = charName + '_tokens';
+                    if (cardsData[tokenKey] || cardsData[tokensKey]) {
+                        const tokenCards = cardsData[tokenKey] || cardsData[tokensKey] || [];
+                        for (let j = 0; j < tokenCards.length; j++) {
+                            const card = tokenCards[j];
+                            allCards.push(Object.assign({}, card, {
+                                category: charName + '_token',
+                                character: charName,
+                                characterType: 'token'
+                            }));
+                        }
+                    }
+                    
+                    // Планшеты персонажей
+                    const tabletKey = charName + '_tablet';
+                    const tabletsKey = charName + '_tablets';
+                    if (cardsData[tabletKey] || cardsData[tabletsKey]) {
+                        const tabletCards = cardsData[tabletKey] || cardsData[tabletsKey] || [];
+                        for (let j = 0; j < tabletCards.length; j++) {
+                            const card = tabletCards[j];
+                            allCards.push(Object.assign({}, card, {
+                                category: charName + '_tablet',
+                                character: charName,
+                                characterType: 'tablet'
+                            }));
+                        }
+                    }
+                }
+
+                displayCards();
+                displayStats();
+                showSuccess('Загружено ' + allCards.length + ' карт!');
+                
+                // Показываем секцию выбора колод
+                document.getElementById('deck-selection').style.display = 'block';
+
+            } catch (error) {
+                console.error('Ошибка загрузки карт:', error);
+                showError('Ошибка загрузки карт: ' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+        
+        window.loadCards = loadCards;
+
+        /** Подтянуть текст эффектов из Google Таблиц и обновить отображение (картинки не трогаем). */
+        async function loadCardsFromSheets() {
+            if (!cardsDataRef) {
+                showError('Сначала загрузите карты (кнопка «Загрузить карты»).');
+                return;
+            }
+            document.getElementById('loading').style.display = 'block';
+            try {
+                const sheetData = await window.fetchGoogleSheetsData();
+                if (window.mergeCardsWithGoogleSheets) {
+                    const n = window.mergeCardsWithGoogleSheets(cardsDataRef, sheetData);
+                    displayCards();
+                    showSuccess('Данные из таблиц применены к ' + (n || 0) + ' картам.');
+                } else {
+                    showError('mergeCardsWithGoogleSheets не найден');
+                }
+            } catch (e) {
+                showError('Не удалось загрузить таблицы: ' + (e && e.message ? e.message : e));
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+        window.loadCardsFromSheets = loadCardsFromSheets;
+
+        function displayCards() {
+            console.log('displayCards вызвана, всего карт:', allCards.length, 'фильтр:', currentFilter);
+            const grid = document.getElementById('cards-grid');
+            if (!grid) {
+                console.error('Элемент cards-grid не найден!');
+                return;
+            }
+            let filteredCards = filterCardsByCategory(allCards, currentFilter);
+            console.log('Отфильтровано карт:', filteredCards.length);
+            // Фильтр по стоимости
+            if (costMin !== null) {
+                filteredCards = filteredCards.filter(function(c) { return (c.cost || 0) >= costMin; });
+            }
+            if (costMax !== null) {
+                filteredCards = filteredCards.filter(function(c) { return (c.cost || 0) <= costMax; });
+            }
+            // Убираем дубликаты по имени, считая их количество
+            const byName = {};
+            for (let i = 0; i < filteredCards.length; i++) {
+                const card = filteredCards[i];
+                const key = (card.name || '').trim().toLowerCase();
+                if (!key) continue;
+                if (!byName[key]) {
+                    byName[key] = { card: Object.assign({}, card), count: 1 };
+                } else {
+                    byName[key].count += 1;
+                }
+            }
+            filteredCards = [];
+            for (let key in byName) {
+                if (byName.hasOwnProperty(key)) {
+                    const item = byName[key];
+                    filteredCards.push(Object.assign({}, item.card, { copies: item.count }));
+                }
+            }
+            
+            // Скрываем сообщение "нет карт"
+            const noCardsDiv = document.getElementById('no-cards');
+            if (noCardsDiv) {
+                noCardsDiv.style.display = 'none';
+            }
+            
+            grid.innerHTML = '';
+
+            if (filteredCards.length === 0) {
+                console.log('⚠️ Нет отфильтрованных карт для категории:', currentFilter);
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 50px;">Карты не найдены</div>';
+                return;
+            }
+
+            console.log('✅ Отображаем', filteredCards.length, 'карт');
+            for (let i = 0; i < filteredCards.length; i++) {
+                const card = filteredCards[i];
+                const cardElement = createCardElement(card);
+                if (cardElement) {
+                    grid.appendChild(cardElement);
+                }
+            }
+
+            document.getElementById('filters-container').style.display = 'block';
+        }
+
+        function createCardElement(card) {
+            const isAltar = (card.name && /Altar/i.test(card.name)) || card.category === 'altar' || String(card.type || card.card_type || '').toLowerCase() === 'altar';
+            const cardDiv = document.createElement('div');
+            cardDiv.className = `card-item ${card.color || 'neutral'} ${card.category || ''}${isAltar ? ' altar' : ''}`;
+            
+            // Разметка карточки
+            cardDiv.innerHTML = `
+                ${card.cost ? `<div class="card-cost">${card.cost}</div>` : ''}
+                
+                <img class="card-image" loading="lazy" alt="${card.name}">
+                
+                <div class="card-name">${card.name || 'Неизвестная карта'}</div>
+                
+                <div class="card-type">${getCardTypeText(card)}${card.copies && card.copies > 1 ? ` • копий: ${card.copies}` : ''}</div>
+                
+                <div class="card-effects">
+                    ${card.effect1 ? `<div class="card-effect">${card.effect1}</div>` : ''}
+                    ${card.effect2 ? `<div class="card-effect">${card.effect2}</div>` : ''}
+                    ${card.effect1text ? `<div class="card-effect" style="font-style: italic;">${card.effect1text}</div>` : ''}
+                    ${card.effect2text ? `<div class="card-effect" style="font-style: italic;">${card.effect2text}</div>` : ''}
+                </div>
+            `;
+
+            // ПРИОРИТЕТ: Используем спрайт-лист (как в TTS). Алтари — та же сетка 6×7, без поворота (в спрайте уже повёрнуты).
+            const img = cardDiv.querySelector('.card-image');
+            const canUseSprite = card.sprite_url && card.card_id !== undefined;
+            
+            let spriteApplied = false;
+            if (canUseSprite) {
+                const numW = isAltar ? (card.sprite_num_w != null ? card.sprite_num_w : 6) : (card.sprite_num_w != null ? card.sprite_num_w : 8);
+                const numH = isAltar ? (card.sprite_num_h != null ? card.sprite_num_h : 7) : (card.sprite_num_h != null ? card.sprite_num_h : 6);
+                const style = typeof getCardSpriteStyle === 'function'
+                    ? getCardSpriteStyle(card.sprite_url, card.card_id, numW, numH)
+                    : '';
+                if (style) {
+                    let spriteDiv = cardDiv.querySelector('.card-image-sprite');
+                    if (!spriteDiv) {
+                        spriteDiv = document.createElement('div');
+                        spriteDiv.className = 'card-image-sprite' + (isAltar ? ' card-image-sprite-altar' : '');
+                        spriteDiv.style.cssText = 'width: 100%; max-width: ' + (isAltar ? '240px' : '180px') + '; height: auto; aspect-ratio: ' + (isAltar ? '7 / 5' : '5 / 7') + '; margin: 0 auto 15px;';
+                        img.parentElement.replaceChild(spriteDiv, img);
+                    }
+                    spriteDiv.style.cssText += style;
+                    spriteApplied = true;
+                }
+            }
+            if (!spriteApplied) {
+                // Обычная загрузка изображения (fallback)
+                const imgName = card.image || card.image_local || '';
+                if (imgName) {
+                    img.src = `https://cob-game-clean-v-1.vercel.app/web/static/${encodeURIComponent(imgName)}`;
+                    // Устойчивый фолбэк: если прямой путь не найден, подберём рабочий URL через кеш
+                    img.onerror = async () => {
+                        try {
+                            if (window.sharedImageCache && typeof window.sharedImageCache.findWorkingImageUrl === 'function') {
+                                const url = await window.sharedImageCache.findWorkingImageUrl(card);
+                                if (url && typeof url === 'string') {
+                                    img.style.display = '';
+                                    img.src = url;
+                                    return;
+                                }
+                            }
+                        } catch (e) {}
+                        // Если ничего не нашли — скрываем
+                        img.style.display = 'none';
+                    };
+                } else {
+                    img.style.display = 'none';
+                }
+            }
+
+            // Добавляем обработчик клика для открытия модального окна
+            cardDiv.addEventListener('click', () => openCardModal(card));
+
+            return cardDiv;
+        }
+
+        function getCardTypeText(card) {
+            if (card.is_gear || card.category === 'attire' || card.category === 'gear') return '👗 Attire';
+            if (card.category === 'starter') return '⭐ Стартовая';
+            if (card.category === 'consumable') return '🧪 Расходник';
+            if (card.category === 'monster') return '👹 Монстр';
+            if (card.category === 'disciple' || card.category === 'main') return '⚔️ Disciple';
+            
+            // Типы элементов персонажей
+            if (card.character) {
+                const charNames = {
+                    'berserk': '⚔️ Berserk',
+                    'wizard': '🧙 Wizard',
+                    'hunter': '🏹 Hunter',
+                    'dark_knight': '⚔️ Dark Knight'
+                };
+                const typeNames = {
+                    'deck': '📚 Колода',
+                    'altar': '🕯️ Алтарь',
+                    'token': '🪙 Токен',
+                    'tablet': '📜 Планшет'
+                };
+                const charName = charNames[card.character] || card.character;
+                const typeName = typeNames[card.characterType] || card.characterType;
+                return `${charName} ${typeName}`;
+            }
+            
+            return '🎴 Основная';
+        }
+
+        function filterCards(category, evt) {
+            currentFilter = category;
+            
+            // Обновляем активную кнопку
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (evt && evt.target) {
+                evt.target.classList.add('active');
+            }
+            
+            displayCards();
+        }
+
+        function filterCardsByCategory(cards, category) {
+            console.log('filterCardsByCategory вызвана с категорией:', category, 'всего карт:', cards.length);
+            if (category === 'all') {
+                console.log('  -> Возвращаем все карты');
+                return cards;
+            }
+            if (category === 'gear') {
+                const filtered = cards.filter(function(card) { return card.is_gear || card.category === 'attire' || card.category === 'gear'; });
+                console.log('  -> Отфильтровано Attire:', filtered.length);
+                return filtered;
+            }
+            if (category === 'starter') {
+                const filtered = cards.filter(function(card) { return card.category === 'starter'; });
+                console.log('  -> Отфильтровано Starter:', filtered.length);
+                return filtered;
+            }
+            if (category === 'monster') {
+                const filtered = cards.filter(function(card) { return card.category === 'monster'; });
+                console.log('  -> Отфильтровано Monster:', filtered.length);
+                return filtered;
+            }
+            if (category === 'consumable') {
+                const filtered = cards.filter(function(card) { return card.category === 'consumable'; });
+                console.log('  -> Отфильтровано Consumable:', filtered.length);
+                return filtered;
+            }
+            if (category === 'effect' || category === 'events') {
+                const filtered = cards.filter(function(card) { return card.category === 'effect' || card.category === 'events'; });
+                console.log('  -> Отфильтровано Events:', filtered.length);
+                return filtered;
+            }
+            if (category === 'altar') {
+                const filtered = cards.filter(function(card) { return (card.name && /Altar/i.test(card.name)) || card.category === 'altar'; });
+                console.log('  -> Отфильтровано Алтари:', filtered.length);
+                return filtered;
+            }
+            if (['red', 'blue', 'green', 'white'].indexOf(category) >= 0) {
+                const filtered = cards.filter(function(card) { return card.color === category; });
+                console.log('  -> Отфильтровано по цвету', category + ':', filtered.length);
+                return filtered;
+            }
+            
+            // Фильтры для персонажей - показываем все компоненты (deck, altar, token, tablet, attire)
+            const characterFilters = ['berserk', 'wizard', 'hunter', 'dark_knight'];
+            if (characterFilters.indexOf(category) >= 0) {
+                // Фильтр по всем элементам персонажа
+                const filtered = cards.filter(function(card) {
+                    // Проверяем по полю character
+                    if (card.character === category) {
+                        return true;
+                    }
+                    // Также проверяем по категории (например berserk_deck, berserk_altar и т.д.)
+                    if (card.category && card.category.indexOf(category + '_') === 0) {
+                        return true;
+                    }
+                    return false;
+                });
+                console.log('  -> Отфильтровано по персонажу', category + ':', filtered.length);
+                // Логируем примеры отфильтрованных карт
+                for (let i = 0; i < Math.min(5, filtered.length); i++) {
+                    const card = filtered[i];
+                    console.log('    Пример:', card.name, 'category:', card.category, 'character:', card.character, 'set:', card.set);
+                }
+                return filtered;
+            }
+            
+            // Фильтры для конкретных элементов персонажей
+            const characterElementFilters = [
+                'berserk_deck', 'berserk_altar', 'berserk_token', 'berserk_tablet',
+                'wizard_deck', 'wizard_altar', 'wizard_token', 'wizard_tablet',
+                'hunter_deck', 'hunter_altar', 'hunter_token', 'hunter_tablet',
+                'dark_knight_deck', 'dark_knight_altar', 'dark_knight_token', 'dark_knight_tablet'
+            ];
+            if (characterElementFilters.indexOf(category) >= 0) {
+                const filtered = cards.filter(function(card) { return card.category === category; });
+                console.log('  -> Отфильтровано по элементу персонажа', category + ':', filtered.length);
+                return filtered;
+            }
+            
+            const filtered = cards.filter(function(card) { return card.category === category; });
+            console.log('  -> Отфильтровано по категории', category + ':', filtered.length);
+            return filtered;
+        }
+
+        function applyCostFilter() {
+            const minEl = document.getElementById('cost-min');
+            const maxEl = document.getElementById('cost-max');
+            const minVal = parseInt(minEl.value);
+            const maxVal = parseInt(maxEl.value);
+            costMin = isNaN(minVal) ? null : minVal;
+            costMax = isNaN(maxVal) ? null : maxVal;
+            displayCards();
+        }
+
+        function resetCostFilter() {
+            costMin = null;
+            costMax = null;
+            document.getElementById('cost-min').value = '';
+            document.getElementById('cost-max').value = '';
+            displayCards();
+        }
+
+        function displayStats() {
+            const stats = calculateStats(allCards);
+            const statsContainer = document.getElementById('stats');
+            
+            const deckDisciple = document.getElementById('deck-disciple').checked;
+            const deckAttire = document.getElementById('deck-attire').checked;
+            const deckStarter = document.getElementById('deck-starter').checked;
+            const deckMonster = document.getElementById('deck-monster').checked;
+            const deckConsumable = document.getElementById('deck-consumable').checked;
+            const deckAltar = document.getElementById('deck-altar') ? document.getElementById('deck-altar').checked : true;
+            const deckEffect = document.getElementById('deck-effect') ? document.getElementById('deck-effect').checked : true;
+            statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-title">Всего карт</div>
+                    <div class="stat-value">${stats.total}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">⚔️ Disciple карты ${deckDisciple ? '✅' : '❌'}</div>
+                    <div class="stat-value">${stats.main}</div>
+                    <div class="stat-subtitle">Trade Row</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">👗 Attire карты ${deckAttire ? '✅' : '❌'}</div>
+                    <div class="stat-value">${stats.gear}</div>
+                    <div class="stat-subtitle">Trade Row</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">⚱️ Алтари ${deckAltar ? '✅' : '❌'}</div>
+                    <div class="stat-value">${stats.altar}</div>
+                    <div class="stat-subtitle">Отдельный фильтр</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">⭐ Стартовые карты ${deckStarter ? '✅' : '❌'}</div>
+                    <div class="stat-value">${stats.starter}</div>
+                    <div class="stat-subtitle">Базовая колода игрока</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">👹 Монстры ${deckMonster ? '✅' : '❌'}</div>
+                    <div class="stat-value">${stats.monster}</div>
+                    <div class="stat-subtitle">Отдельная стопка</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">🧪 Расходники ${deckConsumable ? '✅' : '❌'}</div>
+                    <div class="stat-value">${stats.consumable}</div>
+                    <div class="stat-subtitle">Trade Row</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">✨ Эвенты ${deckEffect ? '✅' : '❌'}</div>
+                    <div class="stat-value">${stats.effect}</div>
+                    <div class="stat-subtitle">При выходе</div>
+                </div>
+            `;
+            
+            document.getElementById('stats-container').style.display = 'block';
+        }
+
+        // Рыночные карты (Trade Row) считаем ТАК ЖЕ, как в game.html:createMarket:
+        // только disciple/attire с ценой > 0.
+        function isMarketEligibleBase(card) {
+            if (!card) return false;
+            const cost = Number(card.cost);
+            return Number.isFinite(cost) && cost > 0;
+        }
+
+        function calculateStats(cards) {
+            const tradeRowMain = cards.filter(card =>
+                (card.category === 'disciple' || card.category === 'main') &&
+                isMarketEligibleBase(card)
+            );
+            const tradeRowGear = cards.filter(card =>
+                (card.is_gear || card.category === 'attire' || card.category === 'gear') &&
+                isMarketEligibleBase(card)
+            );
+
+            return {
+                total: cards.length,
+                main: tradeRowMain.length,
+                gear: tradeRowGear.length,
+                altar: cards.filter(c => (c.name && /Altar/i.test(c.name)) || c.category === 'altar').length,
+                starter: cards.filter(card => card.category === 'starter').length,
+                consumable: cards.filter(card => card.category === 'consumable').length,
+                monster: cards.filter(card => card.category === 'monster').length,
+                effect: cards.filter(card => card.category === 'effect' || card.category === 'events').length
+            };
+        }
+
+        // Функция showCardDetails заменена на openCardModal
+
+        function showError(message) {
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
+        }
+
+        function showSuccess(message) {
+            // Можно добавить уведомление об успехе
+            console.log('Успех:', message);
+        }
+
+        function showLoading(message) {
+            const loadingElement = document.getElementById('loading');
+            if (loadingElement) {
+                loadingElement.innerHTML = `<div class="spinner"></div><p>${message}</p>`;
+                loadingElement.style.display = 'block';
+            }
+        }
+
+        function hideLoading() {
+            const loadingElement = document.getElementById('loading');
+            if (loadingElement) {
+                loadingElement.style.display = 'none';
+            }
+        }
+
+        // generateImageVariants теперь в shared-utils.js
+
+        function handleImageError(imgElement, originalImage, cardName) {
+            // Лёгкий устойчивый fallback только внутри https://cob-game-clean-v-1.vercel.app/web/static/
+            const attempt = parseInt(imgElement.getAttribute('data-attempt') || '0', 10);
+            let candidate = originalImage || '';
+            if (!candidate) { imgElement.style.display = 'none'; return; }
+
+            if (attempt === 0) {
+                // Пробуем заменить пробелы на подчёркивания
+                candidate = candidate.replace(/\s+/g, '_');
+            } else if (attempt === 1) {
+                // Пробуем заменить пробелы на дефисы
+                candidate = candidate.replace(/\s+/g, '-');
+            } else if (attempt === 2) {
+                // Пробуем заменить дефисы на подчёркивания
+                candidate = candidate.replace(/-/g, '_');
+            } else if (attempt === 3) {
+                // Удаляем апострофы
+                candidate = candidate.replace(/["'’‘]/g, '');
+            } else {
+                console.log(`❌ Не найдено изображение для ${cardName} (${originalImage}), скрываем`);
+                imgElement.style.display = 'none';
+                return;
+            }
+
+            imgElement.setAttribute('data-attempt', String(attempt + 1));
+            const nextUrl = `https://cob-game-clean-v-1.vercel.app/web/static/${encodeURIComponent(candidate)}`;
+            console.log(`🔄 Fallback ${attempt + 1} для ${cardName}: ${nextUrl}`);
+            imgElement.src = nextUrl;
+        }
+
+        // Обработчики событий для галочек выбора колод
+        function setupDeckCheckboxes() {
+            const checkboxes = document.querySelectorAll('.deck-checkbox input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    displayStats(); // Обновляем статистику при изменении
+                    console.log(`🎯 Колода ${checkbox.id} ${checkbox.checked ? 'включена' : 'отключена'}`);
+                });
+            });
+        }
+
+        // Экспорт выбранных колод
+        function exportSelectedDecks() {
+            const deckDisciple = document.getElementById('deck-disciple').checked;
+            const deckAttire = document.getElementById('deck-attire').checked;
+            const deckStarter = document.getElementById('deck-starter').checked;
+            const deckMonster = document.getElementById('deck-monster').checked;
+            const deckConsumable = document.getElementById('deck-consumable').checked;
+            const deckEffect = document.getElementById('deck-effect')?.checked;
+            const deckAltar = document.getElementById('deck-altar') ? document.getElementById('deck-altar').checked : true;
+
+            const selectedCards = allCards.filter(card => {
+                if (card.category === 'disciple') {
+                    if (card.name && /Altar/i.test(card.name)) return deckAltar;
+                    return deckDisciple && isMarketEligibleBase(card);
+                }
+                if (card.category === 'attire') return deckAttire && isMarketEligibleBase(card);
+                if (card.category === 'starter') return deckStarter;
+                if (card.category === 'monster') return deckMonster;
+                if (card.category === 'consumable') return deckConsumable;
+                if (card.category === 'effect') return !!deckEffect;
+                if (card.category === 'altar') return deckAltar;
+                return false;
+            });
+
+            const deckConfig = {
+                timestamp: new Date().toISOString(),
+                selected_decks: {
+                    disciple: deckDisciple,
+                    attire: deckAttire,
+                    altar: !!deckAltar,
+                    starter: deckStarter,
+                    monster: deckMonster,
+                    consumable: deckConsumable,
+                    effect: !!deckEffect
+                },
+                trade_row: selectedCards.filter(card => 
+                    card.category === 'disciple' || 
+                    card.category === 'attire' || 
+                    card.category === 'consumable' ||
+                    card.category === 'effect'
+                ),
+                monster_deck: selectedCards.filter(card => card.category === 'monster'),
+                player_deck: selectedCards.filter(card => card.category === 'starter'),
+                stats: {
+                    total_cards: selectedCards.length,
+                    trade_row_cards: selectedCards.filter(card => 
+                        card.category === 'disciple' || 
+                        card.category === 'attire' || 
+                        card.category === 'consumable'
+                    ).length,
+                    monster_cards: selectedCards.filter(card => card.category === 'monster').length,
+                    player_deck_cards: selectedCards.filter(card => card.category === 'starter').length
+                }
+            };
+
+            // Экспортируем в JSON
+            const dataStr = JSON.stringify(deckConfig, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `deck_config_${new Date().toISOString().slice(0, 10)}.json`;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+            
+            showSuccess(`✅ Экспортировано ${deckConfig.stats.total_cards} карт из выбранных колод!`);
+            console.log('🎴 Конфигурация колод:', deckConfig);
+        }
+
+        // Копирование конфигурации колод в буфер обмена
+        async function copyDeckConfig() {
+            const deckDisciple = document.getElementById('deck-disciple').checked;
+            const deckAttire = document.getElementById('deck-attire').checked;
+            const deckStarter = document.getElementById('deck-starter').checked;
+            const deckMonster = document.getElementById('deck-monster').checked;
+            const deckConsumable = document.getElementById('deck-consumable').checked;
+            const deckEffect = document.getElementById('deck-effect')?.checked;
+            const deckAltar = document.getElementById('deck-altar') ? document.getElementById('deck-altar').checked : true;
+
+            const selectedCards = allCards.filter(card => {
+                if (card.category === 'disciple') {
+                    if (card.name && /Altar/i.test(card.name)) return deckAltar;
+                    return deckDisciple;
+                }
+                if (card.category === 'attire') return deckAttire;
+                if (card.category === 'starter') return deckStarter;
+                if (card.category === 'monster') return deckMonster;
+                if (card.category === 'consumable') return deckConsumable;
+                if (card.category === 'effect') return !!deckEffect;
+                if (card.category === 'altar') return deckAltar;
+                return false;
+            });
+
+            const configSummary = {
+                selected_decks: {
+                    disciple: deckDisciple,
+                    attire: deckAttire,
+                    altar: !!deckAltar,
+                    starter: deckStarter,
+                    monster: deckMonster,
+                    consumable: deckConsumable,
+                    effect: !!deckEffect
+                },
+                trade_row: selectedCards.filter(card => 
+                    card.category === 'disciple' || 
+                    card.category === 'attire' || 
+                    card.category === 'consumable' ||
+                    card.category === 'effect'
+                ).length,
+                monster_deck: selectedCards.filter(card => card.category === 'monster').length,
+                player_deck: selectedCards.filter(card => card.category === 'starter').length
+            };
+
+            try {
+                await navigator.clipboard.writeText(JSON.stringify(configSummary, null, 2));
+                showSuccess('📋 Конфигурация скопирована в буфер обмена!');
+                console.log('📋 Скопировано в буфер:', configSummary);
+            } catch (err) {
+                console.error('Ошибка копирования:', err);
+                showError('Не удалось скопировать в буфер обмена');
+            }
+        }
+
+        // Функция обновления карт из TTS файла
+        async function reparseCards() {
+            try {
+                showLoading('🔄 Обновление карт...');
+                
+                // Проверяем, работаем ли мы локально с Flask API
+                let response;
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    response = await fetch('/api/reparse', { method: 'POST' });
+                } else {
+                    showError('❌ Функция недоступна в статической версии (Vercel)');
+                    return;
+                }
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    showSuccess(`✅ Карты обновлены! Загружено: ${result.counts.disciple} Disciple, ${result.counts.starters} Starter, ${result.counts.attire} Attire, ${result.counts.monsters} Monsters, ${result.counts.consumables} Consumables, ${result.counts.effects || 0} Effects`);
+                    // Перезагружаем карты после обновления
+                    setTimeout(() => {
+                        loadCards();
+                    }, 1000);
+                } else {
+                    showError(`❌ Ошибка обновления: ${result.error || 'Неизвестная ошибка'}`);
+                }
+            } catch (error) {
+                console.error('Ошибка обновления карт:', error);
+                showError('❌ Ошибка подключения к серверу');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Функция синхронизации изображений
+        async function syncImages() {
+            try {
+                showLoading('🖼️ Синхронизация изображений...');
+                
+                // Проверяем, работаем ли мы локально с Flask API
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    var response = await fetch('/api/sync_images', { method: 'POST' });
+                } else {
+                    showError('❌ Функция недоступна в статической версии (Vercel)');
+                    return;
+                }
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    showSuccess(`✅ Изображения синхронизированы! Добавлено: ${result.stats.added}, Пропущено: ${result.stats.skipped}, Ошибок: ${result.stats.errors}`);
+                    // Перезагружаем карты для обновления изображений
+                    setTimeout(() => {
+                        loadCards();
+                    }, 1000);
+                } else {
+                    showError(`❌ Ошибка синхронизации: ${result.error || 'Неизвестная ошибка'}`);
+                }
+            } catch (error) {
+                console.error('Ошибка синхронизации изображений:', error);
+                showError('❌ Ошибка подключения к серверу');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Проверка обновлений при загрузке страницы
+        async function checkForUpdates() {
+            try {
+                // API недоступно на Vercel - скрываем баннер
+                const banner = document.getElementById('update-banner');
+                if (banner) banner.style.display = 'none';
+                return;
+            } catch (e) {
+                // Тихо игнорируем ошибки проверки
+            }
+        }
+
+        async function applyDetectedUpdate() {
+            await reparseCards();
+            await syncImages();
+            await loadCards();
+            const banner = document.getElementById('update-banner');
+            banner.style.display = 'none';
+        }
+
+        // Функция принудительного обновления
+        async function forceUpdate() {
+            try {
+                showLoading('⚡ Полное обновление карт, изображений и синхронизация для Vercel...');
+                
+                // Проверяем, работаем ли мы локально с Flask API
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    var response = await fetch('/api/force_update', { method: 'POST' });
+                } else {
+                    showError('❌ Функция недоступна в статической версии (Vercel)');
+                    return;
+                }
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    showSuccess(`✅ Полное обновление завершено! Все файлы синхронизированы для Vercel.`);
+                    console.log('Вывод update_all.py:', result.output);
+                    // Перезагружаем карты после обновления
+                    setTimeout(() => {
+                        loadCards();
+                    }, 1000);
+                } else {
+                    showError(`❌ Ошибка принудительного обновления: ${result.error || 'Неизвестная ошибка'}`);
+                }
+            } catch (error) {
+                console.error('Ошибка принудительного обновления:', error);
+                showError('❌ Ошибка подключения к серверу');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        async function syncAllFiles() {
+            try {
+                showLoading('🔄 Полная синхронизация web/ и data/ в public/...');
+                
+                // Проверяем, работаем ли мы локально с Flask API
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    var response = await fetch('/api/sync-all', { method: 'POST' });
+                } else {
+                    showError('❌ Функция недоступна в статической версии (Vercel)');
+                    return;
+                }
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    showSuccess(`✅ Полная синхронизация завершена!`);
+                    console.log('Вывод синхронизации:', result.sync_output);
+                    console.log('Коммит:', result.commit_hash);
+                    console.log('Vercel URL:', result.vercel_url);
+                    
+                    // Предлагаем открыть Vercel версию
+                    setTimeout(() => {
+                        if (confirm('Открыть обновленную Vercel версию?')) {
+                            window.open(result.vercel_url, '_blank');
+                        }
+                    }, 1000);
+                } else {
+                    showError(`❌ Ошибка полной синхронизации: ${result.error || 'Неизвестная ошибка'}`);
+                }
+            } catch (error) {
+                console.error('Ошибка полной синхронизации:', error);
+                showError('❌ Ошибка подключения к серверу');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Функция предзагрузки изображений
+        function preloadImages(cards) {
+            // Отключено для предотвращения мерцания
+            console.log('⏭️ Предзагрузка изображений отключена');
+        }
+
+        // Функция очистки кеша изображений
+        function clearImageCache() {
+            if (window.sharedImageCache) {
+                window.sharedImageCache.clearCache();
+                alert('🗑️ Кеш изображений очищен! Страница будет перезагружена для применения изменений.');
+                location.reload();
+            } else {
+                alert('❌ Система кеширования недоступна');
+            }
+        }
+
+        // Автоматическая загрузка карт и проверка обновлений
+        document.addEventListener('DOMContentLoaded', () => {
+            checkForUpdates();
+            loadCards();
+            setupDeckCheckboxes();
+        });
+
+        // Функции для модального окна
+        function openCardModal(card) {
+            const modal = document.getElementById('cardModal');
+            const modalImage = document.getElementById('modalCardImage');
+            const modalName = document.getElementById('modalCardName');
+            const modalEffects = document.getElementById('modalCardEffects');
+
+            const typeLower = String(card.card_type || card.type || '').toLowerCase();
+            const isAltar = (card.name && /altar/i.test(card.name)) || card.category === 'altar' || typeLower === 'altar';
+            const canUseSprite = card.sprite_url && card.card_id !== undefined && !card.is_gear && typeLower !== 'attire';
+
+            if (canUseSprite) {
+                const numW = isAltar ? (card.sprite_num_w != null ? card.sprite_num_w : 6) : (card.sprite_num_w != null ? card.sprite_num_w : 8);
+                const numH = isAltar ? (card.sprite_num_h != null ? card.sprite_num_h : 7) : (card.sprite_num_h != null ? card.sprite_num_h : 6);
+                const style = typeof getCardSpriteStyle === 'function'
+                    ? getCardSpriteStyle(card.sprite_url, card.card_id, numW, numH)
+                    : '';
+                if (style) {
+                    modalImage.style.cssText = style + ' max-width: 400px; width: auto; height: auto; aspect-ratio: ' + (isAltar ? '7 / 5' : '5 / 7') + '; background-repeat: no-repeat; display: block;';
+                    modalImage.removeAttribute('src');
+                } else {
+                    const modalNameFile = card.image || card.image_local || '';
+                    if (modalNameFile) {
+                        modalImage.removeAttribute('style');
+                        modalImage.style.backgroundImage = '';
+                        modalImage.src = `https://cob-game-clean-v-1.vercel.app/web/static/${encodeURIComponent(modalNameFile)}`;
+                        modalImage.onerror = () => handleImageError(modalImage, modalNameFile, card.name);
+                    } else {
+                        modalImage.removeAttribute('src');
+                    }
+                }
+            } else {
+                // Attire и fallback: только card.image (отдельный PNG)
+                modalImage.removeAttribute('style');
+                modalImage.style.backgroundImage = '';
+                const modalNameFile = card.image || card.image_local || '';
+                if (modalNameFile) {
+                    modalImage.src = `https://cob-game-clean-v-1.vercel.app/web/static/${encodeURIComponent(modalNameFile)}`;
+                    modalImage.onerror = () => handleImageError(modalImage, modalNameFile, card.name);
+                } else {
+                    modalImage.removeAttribute('src');
+                }
+            }
+            modalImage.alt = card.name;
+
+            modalName.textContent = card.name;
+
+            // Эффекты — те же поля, что в JSON и в превью (effect1, effect2, effect1text, effect2text)
+            let effectsText = '';
+            if (card.effect1) effectsText += `Эффект 1: ${card.effect1}\n`;
+            if (card.effect1text) effectsText += `${card.effect1text}\n`;
+            if (card.effect2) effectsText += `Эффект 2: ${card.effect2}\n`;
+            if (card.effect2text) effectsText += `${card.effect2text}\n`;
+            if (card.reward) effectsText += `Награда: ${card.reward}\n`;
+            if (card.ongoing_effect) effectsText += `Постоянный эффект: ${card.ongoing_effect}\n`;
+
+            modalEffects.textContent = effectsText.trim() || 'Нет описания эффектов';
+
+            modal.style.display = 'block';
+        }
+
+        function closeCardModal() {
+            const modal = document.getElementById('cardModal');
+            modal.style.display = 'none';
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            const modal = document.getElementById('cardModal');
+            if (event.target === modal) {
+                closeCardModal();
+            }
+        }
+
+        // Закрытие модального окна при нажатии Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeCardModal();
+            }
+        });
+    </script>
+
+    <!-- Модальное окно для полного просмотра карты -->
+    <div id="cardModal" class="card-modal">
+        <div class="card-modal-content">
+            <span class="card-modal-close" onclick="closeCardModal()">&times;</span>
+            <img id="modalCardImage" class="card-modal-image" src="" alt="">
+            <div class="card-modal-info">
+                <div id="modalCardName" class="card-modal-name"></div>
+                <div id="modalCardEffects" class="card-modal-effects"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Админ-панель для обновления карт -->
+    <div id="admin-panel" style="display: none; margin-top: 40px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 10px; border: 1px solid rgba(255,255,255,0.2);">
+        <h3 style="color: #ff6b6b; margin-bottom: 20px;">🔧 Админ-панель обновления карт</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+            <div>
+                <h4 style="color: #4ecdc4; margin-bottom: 10px;">📁 Загрузка нового CoB_All.json</h4>
+                <input type="file" id="cob-file-input" accept=".json" style="margin-bottom: 10px; padding: 8px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
+                <button id="upload-cob-btn" style="padding: 8px 16px; background: #4ecdc4; color: white; border: none; border-radius: 5px; cursor: pointer;">Загрузить файл</button>
+                <div id="upload-status" style="margin-top: 10px; font-size: 0.9rem;"></div>
+            </div>
+            
+            <div>
+                <h4 style="color: #45b7d1; margin-bottom: 10px;">⚙️ Обновление карт и изображений</h4>
+                <button id="parse-cards-btn" style="padding: 8px 16px; background: #45b7d1; color: white; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;">Парсить карты</button>
+                <button id="sync-images-btn" style="padding: 8px 16px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer;">Синхр. изображения</button>
+                <button id="force-update-btn" style="padding: 8px 16px; background: #ff9500; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Полное обновление</button>
+                <div id="process-status" style="margin-top: 10px; font-size: 0.9rem;"></div>
+            </div>
+        </div>
+        
+        <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.8rem; max-height: 200px; overflow-y: auto;" id="admin-log">
+            <div style="color: #4ecdc4;">Админ-панель готова к работе...</div>
+        </div>
+        
+        <div style="margin-top: 15px; font-size: 0.8rem; color: #b8c6db;">
+            <strong>Инструкция:</strong><br>
+            1. Загрузите новый CoB_All.json файл<br>
+            2. Нажмите "Парсить карты" для обновления базы<br>
+            3. Нажмите "Синхр. изображения" для обновления картинок<br>
+            4. Или используйте "Полное обновление" для всего сразу<br>
+            5. Обновите страницу для применения изменений
+        </div>
+    </div>
+
+    <!-- Кнопка показа/скрытия админ-панели -->
+    <div style="position: fixed; bottom: 20px; right: 20px;">
+        <button id="admin-toggle-btn" style="padding: 10px; background: rgba(255,107,107,0.8); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 16px;" title="Показать админ-панель">🔧</button>
+    </div>
+
+    <script>
+        // Админ-панель
+        let adminPanelVisible = false;
+        
+        document.getElementById('admin-toggle-btn').addEventListener('click', function() {
+            const panel = document.getElementById('admin-panel');
+            const btn = document.getElementById('admin-toggle-btn');
+            
+            adminPanelVisible = !adminPanelVisible;
+            panel.style.display = adminPanelVisible ? 'block' : 'none';
+            btn.style.background = adminPanelVisible ? 'rgba(76,205,196,0.8)' : 'rgba(255,107,107,0.8)';
+            btn.title = adminPanelVisible ? 'Скрыть админ-панель' : 'Показать админ-панель';
+        });
+
+        function addAdminLog(message, type = 'info') {
+            const log = document.getElementById('admin-log');
+            const colors = {
+                'info': '#4ecdc4',
+                'success': '#44ff44', 
+                'error': '#ff4444',
+                'warning': '#ffaa00'
+            };
+            const div = document.createElement('div');
+            div.style.color = colors[type] || colors['info'];
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(div);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Загрузка файла CoB_All.json
+        document.getElementById('upload-cob-btn').addEventListener('click', function() {
+            const fileInput = document.getElementById('cob-file-input');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                addAdminLog('Выберите файл CoB_All.json', 'warning');
+                return;
+            }
+            
+            if (!file.name.toLowerCase().includes('cob_all') || !file.name.toLowerCase().endsWith('.json')) {
+                addAdminLog('Файл должен называться CoB_All.json', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            addAdminLog('Загружаем файл...', 'info');
+            
+            fetch('/api/upload_cob', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    addAdminLog('Файл успешно загружен!', 'success');
+                    document.getElementById('upload-status').innerHTML = '<span style="color: #44ff44;">✅ Файл загружен</span>';
+                } else {
+                    addAdminLog(`Ошибка загрузки: ${data.error}`, 'error');
+                    document.getElementById('upload-status').innerHTML = '<span style="color: #ff4444;">❌ Ошибка</span>';
+                }
+            })
+            .catch(error => {
+                addAdminLog(`Ошибка: ${error.message}`, 'error');
+                document.getElementById('upload-status').innerHTML = '<span style="color: #ff4444;">❌ Ошибка</span>';
+            });
+        });
+
+        // Парсинг карт
+        document.getElementById('parse-cards-btn').addEventListener('click', function() {
+            addAdminLog('Начинаем парсинг карт...', 'info');
+            
+            fetch('/api/reparse', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    addAdminLog(`Парсинг завершен: ${data.message}`, 'success');
+                    if (data.counts) {
+                        addAdminLog(`Карт: Disciple=${data.counts.disciple}, Starters=${data.counts.starters}, Attire=${data.counts.attire}, Monsters=${data.counts.monsters}, Consumables=${data.counts.consumables}, Effects=${data.counts.effects || 0}`, 'info');
+                    }
+                    document.getElementById('process-status').innerHTML = '<span style="color: #44ff44;">✅ Парсинг завершен</span>';
+                } else {
+                    addAdminLog(`Ошибка парсинга: ${data.error}`, 'error');
+                    document.getElementById('process-status').innerHTML = '<span style="color: #ff4444;">❌ Ошибка</span>';
+                }
+            })
+            .catch(error => {
+                addAdminLog(`Ошибка: ${error.message}`, 'error');
+                document.getElementById('process-status').innerHTML = '<span style="color: #ff4444;">❌ Ошибка</span>';
+            });
+        });
+
+        // Синхронизация изображений
+        document.getElementById('sync-images-btn').addEventListener('click', function() {
+            addAdminLog('Начинаем синхронизацию изображений...', 'info');
+            
+            fetch('/api/sync_images', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    const stats = data.stats;
+                    addAdminLog(`Синхронизация завершена: добавлено=${stats.added}, пропущено=${stats.skipped}, ошибок=${stats.errors}`, 'success');
+                    document.getElementById('process-status').innerHTML = '<span style="color: #44ff44;">✅ Синхронизация завершена</span>';
+                } else {
+                    addAdminLog(`Ошибка синхронизации: ${data.error}`, 'error');
+                    document.getElementById('process-status').innerHTML = '<span style="color: #ff4444;">❌ Ошибка</span>';
+                }
+            })
+            .catch(error => {
+                addAdminLog(`Ошибка: ${error.message}`, 'error');
+                document.getElementById('process-status').innerHTML = '<span style="color: #ff4444;">❌ Ошибка</span>';
+            });
+        });
+
+        // Полное обновление
+        document.getElementById('force-update-btn').addEventListener('click', function() {
+            addAdminLog('Начинаем полное обновление...', 'info');
+            
+            fetch('/api/force_update', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    addAdminLog('Полное обновление завершено!', 'success');
+                    if (data.image_stats) {
+                        addAdminLog(`Изображений: добавлено=${data.image_stats.added}, пропущено=${data.image_stats.skipped}`, 'info');
+                    }
+                    document.getElementById('process-status').innerHTML = '<span style="color: #44ff44;">✅ Полное обновление завершено</span>';
+                } else {
+                    addAdminLog(`Ошибка обновления: ${data.error}`, 'error');
+                    document.getElementById('process-status').innerHTML = '<span style="color: #ff4444;">❌ Ошибка</span>';
+                }
+            })
+            .catch(error => {
+                addAdminLog(`Ошибка: ${error.message}`, 'error');
+                document.getElementById('process-status').innerHTML = '<span style="color: #ff4444;">❌ Ошибка</span>';
+            });
+        });
+    </script>
+</body>
+</html>
