@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="icon" href="data:,">
+    <title>Call of Blades Online - Игра [DEV v2.1]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Open+Sans:wght@300;400;500;600&family=Germania+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/game.css">
+</head>
+<body>
+    <div class="game-container" id="game-container">
+        <!-- Кнопка открытия лога -->
+        <div class="game-log-toggle" onclick="toggleGameLog()" title="Показать/скрыть лог игры">
+            📜 Лог
+        </div>
+        
+        <!-- Лог игры - выдвижная шторка справа -->
+        <div class="game-log-drawer" id="game-log-drawer">
+            <div class="game-log-header">
+                <h3>📜 Лог игры</h3>
+                <button class="btn" onclick="toggleGameLog()" style="padding: 5px 10px; font-size: 0.9rem;">✕</button>
+            </div>
+            <div class="game-log-content">
+                <div id="game-log" class="game-log">
+                    <!-- Логи игры -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Заголовок -->
+        <header class="header">
+                    <div class="game-title">⚔️ Call of Blades Online</div>
+                    <div id="dev-marker" style="margin-left:12px;font-size:12px;color:#9be7ff;opacity:0.85;">
+                        deploy v-2025-02-07
+                    </div>
+            <nav class="nav-buttons">
+                <button class="btn" onclick="location.href='./rules.html'">📖 Правила</button>
+                <button class="btn" onclick="showSettingsModal()" title="Настройки игры">⚙️ Настройки</button>
+                <button class="btn primary" onclick="restartGame()">🔄 Новая игра</button>
+                <details class="nav-more">
+                    <summary class="btn">☰ Ещё</summary>
+                    <div class="nav-more-panel">
+                        <button class="btn" onclick="location.href='/'">🏠 Главная</button>
+                        <button class="btn" onclick="location.href='./simulator.html'">🧪 Симулятор</button>
+                        <button class="btn" onclick="window.open('./cards', '_blank')">📚 База карт</button>
+                        <button class="btn" onclick="loadCardsFromSheets()" title="Подтянуть текст эффектов из Google Таблиц">📥 Обновить тексты карт</button>
+                        <button class="btn" onclick="refreshCards(true)" title="Очистить кеш изображений и обновить">🗑️ Очистить кеш</button>
+                    </div>
+                </details>
+            </nav>
+        </header>
+
+        <!-- ИИ зона сверху -->
+        <div class="ai-top-zone">
+            <!-- Статистика ИИ в столбик -->
+            <div class="ai-stats-column">
+                <div class="stat attack-target" onclick="attackTarget('ai', 'player')" title="Кликните для атаки" style="display: flex; align-items: center; gap: 8px; font-size: 1rem; padding: 8px 12px;">
+                    <span style="font-size: 1.5rem;">🤖</span>
+                    <div>
+                    <span class="stat-label">💚 HP:</span>
+                    <span class="stat-value" id="ai-hp">50</span>
+                </div>
+                </div>
+                <!-- Колода и Сброс в одной строке -->
+                <div class="stat" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                        <span class="stat-label" style="font-size: 1rem;">📚 Колода:</span>
+                        <span class="stat-value" id="ai-deck-count" style="font-size: 1rem;">0</span>
+                        <div class="card-back-button" onclick="showDeckPile('ai')" title="Посмотреть колоду" style="width: 30px; height: 42px; background-image: url('./cardBack.png'); background-size: cover; background-position: center; border-radius: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3); flex-shrink: 0;"></div>
+                </div>
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                        <span class="stat-label" style="font-size: 1rem;">🗑️ Сброс:</span>
+                        <span class="stat-value" id="ai-discard-count" style="font-size: 1rem;">0</span>
+                        <div class="card-back-button" onclick="showDiscardPile('ai')" title="Посмотреть сброс" style="width: 30px; height: 42px; background-image: url('./cardBack.png'); background-size: cover; background-position: center; border-radius: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3); flex-shrink: 0;"></div>
+                </div>
+            </div>
+                </div>
+            
+            <!-- Экипировка ИИ рядом со статистикой -->
+            <div class="ai-attire-zone">
+                <div id="ai-attire" class="attire-area">
+                    <div class="no-items">Нет экипировки</div>
+                </div>
+            </div>
+            
+            <!-- Рука ИИ -->
+            <div class="ai-hand-zone" style="display: flex; align-items: center; gap: 10px;">
+                <button id="ai-hand-toggle-btn" class="ai-hand-toggle-btn" onclick="toggleAIHandVisibility()" title="Показать/скрыть карты ИИ">
+                    👁️
+                </button>
+                <div id="ai-hand" class="hand" style="flex: 1;">
+                    <!-- Карты ИИ (рубашки по умолчанию, открытые при нажатии на кнопку) -->
+                </div>
+                <!-- Справочная картинка с иконками эффектов (справа от карт ИИ) -->
+                <div style="flex-shrink: 0; margin-left: 10px;">
+                    <img src="https://cob-game-clean-v-1.vercel.app/web/static/Refer_card1.png" 
+                         onclick="showReferCardModal()" 
+                         style="width: 120px; height: auto; cursor: pointer; border-radius: 8px; border: 2px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease;"
+                         onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(78, 205, 196, 0.5)';"
+                         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';"
+                         title="Нажмите для просмотра справочника эффектов">
+                </div>
+            </div>
+            
+            <div class="effect-stats" id="ai-effects"></div>
+        </div>
+
+        <!-- Игровая область с новым layout -->
+        <div class="new-game-layout">
+            <!-- Торговый ряд и монстры в одной строке -->
+            <div class="top-row-section">
+                <!-- Торговый ряд -->
+                <div class="market-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <div class="section-title" style="display: flex; align-items: center; gap: 8px;">
+                            <span>🛒 Рынок (<span id="market-count">0</span>)</span>
+                            <div class="card-back-button" onclick="showMarketDeck()" title="Посмотреть колоду рынка" style="width: 30px; height: 42px; background-image: url('./cardBack.png'); background-size: cover; background-position: center; border-radius: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3); flex-shrink: 0;"></div>
+                        </div>
+                        <!-- Стопка Trash Trade Row справа от заголовка -->
+                        <div class="trash-trade-row-section" style="font-size: 0.85rem; line-height: 1.2; display: flex; align-items: center; gap: 5px;">
+                            <span>🗑️ Trash Trade Row (<span id="trash-trade-row-count">0</span>)</span>
+                            <div class="card-back-button" onclick="showTrashTradeRowModal()" title="Посмотреть Trash Trade Row" style="width: 30px; height: 42px; background-image: url('./cardBack.png'); background-size: cover; background-position: center; border-radius: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3); flex-shrink: 0;"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="market" class="market">
+                        <!-- Карты для покупки -->
+                    </div>
+                </div>
+
+                <!-- Секция монстров -->
+                <div class="monsters-section">
+                    <!-- Контейнер для алтаря и монстра (рядом) -->
+                    <div class="monster-altar-row">
+                        <!-- Алтарь душ (слева от монстра) -->
+                        <div id="altar-card-container" class="monster-altar-cell">
+                            <!-- Карта алтаря будет добавлена через JavaScript -->
+                        </div>
+                        
+                        <!-- Монстр -->
+                        <div id="current-monster" class="monster-area monster-altar-cell">
+                        <div class="no-monster">Нет активного монстра</div>
+                    </div>
+                    </div>
+                    
+                    <div class="monster-controls" style="text-align: center; margin-top: 10px; position: relative; z-index: 5; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                        <button id="attack-monster-btn" class="btn" onclick="attackTarget('player', 'monster', 0)" style="display: none; position: relative; z-index: 10;">
+                            ⚔️ Атаковать монстра
+                        </button>
+                        <button id="change-monster-btn" class="btn change-monster-btn" onclick="changeMonster()" title="Сменить монстра">
+                            🔄 Сменить монстра
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Зона разыгранных карт с экипировкой слева -->
+            <div class="played-cards-section">
+                <!-- Экипировка игрока слева -->
+                <div class="player-equipment-left">
+                    <div id="player-attire" class="attire-area">
+                        <div class="no-items">Нет экипировки</div>
+                    </div>
+                </div>
+                
+                <!-- Разыгранные карты в центре -->
+                <div class="played-center">
+                    <div class="played-header">
+                        <div class="section-title">⚡ Play Area</div>
+                        <div class="play-area-info">
+                            <div class="play-area-resources" id="play-area-resources">
+                                <div class="resource-stat primary">✨ <span id="player-blessing-display">0</span></div>
+                                <div class="resource-stat primary">⚔️ <span id="player-damage-display">0</span></div>
+                            </div>
+                            <div class="effect-stats" id="player-effects">
+                                <!-- Счетчики цветов и эффекты -->
+                            </div>
+                            
+                            <!-- Быстрые кнопки управления +/-1 -->
+                            <div style="display: flex; gap: 9px; margin-top: 8px; justify-content: flex-end; flex-wrap: wrap;">
+                                <!-- HP -->
+                                <div style="display: flex; align-items: center; gap: 3px; background: rgba(0, 255, 0, 0.1); padding: 4.5px 9px; border-radius: 4px; border: 1px solid rgba(0, 255, 0, 0.3);">
+                                    <span style="font-size: 1.05rem; color: #4ecdc4;">💚</span>
+                                    <button class="admin-btn" onclick="adminHeal(-1)" style="font-size: 0.9rem; padding: 3px 6px; min-width: 30px; height: 27px;">-1</button>
+                                    <button class="admin-btn" onclick="adminHeal(1)" style="font-size: 0.9rem; padding: 3px 6px; min-width: 30px; height: 27px;">+1</button>
+                                </div>
+                                <!-- Урон -->
+                                <div style="display: flex; align-items: center; gap: 3px; background: rgba(255, 0, 0, 0.1); padding: 4.5px 9px; border-radius: 4px; border: 1px solid rgba(255, 0, 0, 0.3);">
+                                    <span style="font-size: 1.05rem; color: #ff6b6b;">⚔️</span>
+                                    <button class="admin-btn" onclick="adminAddDamage(-1)" style="font-size: 0.9rem; padding: 3px 6px; min-width: 30px; height: 27px;">-1</button>
+                                    <button class="admin-btn" onclick="adminAddDamage(1)" style="font-size: 0.9rem; padding: 3px 6px; min-width: 30px; height: 27px;">+1</button>
+                                </div>
+                                <!-- Души -->
+                                <div style="display: flex; align-items: center; gap: 3px; background: rgba(255, 215, 0, 0.1); padding: 4.5px 9px; border-radius: 4px; border: 1px solid rgba(255, 215, 0, 0.3);">
+                                    <span style="font-size: 1.05rem; color: #ffd700;">💰</span>
+                                    <button class="admin-btn" onclick="adminAddBlessing(-1)" style="font-size: 0.9rem; padding: 3px 6px; min-width: 30px; height: 27px;">-1</button>
+                                    <button class="admin-btn" onclick="adminAddBlessing(1)" style="font-size: 0.9rem; padding: 3px 6px; min-width: 30px; height: 27px;">+1</button>
+                                </div>
+                                <!-- Добор карты -->
+                                <div style="display: flex; align-items: center; gap: 3px; background: rgba(78, 205, 196, 0.1); padding: 4.5px 9px; border-radius: 4px; border: 1px solid rgba(78, 205, 196, 0.3);">
+                                    <button class="admin-btn" onclick="adminDrawCard()" style="font-size: 0.9rem; padding: 3px 6px; min-width: 60px; height: 27px;">📤 Draw 1</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="all-played-cards" class="played-area">
+                        <!-- Разыгранные карты игроков -->
+                    </div>
+                </div>
+                
+                <!-- Управление справа -->
+                <div class="controls-right">
+                    <button id="end-turn-btn" class="btn" onclick="endPlayerTurn()" style="font-size: 1.2rem; padding: 12px 20px; font-weight: bold;">⏭️ Завершить ход</button>
+                    <button id="undo-btn" class="btn" onclick="undoLastAction()" style="font-size: 1.2rem; padding: 12px 20px; font-weight: bold;">↩️ Отменить</button>
+                    <button id="ai-turn-btn" class="btn" onclick="aiTurn()" style="display: none;">🤖 Ход ИИ</button>
+                    <div class="turn-info">
+                        <div>Ход: <span id="turn-counter">1</span></div>
+                        <div>Игрок: <span id="current-player">Игрок</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Основная игровая зона -->
+            <div class="main-layout">
+                <!-- Левая панель - Игрок -->
+                <div class="player-side left-side">
+                    <div class="player-header">
+                        <h2 class="player-name">🧙‍♂️ Игрок</h2>
+                    </div>
+                    
+                    <!-- Базовые параметры (скрыты, ID перенесены в player-bottom-zone) -->
+                    <div class="base-stats" style="display:none;">
+                </div>
+
+                    <!-- Сброс (скрытый элемент для JavaScript) -->
+                    <div id="player-discard" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Зона игрока снизу - горизонтальная рука -->
+            <div class="player-bottom-zone">
+                <div class="player-stats-compact">
+                    <div class="stat hp-row">
+                        <span class="player-tag-mini">🧙 Игрок</span>
+                        <span class="stat-label">💚 HP:</span>
+                        <span class="stat-value" id="player-hp">50</span>
+                    </div>
+                    <!-- Колода и Сброс в одной строке -->
+                    <div class="stat" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <span class="stat-label" style="font-size: 1rem;">🃏 Колода:</span>
+                            <span class="stat-value" id="deck-count" style="font-size: 1rem;">0</span>
+                            <div class="card-back-button" onclick="showDeckPile('player')" title="Посмотреть колоду" style="width: 30px; height: 42px; background-image: url('./cardBack.png'); background-size: cover; background-position: center; border-radius: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3); flex-shrink: 0;"></div>
+                    </div>
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <span class="stat-label" style="font-size: 1rem;">🗑️ Сброс:</span>
+                            <span class="stat-value" id="discard-count" style="font-size: 1rem;">0</span>
+                            <div class="card-back-button" onclick="showDiscardPile('player')" title="Посмотреть сброс" style="width: 30px; height: 42px; background-image: url('./cardBack.png'); background-size: cover; background-position: center; border-radius: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3); flex-shrink: 0;"></div>
+                    </div>
+                    </div>
+                    
+                    <!-- Кнопки управления -->
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button id="end-turn-btn-bottom" class="btn" onclick="endPlayerTurn()" style="font-size: 1rem; padding: 8px 16px; font-weight: bold; flex: 1;">⏭️ Конец хода</button>
+                        <button id="undo-btn-bottom" class="btn" onclick="undoLastAction()" style="font-size: 1rem; padding: 8px 16px; font-weight: bold; flex: 1;">↩️ Отмена</button>
+                    </div>
+                    
+                    <!-- Кнопки дополнительных функций -->
+                    <div class="admin-controls">
+                        <button class="admin-btn" onclick="toggleAdminPanel()" style="font-size: 0.85rem; padding: 6px 12px;">⚙️ Админ</button>
+                        <button class="admin-btn" onclick="showReferCardModal()" style="font-size: 0.85rem; padding: 6px 12px; background: rgba(78, 205, 196, 0.2); border-color: rgba(78, 205, 196, 0.5); color: #4ecdc4;">📋 Свойства</button>
+                </div>
+                
+                    <!-- Админ-панель -->
+                    <div id="admin-panel" style="margin-top: 10px; padding: 10px; background: rgba(255, 0, 0, 0.1); border: 2px solid rgba(255, 0, 0, 0.3); border-radius: 8px;">
+                        <div style="font-size: 0.85rem; color: #ff6b6b; font-weight: bold; margin-bottom: 8px; text-align: center;">⚙️ АДМИН ПАНЕЛЬ</div>
+                        
+                        <!-- Урон -->
+                        <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px; justify-content: center;">
+                            <span style="font-size: 0.7rem; color: #ff6b6b; min-width: 50px;">⚔️ Урон:</span>
+                            <button class="admin-btn" onclick="adminAddDamage(-10)" style="font-size: 0.7rem; padding: 4px 8px; min-width: 30px;">-10</button>
+                            <button class="admin-btn" onclick="adminAddDamage(10)" style="font-size: 0.7rem; padding: 4px 8px; min-width: 30px;">+10</button>
+                    </div>
+                        
+                        <!-- Души -->
+                        <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px; justify-content: center;">
+                            <span style="font-size: 0.7rem; color: #ff6b6b; min-width: 50px;">💰 Души:</span>
+                            <button class="admin-btn" onclick="adminAddBlessing(-10)" style="font-size: 0.7rem; padding: 4px 8px; min-width: 30px;">-10</button>
+                            <button class="admin-btn" onclick="adminAddBlessing(10)" style="font-size: 0.7rem; padding: 4px 8px; min-width: 30px;">+10</button>
+                </div>
+                        
+                        <!-- HP -->
+                        <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px; justify-content: center;">
+                            <span style="font-size: 0.7rem; color: #ff6b6b; min-width: 50px;">💚 HP:</span>
+                            <button class="admin-btn" onclick="adminHeal(-10)" style="font-size: 0.7rem; padding: 4px 8px; min-width: 30px;">-10</button>
+                            <button class="admin-btn" onclick="adminHeal(10)" style="font-size: 0.7rem; padding: 4px 8px; min-width: 30px;">+10</button>
+                            <button class="admin-btn" onclick="adminHeal(50)" style="font-size: 0.7rem; padding: 4px 8px; min-width: 40px;">+50</button>
+                        </div>
+                        
+                        <!-- Другие действия -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 5px;">
+                            <button class="admin-btn" onclick="adminDrawCard()" style="font-size: 0.7rem; padding: 4px 8px;">📤 +1 Карта</button>
+                            <button class="admin-btn" onclick="adminTrashCard()" style="font-size: 0.7rem; padding: 4px 8px;">🗑️ Треш карту</button>
+                        </div>
+
+                        <!-- Dextrous sync / deploy (локально) -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 8px;">
+                            <button class="admin-btn" onclick="dextrousSync(false)" style="font-size: 0.7rem; padding: 4px 8px; background: rgba(78, 205, 196, 0.2); border-color: rgba(78, 205, 196, 0.5); color: #4ecdc4;">
+                                🔄 Dextrous Pull
+                            </button>
+                            <button class="admin-btn" onclick="dextrousSync(true)" style="font-size: 0.7rem; padding: 4px 8px; background: rgba(255, 215, 0, 0.18); border-color: rgba(255, 215, 0, 0.45); color: #ffd600;">
+                                🚀 Pull + Deploy
+                            </button>
+                        </div>
+
+                        <!-- Полное обновление CoB_All → JSON → картинки (как в rules) -->
+                        <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255, 255, 255, 0.12);">
+                            <div style="font-size: 0.7rem; color: #ffd600; text-align: center; margin-bottom: 4px;">
+                                🧩 CoB_All / JSON / картинки
+                            </div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;">
+                                <button class="admin-btn" onclick="fullUpdateFromCob()" style="font-size: 0.7rem; padding: 4px 8px; background: rgba(255, 149, 0, 0.2); border-color: rgba(255, 149, 0, 0.6); color: #ffb84d;">
+                                    🧩 Полное обновление CoB_All
+                                </button>
+                            </div>
+                        </div>
+            </div>
+    </div>
+
+                <div class="player-hand-horizontal">
+                    <div id="player-hand" class="hand">
+                        <!-- Карты игрока -->
+        </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Лог игры удален отсюда - теперь справа как шторка -->
+
+    <!-- Модальное окно выбора -->
+    <div class="modal" id="choice-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="choice-close-btn" onclick="cancelChoice()">&times;</button>
+            <h2 id="choice-title">Выберите карту</h2>
+            <div id="choice-content">
+                <!-- Контент выбора -->
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn primary" id="choice-confirm-btn" onclick="confirmChoice()">✅ Подтвердить</button>
+                <button class="btn" id="choice-cancel-btn" onclick="cancelChoice()">❌ Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно просмотра карт -->
+    <div class="card-preview-modal" id="card-preview-modal">
+        <div class="card-preview-content">
+            <button class="card-preview-close" onclick="closeCardPreview()">×</button>
+            <div id="card-preview-card"></div>
+        </div>
+    </div>
+
+    <!-- Tooltip для карт -->
+    <div class="card-tooltip" id="card-tooltip">
+        <div class="tooltip-name" id="tooltip-name"></div>
+        <div class="tooltip-cost" id="tooltip-cost"></div>
+        <div class="tooltip-type" id="tooltip-type"></div>
+        <div class="tooltip-effects" id="tooltip-effects"></div>
+    </div>
+
+    <!-- Модальное окно правил -->
+    <div class="modal" id="rules-modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('rules-modal')">&times;</button>
+            <h2>📖 Правила игры</h2>
+            <div id="rules-content">
+                <h3>🎯 Цель игры</h3>
+                <p>Снизить здоровье противника до 0 или отравить его ядом до 20+</p>
+                
+                <h3>⚡ Основные эффекты в фигурных скобках {}</h3>
+                
+                <h4>🔥 Базовые эффекты</h4>
+                <ul>
+                    <li><strong>{Blessing X}</strong> - получить X Душ для покупок ✅</li>
+                    <li><strong>{Damage X}</strong> - нанести X урона ✅</li>
+                    <li><strong>{Heal X}</strong> - восстановить X HP ✅</li>
+                    <li><strong>{Draw X}</strong> - взять X карт ✅</li>
+                    <li><strong>{Poison X}</strong> - дать X яда противнику ✅</li>
+                    <li><strong>{Bleed X}</strong> - дать X кровотечения противнику ✅</li>
+                    <li><strong>{Stun X}</strong> - сбросить X карт из руки противника ✅</li>
+                    <li><strong>{Discard X}</strong> - сбросить X своих карт ✅</li>
+                    <li><strong>{Trash}</strong> - уничтожить стартовую карту ✅</li>
+                    <li><strong>{Trash_this}</strong> - уничтожить эту карту после эффектов ✅</li>
+                </ul>
+                
+                <h4>🛡️ Лечебные эффекты</h4>
+                <ul>
+                    <li><strong>{Heal_bleed X}</strong> - снять X кровотечения ✅</li>
+                    <li><strong>{Heal_poison X}</strong> - снять X яда ✅</li>
+                    <li><strong>{Remove_poison X}</strong> - снять X яда с противника (за счет игрока) ✅ РЕАЛИЗОВАН</li>
+                </ul>
+                
+                <h4>🎭 Ресурсные эффекты</h4>
+                <ul>
+                    <li><strong>{Burn X}</strong> - потратить X Душ для активации ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>{Spy X}</strong> - посмотреть X карт (шпионаж) ✅ РЕАЛИЗОВАН</li>
+                </ul>
+                
+                <h4>🎯 Боевые спецэффекты</h4>
+                <ul>
+                    <li><strong>{Destroy}</strong> - уничтожить цель ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>{Defeat Monster}</strong> - победить монстра определенной силы ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>{Ready X}</strong> - приготовить X целей ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>{Shuffle}</strong> - перетасовать колоду ✅ РЕАЛИЗОВАН</li>
+                </ul>
+                
+                <h4>🛍️ Торговые эффекты</h4>
+                <ul>
+                    <li><strong>{Acquire}</strong> - получить карту бесплатно ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>{Steal}</strong> - украсть карту у противника ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>{Trash Trade Row X}</strong> - уничтожить X карт из рынка ✅ РЕАЛИЗОВАН</li>
+                </ul>
+                
+                <h4>🔗 Условные эффекты</h4>
+                <ul>
+                    <li><strong>{W_chain}, {R_chain}, {B_chain}, {G_chain}</strong> - цепочки по цветам ✅</li>
+                    <li><strong>{Ongoing}</strong> - постоянный эффект до конца хода ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>{If_discarded}</strong> - если карта сброшена ✅ РЕАЛИЗОВАН</li>
+                </ul>
+                
+                <h3>📝 Текстовые эффекты и свойства</h3>
+                <ul>
+                    <li><strong>Trigger:</strong> Автоматическая активация при условии ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>TO:</strong> Разделитель "условие ТО эффект" ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>OR:</strong> Выбор альтернатив ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>If you/Rival:</strong> Условия для игрока/противника ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>If Destroyed:</strong> При уничтожении ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>X is equal to:</strong> Переменное значение ✅ РЕАЛИЗОВАН</li>
+                    <li><strong>(Up to X):</strong> Выбор значения X до лимита ✅ РЕАЛИЗОВАН</li>
+                </ul>
+                
+                <h3>🎯 Логика работы способностей</h3>
+                <h4>Базовые эффекты:</h4>
+                <ul>
+                    <li><strong>{Damage N}</strong> - Накапливает N урона у игрока. Игрок должен выбрать цель вручную</li>
+                    <li><strong>{Heal N}</strong> - Мгновенно восстанавливает N HP игроку</li>
+                    <li><strong>{Blessing N}</strong> - Дает N душ для покупок в этом ходу</li>
+                    <li><strong>{Draw N}</strong> - Мгновенно добирает N карт в руку</li>
+                    <li><strong>{Poison N}</strong> - Накладывает N яда на противника (действует в начале хода)</li>
+                    <li><strong>{Bleed N}</strong> - Накладывает N кровотечения на противника (действует в начале хода)</li>
+                </ul>
+                
+                <h4>Управляющие эффекты:</h4>
+                <ul>
+                    <li><strong>{Stun N}</strong> - Заставляет противника сбросить N карт из руки</li>
+                    <li><strong>{Discard N}</strong> - Заставляет себя сбросить N карт из руки</li>
+                    <li><strong>{Trash N}</strong> - Уничтожает N стартовых карт навсегда</li>
+                    <li><strong>{Burn N}</strong> - СТОИМОСТЬ: тратит N душ. Если недостаточно - эффект не срабатывает</li>
+                </ul>
+                
+                <h4>Торговые эффекты:</h4>
+                <ul>
+                    <li><strong>{Acquire}</strong> - Получить любую карту из рынка бесплатно</li>
+                    <li><strong>{Steal}</strong> - Украсть карту из руки или сброса противника</li>
+                    <li><strong>{Trash Trade Row X}</strong> - Уничтожить X карт из рынка</li>
+                </ul>
+                
+                <h4>Условные эффекты:</h4>
+                <ul>
+                    <li><strong>Chain</strong> - Срабатывает только если в этом ходу сыграна карта нужного цвета</li>
+                    <li><strong>TO</strong> - "Если условие ТО эффект". Проверяет условие перед активацией</li>
+                    <li><strong>OR</strong> - Выбор одной из альтернатив (автоматический для ИИ)</li>
+                </ul>
+                
+                <h3>🛡️ Attire карты</h3>
+                <ul>
+                    <li><strong>Def_Y_Text:</strong> Защищают игрока, поглощая урон</li>
+                    <li><strong>Def_N_Text:</strong> Отдельные цели с собственным HP</li>
+                </ul>
+                
+                <h3>🔗 Chain эффекты</h3>
+                <p>Активируются только при наличии карт соответствующего цвета, сыгранных в этом же ходу</p>
+                
+                <h3>🎮 Фазы хода</h3>
+                <ol>
+                    <li><strong>Начало хода:</strong> Применение статусных эффектов (яд, кровотечение)</li>
+                    <li><strong>Основная фаза:</strong> Разыгрывание карт и активация эффектов</li>
+                    <li><strong>Фаза покупок:</strong> Покупка карт за Души</li>
+                    <li><strong>Конец хода:</strong> ⚠️ ВСЕ НЕИСПОЛЬЗОВАННЫЕ ДУШИ СГОРЯТ! Сброс руки и добор новых карт</li>
+                </ol>
+                
+                <h3>✨ Важно про Души</h3>
+                <p><strong>Души НЕ накапливаются между ходами!</strong> Все неиспользованные Души исчезают в конце хода.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Подключаем общий модуль кеширования -->
+    <script src="./shared-image-cache.js"></script>
+    <script src="./shared-utils.js"></script>
+    <script src="./sprite-utils.js"></script>
+    <script src="./google_sheets_merge.js"></script>
+    <!-- Улучшенные парсеры эффектов -->
+    <script src="./improved_effect_parser.js"></script>
+    <script src="./event_text_parser.js"></script>
+    <script>
+        // Fallback для локальной разработки
+        if (typeof SharedUtils === 'undefined') {
+            console.warn('SharedUtils not loaded, creating fallback');
+            window.SharedUtils = {
+                isAutomaticEffect: function(effectText) {
+                    if (!effectText) return true;
+                    const interactiveEffects = [
+                        'Discard', 'Trash', 'Burn', 'Spy', 'Steal',
+                        'Defeat Monster', 'Discard Monster', 'Trash Trade Row', 'OR', 'TO', 'Trash_this'
+                    ];
+                    // Считаем интерактивными также явные токены в фигурных скобках
+                    if (/\{\s*Discard\s+Monster\s*\}/i.test(effectText)) return false;
+                    if (/\{\s*Trash\s+Trade\s+Row\s+\d+\s*\}/i.test(effectText)) return false;
+                    // Acquire эффекты автоматические, если не требуют выбора
+                    if (/Acquire.*for free/i.test(effectText)) return true;
+                    // Проверяем наличие Chain эффектов (как эмоджи так и токены)
+                    const hasChain = /[⚪🔴🔵🟢]/.test(effectText) || /_chain/i.test(effectText);
+                    return !interactiveEffects.some(effect =>
+                        effectText.includes(effect)
+                    ) && !hasChain;
+                },
+                getColorHex: function(color) {
+                    const colorMap = {
+                        'red': '#ff4444',
+                        'blue': '#4444ff', 
+                        'green': '#44ff44',
+                        'white': '#ffffff',
+                        'black': '#000000'
+                    };
+                    return colorMap[color] || '#888888';
+                }
+            };
+        }
+    </script>
+    <script src="./js/game.js"></script>
+</body>
+</html>
