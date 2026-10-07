@@ -5,7 +5,7 @@ const projects = [
   {name:'RecoTune', tag:'MUSIC TOOL', desc:'A practical tuner and learning tool with playable reference notes.', href:'https://recotune.obefree.com', accent:'blue'},
   {name:'Civilization RPG', tag:'TABLETOP SYSTEM', desc:'Generational role-playing where time, legacy and civilization growth become game mechanics.', href:'https://civ.obefree.com', accent:'amber'},
   {name:'StopKadr', tag:'EXPERIMENT', desc:'Interactive media project exploring attention, framing and interpretation.', href:'https://stopkadr.obefree.com', accent:'rose'},
-  {name:'Dice Draft', tag:'TACTICAL CARD GAME', desc:'Two-player drafting and tactical combat built around a shared public dice pool.', href:'https://dice-draft-mobile.obefree.chatgpt.site/', accent:'mint'},
+  {name:'Dice Draft', tag:'TACTICAL CARD GAME', desc:'Two-player drafting and tactical combat built around a shared public dice pool.', href:'dice/', accent:'mint'},
   {name:'Call of Blades', tag:'CARD BATTLE GAME', desc:'Digital card battler with AI play, card database and deck simulation tools.', href:'cob/', accent:'amber'}
 ]
 
