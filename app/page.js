@@ -6,7 +6,7 @@ const projects = [
   {name:'Civilization RPG', tag:'TABLETOP SYSTEM', desc:'Generational role-playing where time, legacy and civilization growth become game mechanics.', href:'https://civ.obefree.com', accent:'amber'},
   {name:'StopKadr', tag:'EXPERIMENT', desc:'Interactive media project exploring attention, framing and interpretation.', href:'https://stopkadr.obefree.com', accent:'rose'},
   {name:'Dice Draft', tag:'TACTICAL CARD GAME', desc:'Two-player drafting and tactical combat built around a shared public dice pool.', href:'https://dice-draft-mobile.obefree.chatgpt.site/', accent:'mint'},
-  {name:'Call of Blades', tag:'CARD BATTLE GAME', desc:'Digital card battler with AI play, card database and deck simulation tools.', href:'https://obefree.github.io/Cob-Game-Clean-v.1/', accent:'amber'}
+  {name:'Call of Blades', tag:'CARD BATTLE GAME', desc:'Digital card battler with AI play, card database and deck simulation tools.', href:'cob/', accent:'amber'}
 ]
 
 export default function Home(){
