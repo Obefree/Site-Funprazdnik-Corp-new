@@ -132,7 +132,7 @@ export default function GamificationLanding() {
     </section>
 
     <section className="gmf-cta" id="contact">
-      <div className="gmf-wrap"><div className="gmf-eyebrow">Ready to build something meaningful?</div><h2>Let's make your<br/>challenge playable.</h2><p>Tell us what you want to change, teach or explore. We'll work with you to find the right interactive format.</p><div className="gmf-actions"><a className="gmf-btn gmf-primary" href={emailLink('Let’s discuss an applied game design project')}>Start a conversation ↗</a><a className="gmf-btn gmf-secondary" style={{color:'#17211a',borderColor:'#788956'}} href="https://obefree.com/">Explore OBEFREE studio ↗</a></div></div>
+      <div className="gmf-wrap"><div className="gmf-eyebrow">Ready to build something meaningful?</div><h2>Let&apos;s make your<br/>challenge playable.</h2><p>Tell us what you want to change, teach or explore. We&apos;ll work with you to find the right interactive format.</p><div className="gmf-actions"><a className="gmf-btn gmf-primary" href={emailLink('Let’s discuss an applied game design project')}>Start a conversation ↗</a><a className="gmf-btn gmf-secondary" style={{color:'#17211a',borderColor:'#788956'}} href="https://obefree.com/">Explore OBEFREE studio ↗</a></div></div>
     </section>
 
     <footer className="gmf-foot">
