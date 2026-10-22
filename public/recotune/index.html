@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#101225" />
+<title>Free Online Tuner & Playable Piano Keyboard — RecoTune</title>
+<meta name="description" content="Tune guitar, bass, ukulele or violin online for free. Accurate chromatic tuner with microphone, playable reference notes, a full online piano, two-track recording studio and no signup. By RecoTune." />
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color-scheme:dark;--bg:#0d1022;--panel:#181c35;--panel2:#202743;--border:#343c61;--text:#f5f7ff;--muted:#a6b0d4;--blue:#84b7ff;--mint:#6ce8c6;--pink:#d8a5ff}
+*[hidden]{display:none!important}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse 90% 55% at 72% -14%,#333e76 0%,transparent 76%),radial-gradient(ellipse 35% 32% at 5% 40%,#1b3150 0%,transparent 92%),var(--bg);color:var(--text)}button,select,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--mint);outline-offset:3px}a{color:inherit;text-decoration:none}button:disabled{opacity:.55;cursor:not-allowed}.wrap{width:min(1120px,calc(100% - 36px));margin:auto}.top{display:flex;align-items:center;justify-content:space-between;padding:24px 0;border-bottom:1px solid #ffffff14}.brand{font-weight:900;font-size:22px;letter-spacing:-.08em}.brand span{color:var(--mint)}.toplinks{display:flex;align-items:center;gap:24px;color:var(--muted);font-size:14px}.toplinks a:hover{color:white}.small-outline{border:1px solid var(--border);padding:10px 16px;border-radius:99px}.intro{padding:52px 0 36px}.eyebrow{color:var(--mint);font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.intro h1{font-size:clamp(38px,5.5vw,66px);letter-spacing:-.063em;line-height:1.04;margin:15px 0}.intro h1 em{font-style:normal;color:var(--blue)}.intro p{color:var(--muted);max-width:700px;font-size:17px;line-height:1.6;margin:0}.hero-cta{display:inline-flex;align-items:center;justify-content:center;background:var(--mint);color:#10192b;border:0;border-radius:13px;padding:13px 20px;font-weight:850;font-size:14px;margin-top:20px}.pills{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.pills span{font-size:12px;padding:7px 11px;background:#ffffff0a;border:1px solid #ffffff19;border-radius:40px;color:#cad2ee}.layout{display:grid;grid-template-columns:1.18fr .82fr;gap:20px;padding:3px 0 30px;align-items:start}.panel{background:linear-gradient(145deg,#1c223d,#171a2f);border:1px solid var(--border);border-radius:27px;box-shadow:0 25px 60px #0004;padding:26px;min-width:0}.panel-title{display:flex;justify-content:space-between;gap:10px;align-items:center}.panel-title h2{margin:0;font-size:21px;letter-spacing:-.04em}.kicker{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase}.meter{margin:30px 0 17px;background:#0e132b;border:1px solid #303b61;border-radius:24px;padding:25px 24px 20px;text-align:center;position:relative;overflow:hidden}.meter:before{content:'';position:absolute;inset:-160px auto auto -130px;width:310px;height:270px;border-radius:50%;background:#23487560;filter:blur(80px);pointer-events:none}.detected{font-size:clamp(75px,10vw,113px);font-weight:800;line-height:1;letter-spacing:-.075em;position:relative}.detected sup{font-size:.22em;color:var(--muted);font-weight:600;vertical-align:top;margin-left:10px;letter-spacing:-.01em}.freq{color:var(--muted);font-size:13px;margin-top:12px;font-variant-numeric:tabular-nums}.cents{display:flex;align-items:center;justify-content:space-between;margin-top:36px;gap:8px;font-size:11px;color:var(--muted)}.cents span:nth-child(2){color:var(--mint)}.meter-line{height:7px;position:relative;background:linear-gradient(90deg,#de8399,#b49be8,#65e8c3,#b49be8,#de8399);border-radius:20px;margin:11px 0 14px;opacity:.85}.meter-line:before{content:'';position:absolute;height:20px;width:2px;background:white;left:50%;top:-7px;opacity:.45}.needle{position:absolute;height:32px;width:5px;border-radius:4px;background:white;box-shadow:0 0 0 4px #fff2,0 0 18px #fff7;top:-13px;left:50%;transform:translateX(-50%);transition:left .12s ease}.meter-state{font-size:13px;font-weight:600;color:#d4dbf4;min-height:20px}.status{color:var(--muted);font-size:12px;margin-top:14px;min-height:18px}.cta{width:100%;background:var(--mint);border:0;border-radius:15px;color:#10192b;font-weight:800;padding:17px 18px;font-size:15px;display:flex;align-items:center;justify-content:center;gap:10px;transition:filter .2s}.cta:hover{filter:brightness(1.11)}.cta.active{background:#d3a0b5}.controls{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-top:20px}.slim{background:#ffffff0a;color:#e8ecff;border:1px solid var(--border);border-radius:11px;padding:10px 13px;cursor:pointer}.hint{color:var(--muted);font-size:12px;line-height:1.5}.note-heading{display:flex;align-items:start;justify-content:space-between;margin-top:21px;gap:12px}.note-heading h3{font-size:17px;margin:0 0 5px;letter-spacing:-.035em}.note-heading p{font-size:12px;line-height:1.45;color:var(--muted);margin:0}.tag{display:inline-flex;align-items:center;font-size:11px;color:var(--mint);background:#245a5459;border:1px solid #427b6e;border-radius:99px;padding:7px 10px;white-space:nowrap}.inst-tabs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:thin;padding:16px 0 20px}.inst-tabs button{white-space:nowrap;border-radius:11px;padding:10px 12px;background:#10172c;border:1px solid var(--border);color:#c9d2ef;font-size:12px;font-weight:700}.inst-tabs button[aria-selected="true"]{background:#365d77;border-color:#5cadbc;color:white}.strings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.note-key{background:#11182d;border:1px solid #344061;border-radius:16px;min-height:91px;color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative}.note-key b{font-size:28px;letter-spacing:-.04em}.note-key small{font-size:11px;color:var(--muted)}.note-key:hover{background:#2a3456}.note-key.selected{background:linear-gradient(155deg,#345b80,#283a64);border-color:var(--blue);box-shadow:inset 0 0 25px #659ee620}.note-key.playing:after{content:'';width:7px;height:7px;background:var(--mint);border-radius:50%;position:absolute;right:11px;top:11px;box-shadow:0 0 0 5px #6ce8c621}.play-row{display:flex;gap:8px;align-items:center;margin:17px 0}.play-btn{flex:1;background:var(--blue);color:#101a2d;border:0;border-radius:13px;font-weight:800;padding:14px}.subbutton{padding:13px;border-radius:13px;background:#11182e;color:var(--text);border:1px solid var(--border)}.tiny{font-size:12px;color:var(--muted)}.setting-row{display:flex;gap:15px;justify-content:space-between;align-items:center;margin:17px 0}.setting-row label{font-size:13px;font-weight:600}.select{background:#121931;border:1px solid var(--border);border-radius:10px;color:white;padding:8px 9px;max-width:150px}.step{display:flex;align-items:center;gap:9px}.step span{min-width:51px;text-align:center;font-size:14px;font-weight:700}.step button{width:33px;height:33px;background:#121931;border:1px solid var(--border);color:white;border-radius:9px}.volume{width:118px;accent-color:var(--mint)}.toggle{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}.toggle input{accent-color:var(--mint);width:16px;height:16px}.bottom{margin:10px 0 64px;padding:24px 30px;display:flex;justify-content:space-between;gap:30px;align-items:center;background:#171d35;border:1px solid var(--border);border-radius:24px}.bottom h2{margin:4px 0;font-size:21px;letter-spacing:-.05em}.bottom p{color:var(--muted);font-size:13px;line-height:1.5;margin:6px 0}.linkbtn{display:inline-block;white-space:nowrap;background:#2c3559;color:white;border:1px solid var(--border);border-radius:13px;padding:14px 18px;font-weight:800;font-size:13px}.foot{border-top:1px solid #ffffff15;padding:23px 0 30px;display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.sr{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}@media(max-width:850px){.layout{grid-template-columns:1fr}.panel{padding:20px}.intro{padding:38px 0 30px}.detected{font-size:94px}.toplinks a:nth-child(2){display:none}}@media(max-width:530px){.wrap{width:calc(100% - 24px)}.top{padding:18px 0}.toplinks{gap:10px}.toplinks a:nth-child(1){display:none}.intro h1{font-size:41px}.intro p{font-size:15px}.pills span{font-size:11px}.meter{padding:20px 15px}.panel{border-radius:21px;padding:16px}.note-key{min-height:78px}.note-key b{font-size:25px}.bottom{flex-direction:column;align-items:stretch;padding:20px}.foot{gap:20px}.toplinks .small-outline{padding:9px 10px}}
+
+/* Full-range interactive piano (88 keys) */
+.piano-panel{margin:0 0 28px;padding:26px 28px 29px}
+.piano-lead{margin:9px 0 0;color:var(--muted);font-size:14px;line-height:1.6;max-width:730px}
+.piano-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin:20px 0 15px}
+.piano-jumps{display:flex;flex-wrap:wrap;gap:7px}
+.piano-jump{border:1px solid var(--border);border-radius:10px;background:#131a33;color:#d5def8;padding:9px 12px;font-weight:700;font-size:12px;min-height:37px}
+.piano-jump.active,.piano-jump:hover{background:#344c72;border-color:#84b7ff;color:#fff}
+.piano-live{display:flex;align-items:center;justify-content:flex-end;gap:13px;min-width:180px}
+.piano-live .note{font-size:26px;font-weight:850;color:var(--mint);font-variant-numeric:tabular-nums}
+.piano-live .frequency{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.piano-scroller{width:100%;max-width:100%;position:relative;overflow-x:auto;overscroll-behavior-x:contain;border-radius:17px 17px 10px 10px;border:1px solid #353c58;background:#0c0f20;scrollbar-color:#687da5 #1d2642;scrollbar-width:thin;scroll-behavior:smooth}
+.piano-keyboard{--whiteWidth:48px;--blackWidth:29px;position:relative;width:calc(var(--whiteWidth)*52);height:228px;background:#0e1429;margin:0;user-select:none;-webkit-user-select:none;isolation:isolate}
+.piano-key{position:absolute;top:0;margin:0;display:flex;align-items:end;justify-content:center;touch-action:pan-x;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;transition:background .08s,border-color .08s;outline-offset:-4px}
+.piano-key.white{height:100%;width:var(--whiteWidth);z-index:1;border:1px solid #9daac7;border-top:0;border-radius:0 0 7px 7px;background:linear-gradient(180deg,#edf4ff 0%,#e2eaf8 86%,#c2d0e6 100%);color:#33405e;box-shadow:inset -4px 0 7px #727c9319}
+.piano-key.black{height:62%;width:var(--blackWidth);z-index:2;border:1px solid #11192d;border-bottom:5px solid #080d19;border-radius:0 0 6px 6px;background:linear-gradient(90deg,#090f20,#232e4f 57%,#12182f);color:#d7e6ff;box-shadow:2px 5px 9px #02040dbb}
+.piano-key.white.pressed{background:linear-gradient(180deg,#bef4df,#86dec7);border-color:#59bca7}
+.piano-key.black.pressed{background:linear-gradient(180deg,#306a70,#40a6a2);border-color:#9becda}
+.piano-key .keylabel{font-size:11px;font-weight:850;letter-spacing:-.02em;padding-bottom:12px;pointer-events:none;white-space:nowrap}
+.piano-key.black .keylabel{font-size:10px;padding-bottom:10px}
+.piano-key .hotkey{position:absolute;bottom:39px;font-size:9px;color:#64708b;pointer-events:none;white-space:nowrap}
+.piano-key.black .hotkey{bottom:30px;color:#b4c8ec}
+.piano-key:focus-visible{outline:3px solid #75e5cf;outline-offset:-5px}
+.piano-under{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:13px;flex-wrap:wrap}
+.piano-instructions{font-size:12px;color:var(--muted);line-height:1.6;margin:0}
+.piano-sound{display:flex;align-items:center;gap:10px;font-size:12px;color:#d4dcf7}
+.piano-sound select{min-width:142px}
+.piano-sustain{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;font-size:12px;color:#d4dcf7}
+.piano-sustain input{width:16px;height:16px;accent-color:var(--mint)}
+@media(max-width:530px){.piano-panel{padding:17px 15px}.piano-keyboard{--whiteWidth:42px;--blackWidth:25px;height:194px}.piano-live{justify-content:flex-start}.piano-scroller{border-radius:12px}.piano-jump{padding:9px 10px}.piano-under{align-items:flex-start}}
+
+/* Integrated two-track browser studio */
+.studio-panel{margin-bottom:28px;padding:26px 28px}
+.studio-panel h2{font-size:23px;letter-spacing:-.04em;margin:0 0 8px}
+.studio-intro{font-size:14px;line-height:1.6;color:var(--muted);max-width:750px;margin:0 0 20px}
+.studio-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.studio-track{padding:17px;background:#10162b;border:1px solid var(--border);border-radius:17px}
+.studio-track strong{display:block;margin-bottom:8px;font-size:15px}
+.studio-track p{font-size:12px;color:var(--muted);margin:0 0 15px;min-height:36px;line-height:1.5}
+.studio-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px;align-items:center}
+.studio-button{background:#263453;border:1px solid #435375;border-radius:11px;color:#f1f5ff;font-size:13px;font-weight:750;padding:12px 14px;min-height:42px}
+.studio-button.primary{background:var(--mint);color:#101a2d;border-color:transparent}
+.studio-button.red{background:#653349;color:white}
+.studio-button:disabled{opacity:.45}
+.studio-file{font-size:12px;color:var(--muted);max-width:100%}
+.studio-status{font-size:12px;line-height:1.5;min-height:20px;color:var(--muted);margin:16px 0 0}
+.studio-info{color:var(--muted);font-size:12px;line-height:1.55;margin:14px 0 0}
+.studio-level{accent-color:var(--mint);width:125px}
+.studio-upload{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:17px}
+.studio-preview{display:none;width:100%;margin-top:14px}
+.studio-preview:not([hidden]){display:block}
+@media(max-width:620px){.studio-grid{grid-template-columns:1fr}.studio-panel{padding:18px}.studio-actions{align-items:stretch}.studio-actions button{flex:1}.studio-track p{min-height:0}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><a class="brand" href="https://obefree.com/">o.reco<span>tune</span></a><nav class="toplinks" aria-label="Main navigation"><a href="#tuner">Tuner</a><a href="#reference">Reference notes</a><a href="#piano">Online piano</a><a class="small-outline" href="https://obefree.com/recotune">Two-track studio ↗</a></nav></header>
+<section class="intro"><div class="eyebrow">RECOTUNE / FREE MUSIC TOOLS</div><h1>Tune your sound.<br><em>Find your note.</em></h1><p>Tune instruments with your microphone, hear reference notes and play a full 88-key online piano. Free, right in your browser — no account or installation.</p><button type="button" class="hero-cta" id="heroStart">◉ Start free tuner</button><div class="pills"><span>✓ Free forever for basic tuning</span><span>✓ Works on phone & desktop</span><span>✓ Audio stays on your device</span></div></section>
+<main class="layout" id="tuner">
+<section class="panel" aria-label="Chromatic tuner"><div class="panel-title"><div><div class="kicker">01 / LISTEN</div><h2>Chromatic tuner</h2></div><span class="tag" id="micBadge">● Mic off</span></div>
+<div class="meter"><div class="detected" id="detected">—</div><div class="freq" id="freq">Play a note to begin</div><div class="cents"><span>♭ −50 cents</span><span>IN TUNE</span><span>+50 cents ♯</span></div><div class="meter-line"><div class="needle" id="needle"></div></div><div class="meter-state" id="meterState">Ready when you are</div></div>
+<button class="cta" id="micButton" type="button">◉ Start microphone tuner</button><div class="status" id="status" role="status" aria-live="polite">To detect pitch, enable the mic and hold a single note.</div>
+<div class="controls"><div class="hint">Accurate pitch is displayed as a note, frequency and cents from the nearest semitone.</div><button class="slim" type="button" id="resetButton">Reset</button></div>
+</section>
+<section class="panel" id="reference" aria-label="Reference notes"><div class="panel-title"><div><div class="kicker">02 / HEAR</div><h2>Play reference notes</h2></div><span class="tag">A4 = <span id="a4badge">440</span> Hz</span></div><div class="note-heading"><div><h3>Tap a string or note</h3><p>Hear a clean, accurate pitch. Play any note without granting microphone access.</p></div></div>
+<div class="inst-tabs" id="instTabs" role="tablist" aria-label="Instrument"></div>
+<div class="strings" id="strings" aria-label="Playable notes"></div>
+<div class="play-row"><button class="play-btn" type="button" id="playButton">▶ Play E2</button><button class="subbutton" type="button" id="stopButton" aria-label="Stop note playback">■ Stop</button></div>
+<div class="setting-row"><label for="referenceSound">Reference sound</label><select class="select" id="referenceSound"><option value="pluck">Soft pluck</option><option value="sine">Pure tone</option></select></div>
+<div class="setting-row"><label for="volume">Volume</label><input type="range" class="volume" id="volume" min="0" max="100" value="43" aria-label="Reference note volume" /></div>
+<div class="setting-row"><label for="a4">Calibration (A4)</label><div class="step"><button type="button" id="a4minus" aria-label="Decrease A4 calibration">−</button><span id="a4">440 Hz</span><button type="button" id="a4plus" aria-label="Increase A4 calibration">+</button></div></div>
+<div class="setting-row"><label for="loop"><span>Repeat note</span></label><label class="toggle"><input id="loop" type="checkbox" /> Loop every second</label></div>
+<div class="setting-row" id="octaveRow" hidden><label for="octaveValue">Chromatic octave</label><div class="step"><button type="button" id="octaveMinus" aria-label="Previous octave">−</button><span id="octaveValue">4</span><button type="button" id="octavePlus" aria-label="Next octave">+</button></div></div>
+<div class="tiny" id="selectedDetails">E2 · 82.41 Hz · Standard guitar</div>
+</section>
+</main>
+
+<section class="panel piano-panel" id="piano" aria-label="Online piano keyboard">
+  <div class="panel-title"><div><div class="kicker">03 / PLAY</div><h2>Free online piano</h2></div><span class="tag">88 keys · A0–C8</span></div>
+  <p class="piano-lead">Play melodies, chords and any pitch on an interactive piano keyboard. Tap or hold multiple keys at once. No installation, microphone or account needed.</p>
+  <div class="piano-tools">
+    <div class="piano-jumps" id="pianoJumps" aria-label="Jump to piano octave"></div>
+    <div class="piano-live" role="status" aria-live="polite" aria-atomic="true"><div class="note" id="pianoCurrentNote">C4</div><div class="frequency" id="pianoCurrentHz">261.63 Hz</div></div>
+  </div>
+  <div class="piano-scroller" id="pianoScroll" tabindex="0" aria-label="Scrollable full piano keyboard from A0 to C8"><div class="piano-keyboard" id="pianoKeys" role="group" aria-label="Piano keys"></div></div>
+  <div class="piano-under">
+    <p class="piano-instructions">← Swipe or scroll for all 88 keys. Play chords with several fingers. On desktop: A–L and W/E/T/Y/U/O/P for sharps; Z / X changes octave.</p>
+    <label class="piano-sound" for="pianoSound">Sound <select id="pianoSound" class="select"><option value="piano">Soft piano</option><option value="pure">Pure tone</option><option value="organ">Organ</option></select></label>
+    <label class="piano-sustain" for="pianoSustain"><input type="checkbox" id="pianoSustain"> Sustain pedal</label>
+  </div>
+</section>
+
+<section class="panel studio-panel" id="studio" aria-label="Two track recording studio">
+  <div class="eyebrow">RECORD / MIX / EXPORT</div>
+  <h2>Two-track music studio</h2>
+  <p class="studio-intro">Record two layers, sing or play along with your first track, add your own backing audio and export a WAV mix. Your recordings stay on your device.</p>
+  <div class="studio-grid">
+    <div class="studio-track">
+      <strong>01 — First recording</strong>
+      <p id="studioTrack1">Record vocals, guitar or another instrument.</p>
+      <button type="button" class="studio-button primary" id="studioRecord1">● Record track 1</button>
+    </div>
+    <div class="studio-track">
+      <strong>02 — Overdub</strong>
+      <p id="studioTrack2">Record another part while track 1 plays back. Headphones recommended.</p>
+      <button type="button" class="studio-button primary" id="studioRecord2">● Record track 2</button>
+    </div>
+  </div>
+  <div class="studio-actions">
+    <button type="button" id="studioStop" class="studio-button red" disabled>■ Stop recording</button>
+    <button type="button" id="studioListen" class="studio-button">▶ Preview mix</button>
+    <button type="button" id="studioExport" class="studio-button primary">↓ Export WAV</button>
+    <button type="button" id="studioReset" class="studio-button">Reset tracks</button>
+  </div>
+  <div class="studio-upload">
+    <label class="studio-file" for="studioBacking">Optional backing track:</label>
+    <input id="studioBacking" type="file" class="studio-file" accept="audio/*"/>
+    <label class="studio-file" for="studioMixLevel">Mix level</label>
+    <input id="studioMixLevel" class="studio-level" type="range" min="25" max="100" value="80" aria-label="Mix volume"/>
+  </div>
+  <audio id="studioPreview" class="studio-preview" controls hidden preload="none"></audio>
+  <p class="studio-status" id="studioStatus" role="status" aria-live="polite">Ready. Allow microphone access only when recording.</p>
+  <p class="studio-info">Tracks are held only in browser memory; export before leaving the page. Recording availability and audio format depend on your browser. Use headphones when overdubbing to avoid feedback. The online piano and reference notes remain available above.</p>
+</section>
+<section class="bottom"><div><div class="eyebrow">KEEP THE IDEA</div><h2>Want to record what you play?</h2><p>RecoTune's free browser studio lets you combine two tracks, use a backing beat and export a WAV file.</p></div><a class="linkbtn" href="#studio">Open free studio ↗</a></section>
+<footer class="foot"><span>RecoTune by <a href="https://obefree.com/">OBEFREE</a> · Musical tools for curious people</span><span>All notes generated locally using the Web Audio API</span></footer></div>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const NOTE_NAMES=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+const instruments={Guitar:['E2','A2','D3','G3','B3','E4'],Bass:['E1','A1','D2','G2'],Ukulele:['G4','C4','E4','A4'],Violin:['G3','D4','A4','E5'],Chromatic:[]};
+let instrument='Guitar',selected='E2',selectedOrigin='Guitar',octave=4,a4=440,audioCtx=null,loopTimer=null,micCtx=null,mediaStream=null,analyser=null,detectTimer=null,history=[],activeVoices=[];
+const midiOf=n=>{const m=/^([A-G])([#♯b♭]?)(-?\d+)$/.exec(n);if(!m)return null;const p={C:0,D:2,E:4,F:5,G:7,A:9,B:11}[m[1]];return (Number(m[3])+1)*12+p+(['#','♯'].includes(m[2])?1:['b','♭'].includes(m[2])?-1:0)};
+const nameOf=m=>NOTE_NAMES[((m%12)+12)%12]+(Math.floor(m/12)-1);
+const hzOf=n=>a4*Math.pow(2,(midiOf(n)-69)/12);
+function setStatus(t){$('status').textContent=t;}
+function generateNotes(){return instrument==='Chromatic'?NOTE_NAMES.map((_,i)=>nameOf(12*(octave+1)+i)):instruments[instrument];}
+function renderTabs(){const target=$('instTabs');target.replaceChildren();Object.keys(instruments).forEach(name=>{const b=document.createElement('button');b.type='button';b.role='tab';b.textContent=name;b.setAttribute('aria-selected',String(name===instrument));b.addEventListener('click',()=>{instrument=name;selected=generateNotes()[0];selectedOrigin=name;stopLoop();renderAll()});target.append(b)});}
+function renderNotes(){const t=$('strings');t.replaceChildren();generateNotes().forEach((name,i)=>{const b=document.createElement('button');b.type='button';b.className='note-key'+(selected===name?' selected':'');b.setAttribute('aria-pressed',String(selected===name));b.setAttribute('aria-label',`Play ${name}, ${hzOf(name).toFixed(2)} hertz`);const strong=document.createElement('b');strong.textContent=name;const small=document.createElement('small');small.textContent=instrument==='Chromatic'?`${hzOf(name).toFixed(1)} Hz`:`String ${generateNotes().length-i} · ${hzOf(name).toFixed(1)} Hz`;b.append(strong,small);b.addEventListener('click',()=>{selected=name;selectedOrigin=instrument;stopLoop();renderNotes();renderSelected();playOnce();if($('loop').checked)startLoop();});t.append(b)});}
+function renderSelected(){$('playButton').textContent=`▶ Play ${selected}`;$('selectedDetails').textContent=`${selected} · ${hzOf(selected).toFixed(2)} Hz · ${selectedOrigin}`;$('a4').textContent=a4+' Hz';$('a4badge').textContent=a4;$('octaveRow').hidden=instrument!=='Chromatic';$('octaveValue').textContent=octave;const midi=midiOf($('pianoCurrentNote').textContent);if(midi!==null)$('pianoCurrentHz').textContent=pianoFrequency(midi).toFixed(2)+' Hz';}
+function renderAll(){renderTabs();renderNotes();renderSelected();}
+async function audio(){if(!audioCtx){audioCtx=new (window.AudioContext||window.webkitAudioContext)();}if(audioCtx.state==='suspended')await audioCtx.resume();return audioCtx;}
+function stopVoices(){if(!audioCtx)return;const t=audioCtx.currentTime;activeVoices.forEach(({gain,osc})=>{try{gain.gain.cancelScheduledValues(t);gain.gain.setTargetAtTime(0.00001,t,.006);osc.stop(t+.07)}catch(e){}});activeVoices=[];}
+async function playOnce(){let ctx;try{ctx=await audio()}catch(e){setStatus('Your browser cannot create reference audio.');return;}if(!selected)return;stopVoices();const hz=hzOf(selected),now=ctx.currentTime,vol=Number($('volume').value)/100;if(vol===0)return;
+const master=ctx.createGain();master.gain.value=vol*0.24;master.connect(ctx.destination);
+const pluck=$('referenceSound').value==='pluck';const parts=pluck?[[1,.78],[2,.24],[3,.1]]:[[1,1]];
+parts.forEach(([harm,ratio])=>{const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(hz*harm,now);gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(ratio,now+.012);if(pluck){gain.gain.exponentialRampToValueAtTime(.0001,now+.93)}else{gain.gain.setValueAtTime(ratio,now+.55);gain.gain.exponentialRampToValueAtTime(.0001,now+.9)}osc.connect(gain);gain.connect(master);osc.start(now);osc.stop(now+.95);activeVoices.push({gain,osc});osc.addEventListener('ended',()=>{osc.disconnect();gain.disconnect();activeVoices=activeVoices.filter(v=>v.osc!==osc)},{once:true});});setTimeout(()=>master.disconnect(),1100);
+const active=[...document.querySelectorAll('.note-key')].find(b=>b.querySelector('b')?.textContent===selected);if(active){active.classList.add('playing');setTimeout(()=>active.classList.remove('playing'),850);}}
+function stopLoop(){if(loopTimer!==null){clearInterval(loopTimer);loopTimer=null;}}
+function startLoop(){stopLoop();if(!$('loop').checked)return;loopTimer=setInterval(()=>{if(document.visibilityState==='visible')playOnce();},1080)}
+
+// --- Independent polyphonic 88-key piano, using the same A4 tuning and master volume. ---
+const PIANO_START=21,PIANO_END=108;
+const pianoVoiceBySource=new Map();
+const pianoHeldBySource=new Map();
+const pianoJumps=[['A0',21],['C2',36],['C3',48],['C4',60],['C5',72],['C6',84],['C7',96],['C8',108]];
+const pianoBindings={KeyA:0,KeyW:1,KeyS:2,KeyE:3,KeyD:4,KeyF:5,KeyT:6,KeyG:7,KeyY:8,KeyH:9,KeyU:10,KeyJ:11,KeyK:12,KeyO:13,KeyL:14,KeyP:15,Semicolon:16,Quote:17};
+const shortKeys=Object.entries(pianoBindings).reduce((o,[code,index])=>(o[index]=code.replace(/^Key/,'').replace('Semicolon',';').replace('Quote',"'"),o),{});
+let pianoComputerOctave=4;
+const pianoKeyByMidi=new Map();
+function pianoFrequency(midi){return a4*Math.pow(2,(midi-69)/12);}
+function updatePianoReadout(midi){
+  const name=nameOf(midi);
+  $('pianoCurrentNote').textContent=name;
+  $('pianoCurrentHz').textContent=pianoFrequency(midi).toFixed(2)+' Hz';
+  selected=name;selectedOrigin='Piano';
+  renderNotes();renderSelected();
+}
+function setPianoPressed(midi){
+  const key=pianoKeyByMidi.get(midi);
+  if(!key)return;
+  const pressed=[...pianoHeldBySource.values()].includes(midi);
+  key.classList.toggle('pressed',pressed);
+  key.setAttribute('aria-pressed',String(pressed));
+}
+function releasePianoVoice(source,force=false){
+  const midi=pianoHeldBySource.get(source);
+  pianoHeldBySource.delete(source);
+  if(midi!==undefined)setPianoPressed(midi);
+  const voice=pianoVoiceBySource.get(source);
+  if(!voice||!audioCtx)return;
+  if($('pianoSustain').checked&&!force){voice.sustained=true;return;}
+  pianoVoiceBySource.delete(source);
+  const now=audioCtx.currentTime;
+  const release=0.42;
+  try{
+    voice.envelope.gain.cancelScheduledValues(now);
+    voice.envelope.gain.setTargetAtTime(0.00001,now,release/4.5);
+    voice.oscillators.forEach(osc=>osc.stop(now+release+0.25));
+  }catch(e){}
+}
+function stopAllPiano(){
+  [...pianoHeldBySource.keys()].forEach(source=>releasePianoVoice(source,true));
+  [...pianoVoiceBySource.keys()].forEach(source=>releasePianoVoice(source,true));
+  pianoHeldBySource.clear();
+  pianoKeyByMidi.forEach((key,midi)=>setPianoPressed(midi));
+}
+async function pressPiano(midi,source){
+  if(midi<PIANO_START||midi>PIANO_END||pianoHeldBySource.has(source))return;
+  if(pianoVoiceBySource.has(source))releasePianoVoice(source,true);
+  pianoHeldBySource.set(source,midi);
+  setPianoPressed(midi);
+  updatePianoReadout(midi);
+  let ctx;
+  try{ctx=await audio()}catch(e){releasePianoVoice(source);setStatus('Your browser cannot play audio.');return;}
+  if(pianoHeldBySource.get(source)!==midi)return;
+  const volume=Number($('volume').value)/100;
+  if(volume===0)return;
+  const now=ctx.currentTime;
+  const hz=pianoFrequency(midi);
+  const kind=$('pianoSound').value;
+  const envelope=ctx.createGain();
+  const master=ctx.createGain();
+  // Limit individual notes so playing several notes at once remains comfortable.
+  master.gain.value=volume*(kind==='organ'?0.10:0.14);
+  envelope.connect(master);master.connect(ctx.destination);
+  const peak=0.85;
+  envelope.gain.setValueAtTime(0.0001,now);
+  envelope.gain.exponentialRampToValueAtTime(peak,now+0.012);
+  if(kind==='piano'){
+    envelope.gain.exponentialRampToValueAtTime(0.3,now+0.50);
+    envelope.gain.exponentialRampToValueAtTime(0.035,now+4.0);
+  }else if(kind==='pure'){
+    envelope.gain.setValueAtTime(0.6,now+0.05);
+    envelope.gain.setValueAtTime(0.6,now+5.0);
+  }else{
+    envelope.gain.setValueAtTime(0.7,now+0.05);
+    envelope.gain.setValueAtTime(0.7,now+5.0);
+  }
+  const partials=kind==='piano'?[[1,0.82],[2,0.16],[3,0.065],[4,0.028]]:kind==='organ'?[[1,0.72],[2,0.25],[3,0.11]]:[[1,1]];
+  const oscillators=[];
+  let ended=0;
+  partials.forEach(([multiple,gainValue])=>{
+    const osc=ctx.createOscillator();
+    const partial=ctx.createGain();
+    osc.type='sine';
+    osc.frequency.setValueAtTime(hz*multiple,now);
+    partial.gain.value=gainValue;
+    osc.connect(partial);partial.connect(envelope);
+    osc.start(now);
+    osc.addEventListener('ended',()=>{
+      ended++;
+      try{osc.disconnect();partial.disconnect();}catch(e){}
+      if(ended===partials.length){
+        try{envelope.disconnect();master.disconnect();}catch(e){}
+        if(pianoVoiceBySource.get(source)?.envelope===envelope)pianoVoiceBySource.delete(source);
+      }
+    },{once:true});
+    oscillators.push(osc);
+    // Prevent stuck notes if focus/visibility events are missed.
+    osc.stop(now+7);
+  });
+  pianoVoiceBySource.set(source,{envelope,oscillators});
+}
+function updatePianoHints(){
+  pianoKeyByMidi.forEach((key,midi)=>{
+    key.querySelector('.hotkey')?.remove();
+    const offset=midi-(pianoComputerOctave+1)*12;
+    if(shortKeys[offset]){
+      const hint=document.createElement('span');hint.className='hotkey';hint.textContent=shortKeys[offset];key.append(hint);
+    }
+  });
+}
+function pianoScrollTo(midi,animate=true){
+  const node=pianoKeyByMidi.get(midi);if(!node)return;
+  const viewport=$('pianoScroll');
+  const offset=node.offsetLeft;
+  viewport.scrollTo({left:Math.max(0,offset-viewport.clientWidth*0.26),behavior:animate?'smooth':'instant'});
+  $('pianoJumps').querySelectorAll('button').forEach(b=>b.classList.toggle('active',Number(b.dataset.midi)===midi));
+  updatePianoHints();
+}
+function renderPiano(){
+  const keyboard=$('pianoKeys');keyboard.replaceChildren();pianoKeyByMidi.clear();
+  let whites=0;
+  for(let midi=PIANO_START;midi<=PIANO_END;midi++){
+    const chroma=midi%12;
+    const isBlack=[1,3,6,8,10].includes(chroma);
+    const key=document.createElement('button');
+    key.type='button';
+    key.className='piano-key '+(isBlack?'black':'white');
+    key.dataset.midi=String(midi);
+    key.style.left=isBlack?`calc(var(--whiteWidth)*${whites} - var(--blackWidth)/2)`:`calc(var(--whiteWidth)*${whites++})`;
+    const name=nameOf(midi);
+    key.setAttribute('aria-label',`Play piano key ${name}`);
+    key.setAttribute('aria-pressed','false');
+    if(chroma===0||midi===PIANO_START||midi===PIANO_END){const label=document.createElement('span');label.className='keylabel';label.textContent=name;key.append(label);}
+    key.addEventListener('pointerdown',e=>{
+      if(e.button!==0&&e.pointerType==='mouse')return;
+      try{key.setPointerCapture?.(e.pointerId);}catch(_){}
+      pressPiano(midi,'pointer:'+e.pointerId);
+    });
+    key.addEventListener('pointerup',e=>releasePianoVoice('pointer:'+e.pointerId));
+    key.addEventListener('pointercancel',e=>releasePianoVoice('pointer:'+e.pointerId));
+    key.addEventListener('lostpointercapture',e=>releasePianoVoice('pointer:'+e.pointerId));
+    // Enter and Space activate native button clicks for assistive technologies.
+    key.addEventListener('click',e=>{if(e.detail===0){const source='access:'+midi;pressPiano(midi,source);setTimeout(()=>releasePianoVoice(source),330);}});
+    pianoKeyByMidi.set(midi,key);keyboard.append(key);
+  }
+  const jumps=$('pianoJumps');jumps.replaceChildren();
+  pianoJumps.forEach(([label,midi])=>{
+    const b=document.createElement('button');b.type='button';b.className='piano-jump';b.textContent=label;b.dataset.midi=String(midi);
+    b.addEventListener('click',()=>{pianoComputerOctave=Math.max(1,Math.min(6,Math.floor(midi/12)-1));pianoScrollTo(midi);});
+    jumps.append(b);
+  });
+  pianoComputerOctave=4;
+  pianoScrollTo(60,false);
+  $('pianoCurrentNote').textContent='C4';
+  $('pianoCurrentHz').textContent=pianoFrequency(60).toFixed(2)+' Hz';
+}
+document.addEventListener('keydown',e=>{
+  if(e.altKey||e.ctrlKey||e.metaKey||e.repeat||/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement?.tagName||''))return;
+  if(e.code==='KeyZ'||e.code==='KeyX'){
+    pianoComputerOctave=Math.max(1,Math.min(6,pianoComputerOctave+(e.code==='KeyX'?1:-1)));
+    pianoScrollTo((pianoComputerOctave+1)*12);
+    e.preventDefault();return;
+  }
+  const semitone=pianoBindings[e.code];if(semitone===undefined)return;
+  const midi=(pianoComputerOctave+1)*12+semitone;
+  if(midi>=PIANO_START&&midi<=PIANO_END){e.preventDefault();pressPiano(midi,'pc:'+e.code);}
+});
+document.addEventListener('keyup',e=>{if(pianoBindings[e.code]!==undefined)releasePianoVoice('pc:'+e.code);});
+window.addEventListener('blur',stopAllPiano);
+$('pianoSustain').addEventListener('change',()=>{if(!$('pianoSustain').checked){[...pianoVoiceBySource].forEach(([source,voice])=>{if(voice.sustained)releasePianoVoice(source,true);});}});
+// --- End piano. ---
+
+function reflectPitch(freq){const midiFloat=69+12*Math.log2(freq/a4);const nearest=Math.round(midiFloat);const cents=Math.round((midiFloat-nearest)*100);const n=nameOf(nearest);$('detected').innerHTML='';$('detected').append(document.createTextNode(n.replace(/-?\d+$/,'')));const sup=document.createElement('sup');sup.textContent=String(Math.floor(nearest/12)-1);$('detected').append(sup);$('freq').textContent=`${freq.toFixed(1)} Hz · ${cents>0?'+':''}${cents} cents`;$('needle').style.left=`${50+Math.max(-50,Math.min(50,cents))}%`;$('meterState').textContent=Math.abs(cents)<=5?'✓ In tune':cents<0?'Tune higher ↑':'Tune lower ↓';$('meterState').style.color=Math.abs(cents)<=5?'var(--mint)':'#d5dcef';}
+function resetPitch(){history=[];$('detected').textContent='—';$('freq').textContent='Play a note to begin';$('needle').style.left='50%';$('meterState').textContent='Ready when you are';$('meterState').style.color='var(--text)';}
+function detectYin(buffer,sampleRate,minHz=40,maxHz=1100){let rms=0;for(let i=0;i<buffer.length;i++)rms+=buffer[i]*buffer[i];rms=Math.sqrt(rms/buffer.length);if(rms<.006)return null;
+// Downsample by 2 for mobile performance. CMNDF suppresses many octave errors.
+const stride=2,N=1536,effectiveRate=sampleRate/stride;const data=new Float32Array(N);for(let i=0;i<N;i++)data[i]=buffer[i*stride];const minLag=Math.max(2,Math.floor(effectiveRate/maxHz));const maxLag=Math.min(Math.floor(effectiveRate/minHz),Math.floor(N/2));const diff=new Float32Array(maxLag+1);for(let lag=1;lag<=maxLag;lag++){let sum=0;for(let j=0;j<N-maxLag;j++){const d=data[j]-data[j+lag];sum+=d*d}diff[lag]=sum}let running=0,found=-1,best=1;for(let lag=1;lag<=maxLag;lag++){running+=diff[lag];const norm=running>0?diff[lag]*lag/running:1;if(lag>=minLag && norm<.17){if(norm<best){best=norm;found=lag}if(lag>minLag+2&&found>0&&norm>best)break;}}if(found<0)return null;const normAt=t=>{let s=0;for(let i=1;i<=t;i++)s+=diff[i];return s>0?diff[t]*t/s:1};let refined=found;if(found>1&&found<maxLag){const x=normAt(found-1),y=normAt(found),z=normAt(found+1);const den=x-2*y+z;if(Math.abs(den)>1e-6)refined+=Math.max(-.5,Math.min(.5,.5*(x-z)/den));}return effectiveRate/refined;}
+function analysisTick(){if(!analyser||!micCtx)return;const buffer=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(buffer);const pitch=detectYin(buffer,micCtx.sampleRate);if(pitch){history.push(pitch);if(history.length>4)history.shift();const median=[...history].sort((a,b)=>a-b)[Math.floor(history.length/2)];reflectPitch(median);setStatus('Listening — play one sustained note at a time.')}else{setStatus('Listening for a stable, single note…');}}
+async function stopMic(){if(detectTimer){clearInterval(detectTimer);detectTimer=null;}if(mediaStream){mediaStream.getTracks().forEach(t=>t.stop());mediaStream=null;}analyser=null;if(micCtx){try{await micCtx.close()}catch(e){}micCtx=null;}$('micButton').textContent='◉ Start microphone tuner';$('micButton').classList.remove('active');$('micBadge').textContent='● Mic off';$('micBadge').style.color='var(--muted)';}
+async function startMic(){if(!navigator.mediaDevices?.getUserMedia){setStatus('Microphone requires HTTPS and a supported browser.');return;}try{mediaStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});micCtx=new(window.AudioContext||window.webkitAudioContext)();await micCtx.resume();const source=micCtx.createMediaStreamSource(mediaStream);analyser=micCtx.createAnalyser();analyser.fftSize=4096;analyser.smoothingTimeConstant=0;source.connect(analyser);detectTimer=setInterval(analysisTick,90);$('micButton').textContent='■ Stop microphone tuner';$('micButton').classList.add('active');$('micBadge').textContent='● Listening';$('micBadge').style.color='var(--mint)';setStatus('Microphone enabled — play a single, sustained note.');}catch(e){await stopMic();setStatus('Could not access microphone. Check browser permissions and HTTPS.');}}
+$('micButton').addEventListener('click',async()=>{if(mediaStream)await stopMic();else await startMic();});$('heroStart').addEventListener('click',async()=>{if(!mediaStream){$('tuner').scrollIntoView({behavior:'smooth',block:'start'});await startMic();}else{$('tuner').scrollIntoView({behavior:'smooth',block:'start'});}});$('resetButton').addEventListener('click',resetPitch);$('playButton').addEventListener('click',()=>{playOnce();if($('loop').checked)startLoop()});$('stopButton').addEventListener('click',()=>{stopLoop();stopVoices();stopAllPiano();$('loop').checked=false;});$('loop').addEventListener('change',()=>{if($('loop').checked){playOnce();startLoop()}else stopLoop()});$('a4minus').addEventListener('click',()=>{a4=Math.max(415,a4-1);renderNotes();renderSelected();});$('a4plus').addEventListener('click',()=>{a4=Math.min(466,a4+1);renderNotes();renderSelected();});$('octaveMinus').addEventListener('click',()=>{octave=Math.max(1,octave-1);selected=nameOf(12*(octave+1));renderNotes();renderSelected()});$('octavePlus').addEventListener('click',()=>{octave=Math.min(7,octave+1);selected=nameOf(12*(octave+1));renderNotes();renderSelected()});document.addEventListener('visibilitychange',()=>{if(document.hidden){stopLoop();stopVoices();stopAllPiano();}});window.addEventListener('pagehide',()=>{stopLoop();stopAllPiano();stopMic()});renderAll();renderPiano();
+})();
+</script>
+
+<script>
+(function () {
+  "use strict";
+  const el = (id) => document.getElementById(id);
+  if (!el("studioRecord1")) return;
+  const tracks = [null, null];
+  let activeRecorder = null, activeStream = null, chunks = [];
+  let backingFile = null, previewUrl = null, monitorAudio = null, monitorBacking = null;
+  const status = (s) => { el("studioStatus").textContent = s; };
+  function stopPreview() {
+    const player = el("studioPreview");
+    player.pause();
+    player.removeAttribute("src");
+    if (monitorAudio) { monitorAudio.pause(); monitorAudio = null; }
+    if (monitorBacking) { monitorBacking.pause(); monitorBacking = null; }
+    if (previewUrl) { URL.revokeObjectURL(previewUrl); previewUrl = null; }
+    player.hidden = true;
+  }
+  function update() {
+    [0,1].forEach((i) => {
+      el("studioTrack" + (i+1)).textContent = tracks[i]
+        ? "Recorded " + (tracks[i].size/1024).toFixed(0) + " KB · ready to mix"
+        : i===0 ? "Record vocals, guitar or another instrument."
+                : "Record another part while track 1 plays back. Headphones recommended.";
+    });
+    const recording = !!activeRecorder && activeRecorder.state !== "inactive";
+    el("studioRecord1").disabled = recording;
+    el("studioRecord2").disabled = recording;
+    el("studioStop").disabled = !recording;
+    el("studioListen").disabled = recording || (!tracks[0] && !tracks[1] && !backingFile);
+    el("studioExport").disabled = recording || (!tracks[0] && !tracks[1] && !backingFile);
+    el("studioReset").disabled = recording;
+  }
+  function playMonitor(blob) {
+    if (!blob) return null;
+    const a = new Audio(URL.createObjectURL(blob));
+    a.addEventListener("ended", () => { URL.revokeObjectURL(a.src); }, {once:true});
+    a.play().catch(()=>{});
+    return a;
+  }
+  async function record(index) {
+    if (activeRecorder) return;
+    if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+      status("Recording is not supported here. Open this page on HTTPS using a current browser.");
+      return;
+    }
+    stopPreview();
+    try {
+      activeStream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+      const mime = ["audio/webm;codecs=opus","audio/mp4","audio/webm"].find(t => MediaRecorder.isTypeSupported(t)) || "";
+      activeRecorder = mime ? new MediaRecorder(activeStream,{mimeType:mime}) : new MediaRecorder(activeStream);
+      chunks = [];
+      const current = activeRecorder;
+      current.ondataavailable = e => {if(e.data && e.data.size)chunks.push(e.data);};
+      current.onerror = () => status("Recording error. Try again.");
+      current.onstop = () => {
+        tracks[index] = chunks.length ? new Blob(chunks,{type:current.mimeType || "audio/webm"}) : null;
+        chunks = [];
+        activeStream?.getTracks().forEach(t=>t.stop());
+        activeStream = null;
+        activeRecorder = null;
+        monitorAudio?.pause(); monitorAudio = null;
+        monitorBacking?.pause(); monitorBacking = null;
+        status(tracks[index] ? "Track " + (index+1) + " saved locally. Ready to preview or export." : "No audio captured.");
+        update();
+      };
+      activeRecorder.start(250);
+      if (index === 1 && tracks[0]) monitorAudio = playMonitor(tracks[0]);
+      if (backingFile) monitorBacking = playMonitor(backingFile);
+      status("● Recording track " + (index+1) + " — press Stop when finished.");
+      update();
+    } catch(e) {
+      activeStream?.getTracks().forEach(t=>t.stop());
+      activeStream = null;
+      activeRecorder = null;
+      status(e && e.name==="NotAllowedError" ? "Microphone permission denied. Allow microphone access in browser settings." : "Cannot start recording: " + (e?.message||e));
+      update();
+    }
+  }
+  async function renderWav() {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const audioCtx = new AudioCtx();
+    try {
+      const blobs = [tracks[0],tracks[1],backingFile].filter(Boolean);
+      if (!blobs.length) throw new Error("Record a track or choose backing audio first.");
+      const decoded = [];
+      for(const blob of blobs) decoded.push(await audioCtx.decodeAudioData(await blob.arrayBuffer()));
+      const rate = 44100;
+      const frames = Math.min(rate*300, Math.max(...decoded.map(d=>Math.ceil(d.duration*rate))));
+      const offline = new OfflineAudioContext(2,frames,rate);
+      for (const d of decoded) {
+        const src=offline.createBufferSource(), gain=offline.createGain();
+        src.buffer=d;
+        gain.gain.value=Number(el("studioMixLevel").value)/100/Math.max(1,decoded.length);
+        src.connect(gain);gain.connect(offline.destination);src.start(0);
+      }
+      const mixed=await offline.startRendering();
+      const left=mixed.getChannelData(0),right=mixed.getChannelData(1);
+      const data=new ArrayBuffer(44+frames*4),view=new DataView(data);
+      const put=(o,v)=>view.setUint32(o,v,true);
+      function str(o,s){for(let i=0;i<s.length;i++)view.setUint8(o+i,s.charCodeAt(i));}
+      str(0,"RIFF");put(4,data.byteLength-8);str(8,"WAVE");str(12,"fmt ");put(16,16);
+      view.setUint16(20,1,true);view.setUint16(22,2,true);put(24,rate);put(28,rate*4);
+      view.setUint16(32,4,true);view.setUint16(34,16,true);str(36,"data");put(40,frames*4);
+      for(let i=0;i<frames;i++){
+        const l=Math.max(-1,Math.min(1,left[i])),r=Math.max(-1,Math.min(1,right[i]));
+        view.setInt16(44+i*4,l<0?l*32768:l*32767,true);
+        view.setInt16(46+i*4,r<0?r*32768:r*32767,true);
+      }
+      return new Blob([data],{type:"audio/wav"});
+    } finally {await audioCtx.close();}
+  }
+  async function mix(preview) {
+    status("Mixing audio on your device…");
+    try {
+      stopPreview();
+      const wav=await renderWav(), url=URL.createObjectURL(wav);
+      if(preview){
+        previewUrl=url;
+        const a=el("studioPreview");
+        a.hidden=false;a.src=url;
+        await a.play();
+        status("Preview ready · " + (wav.size/1024/1024).toFixed(1) + " MB");
+      }else{
+        const link=document.createElement("a");
+        link.href=url;link.download="RecoTune-mix.wav";
+        document.body.appendChild(link);link.click();link.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),20000);
+        status("WAV export created. Save the file to keep your recording.");
+      }
+    }catch(e){status("Could not mix audio: " + (e?.message||e));}
+  }
+  el("studioRecord1").addEventListener("click",()=>record(0));
+  el("studioRecord2").addEventListener("click",()=>record(1));
+  el("studioStop").addEventListener("click",()=>activeRecorder?.state==="recording"&&activeRecorder.stop());
+  el("studioListen").addEventListener("click",()=>mix(true));
+  el("studioExport").addEventListener("click",()=>mix(false));
+  el("studioReset").addEventListener("click",()=>{stopPreview();tracks[0]=null;tracks[1]=null;status("Tracks cleared. Ready to record.");update();});
+  el("studioBacking").addEventListener("change",e=>{backingFile=e.target.files?.[0]||null;status(backingFile?"Backing audio: "+backingFile.name:"Backing removed.");update();});
+  window.addEventListener("pagehide",()=>{activeStream?.getTracks().forEach(t=>t.stop());stopPreview();});
+  update();
+})();
+</script>
+
+</body>
+</html>
