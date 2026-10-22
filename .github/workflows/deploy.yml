@@ -33,6 +33,7 @@ jobs:
       - name: Build (static export)
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.GA4_MEASUREMENT_ID }}
         run: npm run build
 
       - name: Disable Jekyll
