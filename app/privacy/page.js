@@ -18,7 +18,7 @@ export default function PrivacyPage() {
       <p>The analytics script is not loaded, and analytics measurements are not transmitted by our integration, unless you select “Accept analytics” in our consent notice. Choosing “Decline” does not prevent using the website. We store only your preference in your browser to remember your choice. You can change it using the “Privacy settings” button.</p>
       <h2>What we measure</h2>
       <p>After consent, the site can record page visits, usage of the interactive design demo, outbound project links and clicks on email contact links. A contact click does not mean that an email was actually sent. We use aggregate insights for site improvements and to evaluate our services.</p>
-      <h2>Google's role and your rights</h2>
+      <h2>Google&apos;s role and your rights</h2>
       <p>Google may process analytics data in countries outside the European Economic Area. Data handling, cookies and retention also depend on the settings of our Analytics property. You can request information about our processing and ask for access or deletion where applicable. Your browser may also offer cookie deletion controls.</p>
       <p>For details about how Google uses data, see <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Google&apos;s privacy policy</a>.</p>
       <h2>Contact</h2>
