@@ -2,7 +2,7 @@ const projects = [
   {name:'Infernal Skewer', tag:'3D PARTY GAME', desc:'Competitive arena cooking where a skewer is weapon, inventory and recipe.', href:'https://infernal.obefree.com', accent:'hot'},
   {name:'3D / VR AI Companion', tag:'AI · WEBXR', desc:'Embodied AI assistant that can see, act and build with you in a shared 3D space.', href:'https://avatar.obefree.com', accent:'violet'},
   {name:'Critical Mind', tag:'EDTECH', desc:'Gamified critical-reading and media-literacy training for young people.', href:'https://criticalmind.obefree.com', accent:'mint'},
-  {name:'RecoTune', tag:'MUSIC TOOL', desc:'A practical tuner and learning tool with playable reference notes.', href:'https://recotune.obefree.com', accent:'blue'},
+  {name:'RecoTune', tag:'MUSIC TOOL', desc:'Free online tuner, playable 88-key piano and two-track music studio.', href:'recotune/', accent:'blue'},
   {name:'Civilization RPG', tag:'TABLETOP SYSTEM', desc:'Generational role-playing where time, legacy and civilization growth become game mechanics.', href:'https://civ.obefree.com', accent:'amber'},
   {name:'StopKadr', tag:'EXPERIMENT', desc:'Interactive media project exploring attention, framing and interpretation.', href:'https://stopkadr.obefree.com', accent:'rose'},
   {name:'Dice Draft', tag:'TACTICAL CARD GAME', desc:'Two-player drafting and tactical combat built around a shared public dice pool.', href:'dice/', accent:'mint'},
