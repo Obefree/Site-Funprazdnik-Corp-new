@@ -98,9 +98,9 @@ export default function GamificationLanding() {
         <div className="gmf-head"><span className="gmf-eyebrow">02 / Think like a game designer</span><div><h2>Different challenge.<br/>Different rules.</h2><p>Pick a real-world goal and see how the game system changes. This is a simplified illustration of the way we think, not an off-the-shelf gamification formula.</p></div></div>
         <div className="gmf-lab">
           <div className="gmf-lab-select" role="group" aria-label="Choose a design challenge">
-            <button type="button" onClick={()=>setSelected('teams')} aria-pressed={selected==='teams'} className={`gmf-choice ${selected==='teams'?'active':''}`}>Improve collaboration <span>↗</span></button>
-            <button type="button" onClick={()=>setSelected('learning')} aria-pressed={selected==='learning'} className={`gmf-choice ${selected==='learning'?'active':''}`}>Make learning stick <span>↗</span></button>
-            <button type="button" onClick={()=>setSelected('change')} aria-pressed={selected==='change'} className={`gmf-choice ${selected==='change'?'active':''}`}>Change behavior <span>↗</span></button>
+            <button type="button" data-obefree-event="demo_interaction" data-demo-choice="teams" onClick={()=>setSelected('teams')} aria-pressed={selected==='teams'} className={`gmf-choice ${selected==='teams'?'active':''}`}>Improve collaboration <span>↗</span></button>
+            <button type="button" data-obefree-event="demo_interaction" data-demo-choice="learning" onClick={()=>setSelected('learning')} aria-pressed={selected==='learning'} className={`gmf-choice ${selected==='learning'?'active':''}`}>Make learning stick <span>↗</span></button>
+            <button type="button" data-obefree-event="demo_interaction" data-demo-choice="change" onClick={()=>setSelected('change')} aria-pressed={selected==='change'} className={`gmf-choice ${selected==='change'?'active':''}`}>Change behavior <span>↗</span></button>
           </div>
           <div className="gmf-example" aria-live="polite">
             <div className="gmf-example-label">PLAYABLE SYSTEM / DESIGN SKETCH</div>
