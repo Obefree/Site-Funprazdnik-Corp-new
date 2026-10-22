@@ -20,7 +20,7 @@ export default function PrivacyPage() {
       <p>After consent, the site can record page visits, usage of the interactive design demo, outbound project links and clicks on email contact links. A contact click does not mean that an email was actually sent. We use aggregate insights for site improvements and to evaluate our services.</p>
       <h2>Google's role and your rights</h2>
       <p>Google may process analytics data in countries outside the European Economic Area. Data handling, cookies and retention also depend on the settings of our Analytics property. You can request information about our processing and ask for access or deletion where applicable. Your browser may also offer cookie deletion controls.</p>
-      <p>For details about how Google uses data, see <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Google's privacy policy</a>.</p>
+      <p>For details about how Google uses data, see <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Google&apos;s privacy policy</a>.</p>
       <h2>Contact</h2>
       <p>For privacy questions, contact <a href="mailto:hello@obefree.com">hello@obefree.com</a>.</p>
       <p style={{borderTop:'1px solid #c6cfc0',paddingTop:20,marginTop:60,color:'#596458',fontSize:13}}>Last updated: October 22, 2026 · <a href={`${basePath}/gamification/`}>Applied Game Design</a></p>
